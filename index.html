@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Residences</title>
+  <meta name="description" content="Explore the residences floor by floor.">
+  <meta name="theme-color" content="#0a0f1a">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#/" aria-label="Back to the tower">
+      <span class="brand-mark" id="brandMark"></span>
+      <span class="brand-name" id="brandName"></span>
+      <span class="brand-loc" id="brandLoc"></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Main"></nav>
+  </header>
+
+  <main class="viewport" id="viewport" aria-live="polite"></main>
+
+  <div class="scene-ui" id="ui"></div>
+
+  <div class="floor-card" id="floorCard" hidden></div>
+
+  <footer class="footline">
+    <p class="hint" id="hint"><span class="hint-dot" aria-hidden="true"></span><span id="hintText"></span></p>
+    <p class="legal" id="legal"></p>
+  </footer>
+
+  <div class="loading-bar" id="loadingBar" aria-hidden="true"></div>
+  <div class="calib" id="calib" hidden></div>
+
+  <dialog class="lead" id="lead" aria-labelledby="leadTitle">
+    <form class="lead-form" id="leadForm">
+      <button class="lead-close" type="button" id="leadClose" aria-label="Close">&times;</button>
+      <p class="eyebrow" id="leadEyebrow"></p>
+      <h2 class="lead-title" id="leadTitle"></h2>
+      <div class="lead-fields">
+        <label>Name<input name="name" autocomplete="name" required></label>
+        <label>Email<input name="email" type="email" autocomplete="email" required></label>
+        <label>Phone<input name="phone" type="tel" autocomplete="tel"></label>
+        <label>Message<textarea name="message" rows="3"></textarea></label>
+        <input type="hidden" name="interest">
+      </div>
+      <p class="lead-status" id="leadStatus" role="status"></p>
+      <button class="btn btn-solid lead-submit" type="submit">Send request</button>
+    </form>
+  </dialog>
+
+  <script src="data/property.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

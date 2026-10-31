@@ -20,7 +20,7 @@
   const noHover = matchMedia("(hover: none)");
   const calibrate = new URLSearchParams(location.search).has("calibrate");
 
-  const STATUS = { available: "Available", reserved: "Reserved", sold: "Sold" };
+  const STATUS = { available: "Available", reserved: "Reserved", sold: "Sold", ...P.statusLabels };
   const DEPTH = { tower: 0, plan: 1, room: 2 };
 
   // ------------------------------------------------------------------ helpers
@@ -32,9 +32,13 @@
   const esc = s => String(s).replace(/[&<>"']/g, c =>
     ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
+  const currency = P.currency &&
+    new Intl.NumberFormat(P.locale || "en-US", { style: "currency", currency: P.currency, maximumFractionDigits: 0 });
+
   function money(v) {
     if (v == null || v === "") return "";
     if (typeof v === "string") return v;
+    if (currency) return currency.format(v);
     const trim = n => n.toFixed(2).replace(/\.?0+$/, "");
     if (v >= 1e6) return `$${trim(v / 1e6)}M`;
     if (v >= 1e3) return `$${Math.round(v / 1e3)}K`;
@@ -42,6 +46,11 @@
   }
 
   // ------------------------------------------------------------------ data
+
+  // A floor holds one residence type (with room renders), a plate of individual
+  // apartments (P.apartments), or neither: then it only shows its status.
+  const residences = P.residences || {};
+  const plates = P.plates || {};
 
   const floorInfo = new Map();
   for (const entry of P.floors) {
@@ -54,31 +63,72 @@
     }
   }
   for (const [f, info] of floorInfo) {
-    if (!P.residences[info.residence]) {
-      console.warn(`Floor ${f}: unknown residence "${info.residence}" in data/property.js`);
+    const missing = info.plate ? !plates[info.plate] && `plate "${info.plate}"`
+      : info.residence && !residences[info.residence] && `residence "${info.residence}"`;
+    if (missing) {
+      console.warn(`Floor ${f}: unknown ${missing} in the property data`);
       floorInfo.delete(f);
     }
   }
 
+  const aptsByFloor = new Map();
+  for (const apt of P.apartments || []) {
+    apt.id = apt.unit.toLowerCase().replace(/[^a-z0-9]+/g, "");
+    apt.name = apt.name || `Apartment ${apt.unit}`;
+    apt.status = apt.status || "available";
+    if (!aptsByFloor.has(apt.floor)) aptsByFloor.set(apt.floor, []);
+    aptsByFloor.get(apt.floor).push(apt);
+  }
+
+  const lowest = apts => (apts.length ? Math.min(...apts.map(a => a.price)) : null);
+
   function unitAt(floor) {
     const info = floorInfo.get(floor);
     if (!info) return null;
-    const res = P.residences[info.residence];
-    const status = info.status || "available";
+    const res = residences[info.residence];
+    const plate = plates[info.plate];
+    const apts = plate ? aptsByFloor.get(floor) || [] : null;
+    const open = apts ? apts.filter(a => a.status === "available") : [];
+    const status = info.status || (apts && !open.length ? "sold" : "available");
     return {
       floor,
       res,
+      plate,
+      apts,
+      open,
+      note: info.note,
       status,
-      statusKey: STATUS[status] ? status : "other",
-      priceFrom: info.priceFrom ?? res.priceFrom,
-      towerClip: info.towerClip ?? res.towerClip,
+      statusKey: statusKey(status),
+      priceFrom: info.priceFrom ?? (apts ? lowest(open) : res && res.priceFrom),
+      towerClip: info.towerClip ?? (plate || res || {}).towerClip,
     };
   }
 
-  const roomOf = (unit, id) => unit.res.rooms.find(r => r.id === id);
-  const statusLabel = unit => STATUS[unit.status] || unit.status;
+  const canEnter = unit => !!unit && (unit.apts ? unit.apts.length > 0 : !!unit.res);
+  const planOf = unit => unit.plate || unit.res.plan;
+  const roomOf = (unit, id) => (unit.apts || unit.res.rooms).find(r => r.id === id);
+  const placeName = unit => (unit.apts ? `Floor ${unit.floor}` : unit.res.name);
+  const statusKey = status => (STATUS[status] ? status : "other");
+  const statusLabel = item => STATUS[item.status] || item.status;
   const showsPrice = unit => unit.status !== "sold" && unit.priceFrom != null && unit.priceFrom !== "";
-  const unitMeta = res => `${res.beds} Bed · ${res.baths} Bath · ${num(res.sqft)} SF`;
+  const area = m2 => `${num(m2)} m²`;
+
+  function layoutRange(apts) {
+    const layouts = [...new Set(apts.map(a => a.layout).filter(Boolean))].sort();
+    return layouts.length > 1 ? `${layouts[0]} – ${layouts[layouts.length - 1]}` : layouts[0] || "";
+  }
+
+  function unitName(unit) {
+    if (unit.apts) return `${unit.apts.length} apartments`;
+    return unit.res ? unit.res.name : statusLabel(unit);
+  }
+
+  function unitMeta(unit) {
+    if (unit.apts) return `${layoutRange(unit.apts)} · ${unit.open.length} available`;
+    if (!unit.res) return unit.note || "";
+    const res = unit.res;
+    return `${res.beds} Bed · ${res.baths} Bath · ${num(res.sqft)} SF`;
+  }
 
   function priceLine(unit) {
     return showsPrice(unit) ? `${statusLabel(unit)} · From ${money(unit.priceFrom)}` : statusLabel(unit);
@@ -89,7 +139,7 @@
   function parseHash() {
     const m = location.hash.match(/^#\/floor\/(\d+)(?:\/([\w-]+))?/);
     const unit = m && unitAt(Number(m[1]));
-    if (!unit) return { view: "tower" };
+    if (!canEnter(unit)) return { view: "tower" };
     if (m[2] && roomOf(unit, m[2])) return { view: "room", floor: unit.floor, room: m[2] };
     return { view: "plan", floor: unit.floor };
   }
@@ -104,8 +154,8 @@
     const base = `${P.name} — ${P.location}`;
     if (s.view === "tower") return base;
     const unit = unitAt(s.floor);
-    if (s.view === "plan") return `${unit.res.name}, Floor ${s.floor} — ${P.name}`;
-    return `${roomOf(unit, s.room).name} · ${unit.res.name} — ${P.name}`;
+    if (s.view === "plan") return `${unit.apts ? "" : `${unit.res.name}, `}Floor ${s.floor} — ${P.name}`;
+    return `${roomOf(unit, s.room).name} · ${placeName(unit)} — ${P.name}`;
   }
 
   // ------------------------------------------------------------------ scenes & layout
@@ -115,10 +165,11 @@
       return { image: P.tower.image, size: P.tower.size, focus: P.tower.focus, alt: `${P.name} tower` };
     }
     const unit = unitAt(s.floor);
-    const plan = unit.res.plan;
-    if (s.view === "plan") {
+    const plan = planOf(unit);
+    // Apartment floors keep the plan on screen; picking an apartment only changes the panel.
+    if (s.view === "plan" || unit.apts) {
       return { image: plan.image, size: plan.size, frame: plan.frame, focus: plan.focus, plan: true,
-               alt: `${unit.res.name} floor plan` };
+               alt: `${placeName(unit)} floor plan` };
     }
     const room = roomOf(unit, s.room);
     return { image: room.image, size: room.size, focus: room.focus, alt: `${room.name}, ${unit.res.name}` };
@@ -176,8 +227,10 @@
     el.append(img);
     el._scene = scene;
     el._state = state;
-    if (state.view === "tower") buildFloors(el, scene);
-    if (state.view === "plan") buildHotspots(el, unitAt(state.floor));
+    const unit = state.view === "tower" ? null : unitAt(state.floor);
+    if (!unit) buildFloors(el, scene);
+    else if (unit.apts) buildApartments(el, unit, scene);
+    else if (state.view === "plan") buildHotspots(el, unit);
     place(el, layout(scene));
     return el;
   }
@@ -192,7 +245,7 @@
             lerp(o.topRight, o.bottomRight, t1), lerp(o.topLeft, o.bottomLeft, t1)];
   }
 
-  const quadCenter = q => [(q[0][0] + q[1][0] + q[2][0] + q[3][0]) / 4, (q[0][1] + q[1][1] + q[2][1] + q[3][1]) / 4];
+  const centroid = pts => [pts.reduce((s, p) => s + p[0], 0) / pts.length, pts.reduce((s, p) => s + p[1], 0) / pts.length];
 
   function buildFloors(layer, scene) {
     const [W, H] = scene.size || P.mediaSize;
@@ -207,17 +260,17 @@
       const q = floorQuad(f);
       const poly = document.createElementNS(SVGNS, "polygon");
       poly.setAttribute("points", q.map(([x, y]) => `${x * W},${y * H}`).join(" "));
-      poly.setAttribute("class", `floor is-${unit.statusKey}`);
+      poly.setAttribute("class", `floor is-${unit.statusKey}${canEnter(unit) ? "" : " is-closed"}`);
       poly.setAttribute("tabindex", "0");
       poly.setAttribute("role", "button");
-      poly.setAttribute("aria-label", `Floor ${f}, ${unit.res.name}, ${priceLine(unit)}`);
+      poly.setAttribute("aria-label", `Floor ${f}, ${unitName(unit)}, ${priceLine(unit)}`);
       poly.dataset.floor = f;
       svg.append(poly);
       if (calibrate) {
         const t = document.createElementNS(SVGNS, "text");
         t.setAttribute("class", "floor-num");
         t.setAttribute("x", q[1][0] * W + 8);
-        t.setAttribute("y", quadCenter(q)[1] * H + 4);
+        t.setAttribute("y", centroid(q)[1] * H + 4);
         t.textContent = f;
         svg.append(t);
       }
@@ -248,7 +301,7 @@
     svg.addEventListener("click", e => {
       const f = floorOf(e);
       if (!f) return hideFloor();
-      if (lastPointer === "mouse" || (pinned && hovered === f)) return go({ view: "plan", floor: f });
+      if (lastPointer === "mouse" || (pinned && hovered === f)) return enter(f);
       pinned = true;
       showFloor(f);
     });
@@ -257,7 +310,7 @@
       if (!f) return;
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
-        go({ view: "plan", floor: f });
+        enter(f);
       } else if (e.key === "ArrowUp" || e.key === "ArrowDown") {
         e.preventDefault();
         const next = svg.querySelector(`[data-floor="${f + (e.key === "ArrowUp" ? 1 : -1)}"]`);
@@ -284,10 +337,11 @@
     card.innerHTML = `
       <div class="fc-floor"><span>Floor</span><b>${f}</b></div>
       <div class="fc-body">
-        <p class="fc-name">${esc(unit.res.name)}</p>
-        <p class="fc-meta">${esc(unitMeta(unit.res))}</p>
+        <p class="fc-name">${esc(unitName(unit))}</p>
+        <p class="fc-meta">${esc(unitMeta(unit))}</p>
+        ${canEnter(unit) ? `
         <p class="fc-status is-${unit.statusKey}">${esc(priceLine(unit))}</p>
-        <button class="btn btn-solid fc-go" type="button">Explore residence <span aria-hidden="true">→</span></button>
+        <button class="btn btn-solid fc-go" type="button">Explore ${unit.apts ? "floor" : "residence"} <span aria-hidden="true">→</span></button>` : ""}
       </div>`;
     card.classList.toggle("is-pinned", pinned);
     const entering = card.hidden;
@@ -333,8 +387,12 @@
     if (currentLayer) currentLayer.querySelectorAll(".floor.is-active").forEach(p => p.classList.remove("is-active"));
   }
 
+  function enter(f) {
+    if (canEnter(unitAt(f))) go({ view: "plan", floor: f });
+  }
+
   card.addEventListener("click", e => {
-    if (e.target.closest(".fc-go") && hovered != null) go({ view: "plan", floor: hovered });
+    if (e.target.closest(".fc-go") && hovered != null) enter(hovered);
   });
 
   // ------------------------------------------------------------------ plan hotspots
@@ -356,6 +414,99 @@
     layer.append(wrap);
   }
 
+  // ------------------------------------------------------------------ plan apartments
+
+  const aptKey = apt => statusKey(apt.status);
+
+  function buildApartments(layer, unit, scene) {
+    const [W, H] = scene.size || P.mediaSize;
+    const svg = document.createElementNS(SVGNS, "svg");
+    svg.setAttribute("class", "apts");
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    svg.setAttribute("preserveAspectRatio", "none");
+    for (const apt of unit.apts) {
+      const shape = unit.plate.slots[apt.slot];
+      if (!shape) {
+        console.warn(`${apt.unit}: no slot "${apt.slot}" on the floor plate`);
+        continue;
+      }
+      const pts = shape.map(([x, y]) => [x * W, y * H]);
+      const [cx, cy] = centroid(pts);
+      const a = document.createElementNS(SVGNS, "a");
+      a.setAttribute("href", href({ view: "room", floor: unit.floor, room: apt.id }));
+      a.setAttribute("class", `apt is-${aptKey(apt)}`);
+      a.setAttribute("aria-label", `${apt.name}, ${apt.layout ? `${apt.layout}, ${area(apt.area)}, ` : ""}${statusLabel(apt)}`);
+      a.dataset.room = apt.id;
+      a.innerHTML = `<polygon points="${pts.map(p => p.join(",")).join(" ")}"/>`
+        + `<text class="apt-num" x="${cx}" y="${apt.layout ? cy - 4 : cy + 8}">${esc(apt.unit)}</text>`
+        + (apt.layout ? `<text class="apt-layout" x="${cx}" y="${cy + 22}">${esc(apt.layout)}</text>` : "");
+      svg.append(a);
+    }
+    layer.append(svg);
+  }
+
+  function floorSummary(unit) {
+    const sizes = unit.apts.filter(a => a.area).map(a => a.area);
+    const aptHref = a => href({ view: "room", floor: unit.floor, room: a.id });
+    return `
+      <p class="eyebrow">Floor ${unit.floor} · <span class="status is-${unit.statusKey}">${unit.open.length} of ${unit.apts.length} available</span></p>
+      <h1 class="panel-title">Floor ${unit.floor}</h1>
+      <div class="stats">
+        <div><b>${unit.apts.length}</b><span>Apartments</span></div>
+        <div><b>${unit.open.length}</b><span>Available</span></div>
+        <div><b>${sizes.length ? `${Math.round(Math.min(...sizes))}–${Math.round(Math.max(...sizes))}` : "–"}</b><span>m²</span></div>
+      </div>
+      ${showsPrice(unit) ? `<p class="price"><span>From</span>${esc(money(unit.priceFrom))}</p>` : ""}
+      <ul class="apt-list">
+        ${unit.apts.map(a => `
+          <li><a href="${aptHref(a)}" data-room="${esc(a.id)}">
+            <b>${esc(a.unit)}</b>
+            <span class="apt-meta">${a.layout ? esc(a.layout) : ""}</span>
+            <span class="apt-meta">${a.area ? esc(area(a.area)) : ""}</span>
+            <span class="apt-end is-${aptKey(a)}">${esc(a.status === "available" && a.price ? money(a.price) : statusLabel(a))}</span>
+          </a></li>`).join("")}
+      </ul>`;
+  }
+
+  function aptDetail(unit, apt) {
+    const open = apt.status === "available";
+    const facts = [
+      apt.facing && ["Facing", apt.facing],
+      apt.outdoor > 0 && ["Balcony or terrace", area(apt.outdoor)],
+      open && apt.price && apt.area && ["Price per m²", money(Math.round(apt.price / apt.area))],
+    ].filter(Boolean);
+    const note = apt.layout ? P.aptNote : P.soldNote;
+    return `
+      <p class="eyebrow">Floor ${unit.floor} · <span class="status is-${aptKey(apt)}">${esc(statusLabel(apt))}</span></p>
+      <h1 class="panel-title">${esc(apt.name)}</h1>
+      ${apt.layout ? `
+      <div class="stats">
+        <div><b>${esc(apt.layout)}</b><span>Layout</span></div>
+        <div><b>${esc(num(apt.area))}</b><span>m² inside</span></div>
+        <div><b>${apt.outdoor > 0 ? esc(num(apt.outdoor)) : "–"}</b><span>m² outside</span></div>
+      </div>` : ""}
+      ${open && apt.price ? `<p class="price"><span>Price</span>${esc(money(apt.price))}</p>` : ""}
+      ${facts.length ? `<dl class="facts">${facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>` : ""}
+      ${note ? `<p class="desc">${esc(note)}</p>` : ""}`;
+  }
+
+  function renderApartments(state, unit) {
+    const apt = state.view === "room" ? roomOf(unit, state.room) : null;
+    currentLayer.querySelectorAll(".apt").forEach(el => el.classList.toggle("is-selected", !!apt && el.dataset.room === apt.id));
+    const back = apt
+      ? `<a class="btn btn-ghost" href="${href({ view: "plan", floor: unit.floor })}">Back to floor</a>`
+      : `<a class="btn btn-ghost" href="#/">Back to tower</a>`;
+    const more = P.source
+      ? `<a class="btn btn-solid" href="${esc(P.source.href)}" target="_blank" rel="noopener">${esc(P.source.label)}</a>`
+      : `<button class="btn btn-solid" type="button" data-lead="plan">Request details</button>`;
+    ui.innerHTML = `
+      <aside class="panel" aria-label="${esc(apt ? apt.name : `Floor ${unit.floor}`)}">
+        ${apt ? aptDetail(unit, apt) : floorSummary(unit)}
+        <div class="actions">${back}${more}</div>
+        ${P.source && P.source.note ? `<p class="source">${esc(P.source.note)}</p>` : ""}
+      </aside>`;
+  }
+
   // ------------------------------------------------------------------ scene UI
 
   function renderUI(state) {
@@ -367,6 +518,11 @@
     }
     const unit = unitAt(state.floor);
     const roomHref = r => href({ view: "room", floor: unit.floor, room: r.id });
+
+    if (unit.apts) {
+      renderApartments(state, unit);
+      return lightOnHover(unit);
+    }
 
     if (state.view === "plan") {
       ui.innerHTML = `
@@ -391,16 +547,7 @@
             <button class="btn btn-solid" type="button" data-lead="plan">Request floor plan</button>
           </div>
         </aside>`;
-      ui.querySelectorAll(".room-list a").forEach(a => {
-        const spot = () => currentLayer && currentLayer.querySelector(`.hotspot[data-room="${a.dataset.room}"]`);
-        const on = () => { const s = spot(); if (s) s.classList.add("is-lit"); prefetchRoom(roomOf(unit, a.dataset.room)); };
-        const off = () => { const s = spot(); if (s) s.classList.remove("is-lit"); };
-        a.addEventListener("pointerenter", on);
-        a.addEventListener("pointerleave", off);
-        a.addEventListener("focus", on);
-        a.addEventListener("blur", off);
-      });
-      return;
+      return lightOnHover(unit);
     }
 
     const room = roomOf(unit, state.room);
@@ -415,6 +562,19 @@
           ${unit.res.rooms.map(r => `<a href="${roomHref(r)}"${r.id === room.id ? ' aria-current="page"' : ""}>${esc(r.name)}</a>`).join("")}
         </nav>
       </div>`;
+  }
+
+  // Hovering a list entry lights its marker on the plan.
+  function lightOnHover(unit) {
+    ui.querySelectorAll("a[data-room]").forEach(a => {
+      const spot = () => currentLayer && currentLayer.querySelector(`[data-room="${a.dataset.room}"]`);
+      const on = () => { const s = spot(); if (s) s.classList.add("is-lit"); prefetchRoom(roomOf(unit, a.dataset.room)); };
+      const off = () => { const s = spot(); if (s) s.classList.remove("is-lit"); };
+      a.addEventListener("pointerenter", on);
+      a.addEventListener("pointerleave", off);
+      a.addEventListener("focus", on);
+      a.addEventListener("blur", off);
+    });
   }
 
   // ------------------------------------------------------------------ preloading
@@ -443,7 +603,8 @@
   }
 
   function prefetchUnit(unit) {
-    preload(unit.res.plan.image);
+    if (!canEnter(unit)) return;
+    preload(planOf(unit).image);
     if (unit.towerClip && !reducedMotion.matches) clipSource(unit.towerClip);
   }
 
@@ -481,7 +642,17 @@
       return;
     }
     if (current && href(current) === href(next)) return;
-    transition(next);
+    show(next);
+  }
+
+  // Moving between a floor and one of its apartments keeps the same scene.
+  const sameScene = (a, b) => a.view !== "tower" && b.view !== "tower" && a.floor === b.floor && !!unitAt(a.floor).apts;
+
+  function show(next) {
+    if (!current || !sameScene(current, next)) return transition(next);
+    current = next;
+    document.title = titleFor(next);
+    renderUI(next);
   }
 
   function kindOf(prev, next) {
@@ -494,13 +665,13 @@
 
   // Where the inner (deeper) scene sits inside the outer one, as image fractions.
   function anchor(outer, inner) {
-    if (outer.view === "tower") return quadCenter(floorQuad(inner.floor));
+    if (outer.view === "tower") return centroid(floorQuad(inner.floor));
     return roomOf(unitAt(inner.floor), inner.room).hotspot;
   }
 
   function clipFor(outer, inner, dir) {
     const unit = unitAt(inner.floor);
-    if (outer.view === "tower" && inner.view === "plan") return dir === "in" ? unit.towerClip : unit.res.towerBackClip;
+    if (outer.view === "tower" && inner.view === "plan") return dir === "in" ? unit.towerClip : (unit.plate || unit.res).towerBackClip;
     if (outer.view === "plan" && inner.view === "room") {
       const room = roomOf(unit, inner.room);
       return dir === "in" ? room.clip : room.backClip;
@@ -548,15 +719,15 @@
     if (queued) {
       const q = queued;
       queued = null;
-      if (href(q) !== href(current)) transition(q);
+      if (href(q) !== href(current)) show(q);
     }
   }
 
   function afterEnter(state) {
     const idle = window.requestIdleCallback || (fn => setTimeout(fn, 400));
     idle(() => {
-      if (state.view === "tower") Object.values(P.residences).forEach(r => preload(r.plan.image));
-      else unitAt(state.floor).res.rooms.forEach(r => preload(r.image));
+      if (state.view === "tower") [...Object.values(residences).map(r => r.plan), ...Object.values(plates)].forEach(p => preload(p.image));
+      else if (!unitAt(state.floor).apts) unitAt(state.floor).res.rooms.forEach(r => preload(r.image));
     });
   }
 
@@ -705,9 +876,10 @@
   function openLead(kind) {
     const unit = current && current.view !== "tower" ? unitAt(current.floor) : null;
     const forPlan = kind === "plan" && unit;
-    $("#leadEyebrow").textContent = forPlan ? `Floor ${unit.floor} · ${unit.res.name}` : P.name;
+    const place = forPlan && (unit.apts ? `Floor ${unit.floor}` : `${unit.res.name}, Floor ${unit.floor}`);
+    $("#leadEyebrow").textContent = forPlan ? place : P.name;
     $("#leadTitle").textContent = forPlan ? "Request the floor plan" : "Request a private tour";
-    leadForm.elements.interest.value = forPlan ? `Floor plan: ${unit.res.name}, Floor ${unit.floor}` : "Private tour";
+    leadForm.elements.interest.value = forPlan ? `Floor plan: ${place}` : "Private tour";
     say("");
     leadSubmit.disabled = false;
     lead.showModal();
@@ -765,8 +937,11 @@
     $("#brandLoc").textContent = P.location;
     $("#legal").textContent = P.legal || "";
     $("#hintText").textContent = noHover.matches ? "Tap a floor to explore" : "Hover a floor to explore";
+    const cta = P.cta || {};
     $("#nav").innerHTML = (P.nav || []).map(n => `<a class="nav-link" href="${esc(n.href)}">${esc(n.label)}</a>`).join("")
-      + `<button class="btn btn-solid nav-cta" type="button" data-lead="tour">${esc((P.cta && P.cta.label) || "Private Tour")}</button>`;
+      + (cta.href
+        ? `<a class="btn btn-solid nav-cta" href="${esc(cta.href)}" target="_blank" rel="noopener">${esc(cta.label || "Contact")}</a>`
+        : `<button class="btn btn-solid nav-cta" type="button" data-lead="tour">${esc(cta.label || "Private Tour")}</button>`);
 
     const icon = document.createElement("link");
     icon.rel = "icon";

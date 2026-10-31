@@ -89,6 +89,18 @@ ffmpeg -i raw.mp4 -vf scale=1920:-2 -c:v libx264 -crf 23 -preset slow -an -movfl
 
 Clips download in the background when someone hovers a floor or room, so they usually start instantly. If a clip is missing or fails to load, the site falls back to the zoom. Visitors with reduced motion enabled get a simple crossfade.
 
+## Buildings sold apartment by apartment
+
+For a building with many apartments per floor, give floors a `plate` instead of a `residence`. The visitor goes tower → floor plate (apartments coloured by status) → apartment details. [metropolis/](metropolis/) is a full example built from a real price list.
+
+- `plates.<id>`: the floor-plate `image`, its `frame`, and `slots`, the outline of each apartment position as `[x, y]` corners.
+- `apartments`: one entry per apartment with `unit`, `floor`, `slot`, and optionally `layout`, `area`, `outdoor`, `facing`, `price` and `status`.
+- A floor entry with only a `status` (and an optional `note`) shows a card but can't be opened, which suits floors not yet on sale.
+- `locale` and `currency` (e.g. `"cs-CZ"`, `"CZK"`) format prices; `statusLabels` renames statuses.
+- `cta.href` turns the top-right button into a link, and `source` adds a link and a data note under each panel.
+
+Each page is a copy of `index.html` with its own data file, sharing `css/` and `js/`.
+
 ## Tour and floor plan requests
 
 The "Private Tour" and "Request floor plan" buttons open a short form. Connect it in `data/property.js`:

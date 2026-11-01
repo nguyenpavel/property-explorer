@@ -31,6 +31,11 @@ window.PROPERTY = {
     href: "https://www.central-group.cz/prehled-bytu/217",
     note: "Data from Central Group's public price list, read 31 Oct 2026. Prices include VAT and change often.",
   },
+  // Each listed apartment links to its own page (floor plan, rooms) on the developer's site.
+  aptLink: {
+    label: "Official floor plan",
+    href: apt => `https://www.central-group.cz/byt-detail/217-01-${apt.unit.replace(/\D/g, "").padStart(3, "0")}`,
+  },
 
   legal: "Unofficial concept demo, not affiliated with Central Group. Illustrations are schematic, not the official design.",
 

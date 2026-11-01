@@ -496,8 +496,11 @@
     const back = apt
       ? `<a class="btn btn-ghost" href="${href({ view: "plan", floor: unit.floor })}">Back to floor</a>`
       : `<a class="btn btn-ghost" href="#/">Back to tower</a>`;
-    const more = P.source
-      ? `<a class="btn btn-solid" href="${esc(P.source.href)}" target="_blank" rel="noopener">${esc(P.source.label)}</a>`
+    const link = apt && apt.status === "available" && P.aptLink
+      ? { href: P.aptLink.href(apt), label: P.aptLink.label }
+      : P.source;
+    const more = link
+      ? `<a class="btn btn-solid" href="${esc(link.href)}" target="_blank" rel="noopener">${esc(link.label)}</a>`
       : `<button class="btn btn-solid" type="button" data-lead="plan">Request details</button>`;
     ui.innerHTML = `
       <aside class="panel" aria-label="${esc(apt ? apt.name : `Floor ${unit.floor}`)}">

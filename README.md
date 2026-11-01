@@ -98,6 +98,7 @@ For a building with many apartments per floor, give floors a `plate` instead of 
 - A floor entry with only a `status` (and an optional `note`) shows a card but can't be opened, which suits floors not yet on sale.
 - `locale` and `currency` (e.g. `"cs-CZ"`, `"CZK"`) format prices; `statusLabels` renames statuses.
 - `cta.href` turns the top-right button into a link, and `source` adds a link and a data note under each panel.
+- `aptLink` (a label and a function from apartment to URL) links each available apartment to its own page elsewhere, such as the developer's listing.
 
 Each page is a copy of `index.html` with its own data file, sharing `css/` and `js/`.
 

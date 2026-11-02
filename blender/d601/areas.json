@@ -1,0 +1,66 @@
+{
+ "01": {
+  "name": "Hall",
+  "table": 10.4,
+  "raw": 10.701,
+  "net": 10.444,
+  "finish_mm": 14.0,
+  "ok": true
+ },
+ "02": {
+  "name": "Living room + kitchen",
+  "table": 26.9,
+  "raw": 27.225,
+  "net": 26.918,
+  "finish_mm": 14.0,
+  "ok": true
+ },
+ "03": {
+  "name": "Room",
+  "table": 16.3,
+  "raw": 16.493,
+  "net": 16.261,
+  "finish_mm": 14.0,
+  "ok": true
+ },
+ "04": {
+  "name": "Room",
+  "table": 13.3,
+  "raw": 13.497,
+  "net": 13.291,
+  "finish_mm": 14.0,
+  "ok": true
+ },
+ "05": {
+  "name": "Bathroom",
+  "table": 4.7,
+  "raw": 4.893,
+  "net": 4.715,
+  "finish_mm": 20.0,
+  "ok": true
+ },
+ "06": {
+  "name": "WC",
+  "table": 1.7,
+  "raw": 1.838,
+  "net": 1.724,
+  "finish_mm": 20.0,
+  "ok": true
+ },
+ "07": {
+  "name": "Storage",
+  "table": 1.9,
+  "raw": 1.97,
+  "net": 1.884,
+  "finish_mm": 14.0,
+  "ok": true
+ },
+ "08": {
+  "name": "Loggia",
+  "table": 8.3,
+  "raw": 8.34,
+  "net": 8.34,
+  "finish_mm": 0.0,
+  "ok": true
+ }
+}

@@ -1,0 +1,9 @@
+Warning: in BindingsAtPrim at line 688 of C:\db\build\S\VS1564R\build\usd\src\external_usd\pxr\usd\usdShade\materialBindingAPI.cpp -- Found material bindings on prim at path (/World/faucet01_GRP/main01_GEO) but MaterialBindingAPI is not applied on the prim
+Warning: in BindingsAtPrim at line 688 of C:\db\build\S\VS1564R\build\usd\src\external_usd\pxr\usd\usdShade\materialBindingAPI.cpp -- Found material bindings on prim at path (/World/faucet01_GRP/main01_GEO) but MaterialBindingAPI is not applied on the prim
+Warning: in BindingsAtPrim at line 688 of C:\db\build\S\VS1564R\build\usd\src\external_usd\pxr\usd\usdShade\materialBindingAPI.cpp -- Found material bindings on prim at path (/World/faucet01_GRP/pipeInner01_GEO) but MaterialBindingAPI is not applied on the prim
+Warning: in BindingsAtPrim at line 688 of C:\db\build\S\VS1564R\build\usd\src\external_usd\pxr\usd\usdShade\materialBindingAPI.cpp -- Found material bindings on prim at path (/World/faucet01_GRP/pipeInner01_GEO) but MaterialBindingAPI is not applied on the prim
+ASSET faucet: 3422602 -> 29998 tris, [12.96, 35.609, 29.411] m, 1 materials -> faucet.blend
+Blender 4.3.2 (hash 32f5fdce0a0a built 2024-12-17 03:35:23)
+USD import of 'D:\Downloads\Residential_NVD@10012\Assets\ArchVis\Residential\Kitchen\KitchenFaucets\faucet_01.usd' took 1384.87 ms
+
+Blender quit

@@ -1,0 +1,1326 @@
+{
+ "sofa": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Maplewood/Maplewood_Sofa.usd",
+  "size_m": [
+   2.743346191122839,
+   0.9417724398872451,
+   0.6986356960541968
+  ],
+  "materials": {
+   "Fabric": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "bump_factor": 0.5,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Maplewood/Textures/MaplewoodSofa_Fabric_A.png"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Maplewood/Textures/MaplewoodSofa_Fabric_N.png"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Maplewood/Textures/MaplewoodSofa_Fabric_R.png"
+     },
+     "texture_scale": [
+      1.0,
+      1.0
+     ]
+    },
+    "sub": "OmniPBR"
+   },
+   "Legs": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Maplewood/Textures/MaplewoodSofa_Wood_A.png"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Maplewood/Textures/MaplewoodSofa_Wood_N.png"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Maplewood/Textures/MaplewoodSofa_Wood_R.png"
+     }
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "coffee_table": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Appleseed/Appleseed_CoffeeTable.usd",
+  "size_m": [
+   1.3185599986040586,
+   0.7492999863035976,
+   0.4500084013489989
+  ],
+  "materials": {
+   "Legs": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "albedo_add": 0.019999999552965164,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Appleseed/Textures/Appleseed_CoffeeTable_Metal_A.png"
+     },
+     "metallic_constant": 0.0,
+     "metallic_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Appleseed/Textures/Appleseed_CoffeeTable_Metal_M.png"
+     },
+     "metallic_texture_influence": 1.0,
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Appleseed/Textures/Appleseed_CoffeeTable_Metal_N.png"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Appleseed/Textures/Appleseed_CoffeeTable_Metal_R.png"
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "Tabletop": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "bump_factor": 0.5,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Appleseed/Textures/Appleseed_CoffeeTable_Wood_A.png"
+     },
+     "metallic_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Appleseed/Textures/Appleseed_CoffeeTable_Wood_M.png"
+     },
+     "metallic_texture_influence": 1.0,
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Appleseed/Textures/Appleseed_CoffeeTable_Wood_N.png"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Appleseed/Textures/Appleseed_CoffeeTable_Wood_R.png"
+     }
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "dining_table": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/EastRural_Table.usd",
+  "size_m": [
+   0.9144000039756293,
+   1.5273019067801101,
+   0.7619999524503953
+  ],
+  "materials": {
+   "TableTop": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_TableTop_BaseColor.png"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_TableTop_Normal.png"
+     },
+     "reflection_roughness_constant": 1.0,
+     "reflection_roughness_texture_influence": 0.75,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_TableTop_Roughness.png"
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "WhiteWood": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "bump_factor": 0.15000000596046448,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_Table_WhiteWood_BaseColor.png"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_Table_WhiteWood_Normal.png"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_Table_WhiteWood_Roughness.png"
+     }
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "dining_chair": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/EastRural_Chair.usd",
+  "size_m": [
+   0.42299250610934536,
+   0.48916491368789394,
+   1.000412575295286
+  ],
+  "materials": {
+   "Cushion": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "albedo_add": 0.0010000000474974513,
+     "bump_factor": 0.20000000298023224,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_Chair_DarkLeather_BaseColor.png"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_Chair_DarkLeather_Normal.png"
+     },
+     "reflection_roughness_constant": 1.0,
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_Chair_DarkLeather_Roughness.png"
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "WhiteWood": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "bump_factor": 0.15000000596046448,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_Chair_WhiteWood_BaseColor.png"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_Chair_WhiteWood_Normal.png"
+     },
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_Chair_WhiteWood_Roughness.png"
+     }
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "media_unit": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/MediaTables/Soulard.usd",
+  "size_m": [
+   1.5240001337826214,
+   0.40640002295970845,
+   0.5588000363379706
+  ],
+  "materials": {
+   "Metal": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/MediaTables/Textures/Soulard_Metal_BaseColor.png"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/MediaTables/Textures/Soulard_Metal_Normal.png"
+     },
+     "reflection_roughness_constant": 1.0,
+     "reflection_roughness_texture_influence": 0.75,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/MediaTables/Textures/Soulard_Metal_Roughness.png"
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "Wood": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "bump_factor": 0.15000000596046448,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/MediaTables/Textures/Soulard_Wood_BaseColor.png"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/MediaTables/Textures/Soulard_Wood_Normal.png"
+     },
+     "reflection_roughness_constant": 1.0,
+     "reflection_roughness_texture_influence": 0.6499999761581421,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/MediaTables/Textures/Soulard_Wood_Roughness.png"
+     }
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "tv": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/TV_Wall.usd",
+  "size_m": [
+   0.05291585624217987,
+   1.44,
+   0.8100000000000002
+  ],
+  "materials": {
+   "Screen": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/textures/TV_Wall_Screen_BaseColor.tga"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/textures/TV_Wall_Screen_N.tga"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/textures/TV_Wall_Screen_R.tga"
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "Back": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "bump_factor": 0.25,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/textures/TV_Wall_Back_BaseColor.tga"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/textures/TV_Wall_Back_N.tga"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/textures/TV_Wall_Back_R.tga"
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "Main": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/textures/TV_Wall_Main_BaseColor.tga"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/textures/TV_Wall_Main_N.tga"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/textures/TV_Wall_Main_R.tga"
+     }
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "desk": {
+  "usd": "D:/Downloads/SimReady_Furniture_Misc_01_NVD@10010/Assets/simready_content/common_assets/props/contemporary_lowhalfdesk/contemporary_lowhalfdesk_base.usd",
+  "size_m": [
+   0.5969000458717346,
+   0.9271001219749451,
+   0.7014632821083069
+  ],
+  "materials": {
+   "opaque__plastic__contemporarylowhalfdesk": {
+    "shader": "SimPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/SimReady_Furniture_Misc_01_NVD@10010/Assets/simready_content/common_assets/props/contemporary_lowhalfdesk/Textures/ContemporaryOfficeLoweredDeskHalf_P_A.png"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/SimReady_Furniture_Misc_01_NVD@10010/Assets/simready_content/common_assets/props/contemporary_lowhalfdesk/Textures/ContemporaryOfficeLoweredDeskHalf_P_N.png"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/SimReady_Furniture_Misc_01_NVD@10010/Assets/simready_content/common_assets/props/contemporary_lowhalfdesk/Textures/ContemporaryOfficeLoweredDeskHalf_P_SG.png"
+     }
+    },
+    "sub": "SimPBR"
+   },
+   "opaque__wood__body_contemporarylowhalfdesk": {
+    "shader": "SimPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/SimReady_Furniture_Misc_01_NVD@10010/Assets/simready_content/common_assets/props/contemporary_lowhalfdesk/Textures/ContemporaryOfficeLoweredDeskHalf_W_A.png"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/SimReady_Furniture_Misc_01_NVD@10010/Assets/simready_content/common_assets/props/contemporary_lowhalfdesk/Textures/ContemporaryOfficeLoweredDeskHalf_W_N.png"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/SimReady_Furniture_Misc_01_NVD@10010/Assets/simready_content/common_assets/props/contemporary_lowhalfdesk/Textures/ContemporaryOfficeLoweredDeskHalf_W_SG.png"
+     }
+    },
+    "sub": "SimPBR"
+   }
+  }
+ },
+ "desk_chair": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Chairs/Chair_Desk.usd",
+  "size_m": [
+   0.6714350891113281,
+   0.6500555610656739,
+   0.8560147166252137
+  ],
+  "materials": {
+   "M_Chair_Desk_Seat_Back": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "ao_to_diffuse": 0.10000000149011612,
+     "bump_factor": 0.15000000596046448,
+     "diffuse_color_constant": [
+      0.5879999995231628,
+      0.5879999995231628,
+      0.5879999995231628
+     ],
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Chairs/Textures/Chair_Desk_BaseColor.png"
+     },
+     "enable_ORM_texture": true,
+     "metallic_texture": {
+      "asset": ""
+     },
+     "metallic_texture_influence": 1.0,
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Chairs/Textures/Chair_Desk_Normal.png"
+     },
+     "ORM_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Chairs/Textures/Chair_Desk_ORM.png"
+     },
+     "reflection_roughness_constant": 1.0,
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": ""
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "M_Chair_Desk_Legs": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_color_constant": [
+      0.5,
+      0.5,
+      0.5
+     ],
+     "metallic_constant": 1.0,
+     "reflection_roughness_constant": 0.10000000149011612
+    },
+    "sub": "OmniPBR"
+   },
+   "M_Chair_Desk_Feet": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_color_constant": [
+      0.019999999552965164,
+      0.019999999552965164,
+      0.019999999552965164
+     ],
+     "reflection_roughness_constant": 0.75
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "nightstand": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/EndTables/Festus01.usd",
+  "size_m": [
+   0.38099998474121094,
+   0.38099998474121094,
+   0.4647725747806453
+  ],
+  "materials": {
+   "Festus_Table": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "ao_to_diffuse": 0.10000000149011612,
+     "bump_factor": 1.0,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/EndTables/textures/Festus_BaseColor.png"
+     },
+     "diffuse_tint": [
+      0.4903060495853424,
+      0.5696202516555786,
+      0.5205222368240356
+     ],
+     "enable_ORM_texture": true,
+     "metallic_texture": {
+      "asset": ""
+     },
+     "metallic_texture_influence": 1.0,
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/EndTables/textures/Festus_Normal.png"
+     },
+     "ORM_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/EndTables/textures/Festus_ORM.png"
+     },
+     "reflection_roughness_constant": 1.0,
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": ""
+     }
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "table_lamp": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Table Lamps/Theory.usd",
+  "size_m": [
+   0.25012713826908595,
+   0.32797923785494465,
+   0.4354992244653575
+  ],
+  "materials": {
+   "Glass": {
+    "shader": "OmniGlass.mdl",
+    "inputs": {
+     "depth": 0.0,
+     "glass_color_texture": {
+      "asset": ""
+     },
+     "reflection_color_texture": {
+      "asset": ""
+     },
+     "thin_walled": false
+    },
+    "sub": "OmniGlass"
+   },
+   "MainBody": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Table Lamps/textures/Theory_Metal_body_A.png"
+     },
+     "reflection_roughness_constant": 0.3499999940395355,
+     "reflection_roughness_texture_influence": 0.009999999776482582,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Table Lamps/textures/Theory_Metal_body_SG.png"
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "Silver": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Table Lamps/textures/Theory_Bulb_metal_silver_A.png"
+     },
+     "metallic_constant": 1.0,
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Table Lamps/textures/Theory_Bulb_metal_silver_N.png"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Table Lamps/textures/Theory_Bulb_metal_silver_SG.png"
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "Copper": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Table Lamps/textures/Theory_Bulb_metal_copper_A.png"
+     },
+     "metallic_constant": 1.0,
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Table Lamps/textures/Theory_Bulb_metal_copper_N.png"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Table Lamps/textures/Theory_Bulb_metal_copper_SG.png"
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "Filament": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_color_constant": [
+      1.0,
+      0.4776118993759155,
+      0.0
+     ],
+     "emissive_color": [
+      1.0,
+      0.5556962490081787,
+      0.10000002384185791
+     ],
+     "emissive_intensity": 25000.0,
+     "enable_emission": true
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "floor_lamp": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/FloorLamp.usd",
+  "size_m": [
+   0.4828913008520459,
+   0.48190054770036284,
+   1.5910186149697307
+  ],
+  "materials": {
+   "WhiteMarble": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_marble_A.png"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_marble_N.png"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_marble_R.png"
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "Nickel": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "albedo_add": 0.04999999701976776,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_nikle_A.png"
+     },
+     "metallic_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_nikle_M.png"
+     },
+     "metallic_texture_influence": 1.0,
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_nikle_N.png"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_nikle_R.png"
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "Glass": {
+    "shader": "OmniGlass.mdl",
+    "inputs": {},
+    "sub": "OmniGlass"
+   },
+   "Shade": {
+    "shader": "OmniSurface.mdl",
+    "inputs": {
+     "coat_normal_image": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_whitecotton_N.png"
+     },
+     "diffuse_reflection_color_image": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_whitecotton_A.png"
+     },
+     "enable_diffuse_transmission": true,
+     "enable_thin_film": false,
+     "specular_reflection_roughness_image": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_whitecotton_RG.png"
+     },
+     "subsurface_scale": 1.0,
+     "subsurface_scattering_color": [
+      1.0,
+      1.0,
+      1.0
+     ],
+     "subsurface_transmission_color": [
+      0.9873417615890503,
+      0.999997079372406,
+      0.9999899864196777
+     ],
+     "subsurface_weight": 0.30000001192092896
+    },
+    "sub": "OmniSurface"
+   }
+  }
+ },
+ "pendant": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Chandeliers/Chandelier_Spiral.usd",
+  "size_m": [
+   1.1832514190673828,
+   1.231725082397461,
+   0.6153611946105957
+  ],
+  "materials": {
+   "M_Chandelier": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "ao_to_diffuse": 0.10000000149011612,
+     "diffuse_color_constant": [
+      0.5879999995231628,
+      0.5879999995231628,
+      0.5879999995231628
+     ],
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Chandeliers/Textures/Chandelier_BaseColor.png"
+     },
+     "emissive_color": [
+      1.0,
+      0.9490196108818054,
+      0.8392156958580017
+     ],
+     "emissive_intensity": 100000.0,
+     "emissive_mask_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Chandeliers/Textures/Chandelier_Emissive.png"
+     },
+     "enable_emission": true,
+     "enable_ORM_texture": true,
+     "metallic_texture": {
+      "asset": ""
+     },
+     "metallic_texture_influence": 1.0,
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Chandeliers/Textures/Chandelier_Normal.png"
+     },
+     "ORM_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Chandeliers/Textures/Chandelier_ORM.png"
+     },
+     "reflection_roughness_constant": 1.0,
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": ""
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "M_Chandelier_CeilingMounts": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_color_constant": [
+      0.5879999995231628,
+      0.5879999995231628,
+      0.5879999995231628
+     ],
+     "diffuse_texture": {
+      "asset": ""
+     },
+     "metallic_constant": 1.0,
+     "reflection_roughness_constant": 0.10000000149011612
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "plant": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Plant_02.usd",
+  "size_m": [
+   0.4463324447050887,
+   0.4147664168156737,
+   0.5066588896608697
+  ],
+  "materials": {
+   "plant02_leaves": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "albedo_brightness": 1.0,
+     "albedo_desaturation": 0.0,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Textures/plant02_leaves_basecolor.png"
+     },
+     "diffuse_tint": [
+      0.7457799911499023,
+      0.852320671081543,
+      0.6257544159889221
+     ],
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Textures/plant02_leaves_normal.png"
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "plant02_dirt": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Textures/Plant_dirt_1.jpg"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Textures/Plant_dirt_1_bump.jpg"
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "plant02_vase": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Textures/marble.png"
+     }
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "plant_big": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Plant_01.usd",
+  "size_m": [
+   0.6867448653263253,
+   0.6824438705494135,
+   0.509845210848195
+  ],
+  "materials": {
+   "plant01_leaves": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "albedo_add": 0.0,
+     "albedo_desaturation": 0.3499999940395355,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Textures/plant01_leaves_basecolor.png"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Textures/plant01_leaves_normal.png"
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "plant01_stems": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_color_constant": [
+      0.15140870213508606,
+      0.2362869381904602,
+      0.14456374943256378
+     ]
+    },
+    "sub": "OmniPBR"
+   },
+   "plant01_dirt": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Textures/Plant_dirt_1.jpg"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Textures/Plant_dirt_1_bump.jpg"
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "plant01_vase": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "albedo_add": 0.0,
+     "albedo_brightness": 1.0,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Textures/marble.png"
+     }
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "rug": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Rugs/Blue_Rugs.usd",
+  "size_m": [
+   2.4380886295865025,
+   3.047638786860432,
+   0.004999999888241291
+  ],
+  "materials": {
+   "Blue_rug": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Rugs/Textures/BlueRug_BaseColor.png"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Rugs/Textures/BlueRug_N.png"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Rugs/Textures/BlueRug_R.png"
+     }
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "picture_wide": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/FramedPicture_Wide01.usd",
+  "size_m": [
+   0.9893160069046604,
+   0.03182195436747773,
+   0.4493721713170927
+  ],
+  "materials": {
+   "Picture": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/BW_Wide_01.png"
+     },
+     "reflection_roughness_constant": 0.25
+    },
+    "sub": "OmniPBR"
+   },
+   "Matte": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_FrameBoard_White_BaseColor.tga"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_FrameBoard_White_N.tga"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_FrameBoard_White_R.tga"
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "OmniGlass": {
+    "shader": "OmniGlass.mdl",
+    "inputs": {},
+    "sub": "OmniGlass"
+   },
+   "Frame": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "bump_factor": 0.0,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_Frame_BaseColor.tga"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_Frame_N.tga"
+     },
+     "reflection_roughness_constant": 1.0,
+     "reflection_roughness_texture_influence": 0.75,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_Frame_R.tga"
+     }
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "picture_wide2": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/FramedPicture_Wide03.usd",
+  "size_m": [
+   0.9893160069046604,
+   0.03182195436747773,
+   0.4493721713170927
+  ],
+  "materials": {
+   "Picture": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/BW_Wide_03.png"
+     },
+     "reflection_roughness_constant": 0.25
+    },
+    "sub": "OmniPBR"
+   },
+   "Matte": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_FrameBoard_White_BaseColor.tga"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_FrameBoard_White_N.tga"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_FrameBoard_White_R.tga"
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "OmniGlass": {
+    "shader": "OmniGlass.mdl",
+    "inputs": {},
+    "sub": "OmniGlass"
+   },
+   "Frame": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "bump_factor": 0.0,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_Frame_BaseColor.tga"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_Frame_N.tga"
+     },
+     "reflection_roughness_constant": 1.0,
+     "reflection_roughness_texture_influence": 0.75,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_Frame_R.tga"
+     }
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "picture_tall": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/FramedPicture_Tall01.usd",
+  "size_m": [
+   0.44937216707977257,
+   0.03182202626534822,
+   0.9893160111419502
+  ],
+  "materials": {
+   "Picture": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/BW_Tall_01.png"
+     },
+     "reflection_roughness_constant": 0.25
+    },
+    "sub": "OmniPBR"
+   },
+   "OmniGlass": {
+    "shader": "OmniGlass.mdl",
+    "inputs": {},
+    "sub": "OmniGlass"
+   },
+   "Matte": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_FrameBoard_White_BaseColor.tga"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_FrameBoard_White_N.tga"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_FrameBoard_White_R.tga"
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "Frame": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "bump_factor": 0.0,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_Frame_BaseColor.tga"
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_Frame_N.tga"
+     },
+     "reflection_roughness_constant": 1.0,
+     "reflection_roughness_texture_influence": 0.75,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_Frame_R.tga"
+     }
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "painting": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/Painting_01.usd",
+  "size_m": [
+   0.05080000763833503,
+   1.4096999806977806,
+   1.054100013060122
+  ],
+  "materials": {
+   "M_Painting_Canvas": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "bump_factor": 2.0,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/Painting_BaseColor.png"
+     },
+     "enable_ORM_texture": true,
+     "metallic_texture": {
+      "asset": ""
+     },
+     "metallic_texture_influence": 1.0,
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/Painting_Normal.png"
+     },
+     "ORM_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/Painting_ORM.png"
+     },
+     "reflection_roughness_constant": 1.0,
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": ""
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "Wood": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "./textures/Oak_BaseColor.png"
+     },
+     "enable_ORM_texture": true,
+     "metallic_texture_influence": 1.0,
+     "normalmap_texture": {
+      "asset": "./textures/Oak_N.png"
+     },
+     "ORM_texture": {
+      "asset": "./textures/Oak_ORM.png"
+     },
+     "reflection_roughness_texture_influence": 1.0
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "mirror": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Mirrors/MirrorRound.usd",
+  "size_m": [
+   0.7199988555908203,
+   0.719997787475586,
+   0.02197763204574585
+  ],
+  "materials": {
+   "Mirror1": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_color_constant": [
+      0.5,
+      0.5,
+      0.5
+     ],
+     "metallic_constant": 1.0,
+     "reflection_roughness_constant": 0.0
+    },
+    "sub": "OmniPBR"
+   },
+   "MirrorBack": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_color_constant": [
+      0.5,
+      0.5,
+      0.5
+     ]
+    },
+    "sub": "OmniPBR"
+   },
+   "MirrorFrame": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_color_constant": [
+      0.019999999552965164,
+      0.019999999552965164,
+      0.019999999552965164
+     ]
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "faucet": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Kitchen/KitchenFaucets/faucet_01.usd",
+  "size_m": [
+   0.12932276248931884,
+   0.3562898063659668,
+   0.293976708650589
+  ],
+  "materials": {
+   "faucet01_Mat": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Kitchen/KitchenFaucets/Textures/faucet01_albedo.png"
+     },
+     "metallic_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Kitchen/KitchenFaucets/Textures/faucet01_metal.png"
+     },
+     "metallic_texture_influence": 1.0,
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Kitchen/KitchenFaucets/Textures/faucet01_normal.png"
+     },
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Kitchen/KitchenFaucets/Textures/faucet01_rough.png"
+     }
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ },
+ "daybed_fabric": {
+  "usd": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Daybed.usd",
+  "size_m": [
+   2.470810223613692,
+   1.5135177449424675,
+   0.6485300384461882
+  ],
+  "materials": {
+   "M_Iron": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "albedo_brightness": 1.5,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/Iron_BaseColor.png"
+     },
+     "enable_ORM_texture": true,
+     "metallic_texture": {
+      "asset": ""
+     },
+     "metallic_texture_influence": 1.0,
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/Iron_N.png"
+     },
+     "ORM_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/Iron_ORM.png"
+     },
+     "project_uvw": true,
+     "reflection_roughness_constant": 1.0,
+     "reflection_roughness_texture_influence": 0.699999988079071,
+     "reflectionroughness_texture": {
+      "asset": ""
+     },
+     "texture_scale": [
+      0.10000000149011612,
+      0.09999999403953552
+     ],
+     "world_or_object": true
+    },
+    "sub": "OmniPBR"
+   },
+   "M_Ash": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "albedo_desaturation": 0.44999998807907104,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/Ash_BaseColor.png"
+     },
+     "diffuse_tint": [
+      0.06666667014360428,
+      0.06666667014360428,
+      0.06666667014360428
+     ],
+     "enable_ORM_texture": true,
+     "metallic_texture": {
+      "asset": ""
+     },
+     "metallic_texture_influence": 1.0,
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/Ash_Normal.png"
+     },
+     "ORM_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/Ash_ORM.png"
+     },
+     "reflection_roughness_constant": 1.0,
+     "reflection_roughness_texture_influence": 0.3499999940395355,
+     "reflectionroughness_texture": {
+      "asset": ""
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "M_Rubber_Smooth": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "albedo_add": 0.029999999329447746,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/Rubber_Smooth_BaseColor.png"
+     },
+     "enable_ORM_texture": true,
+     "metallic_texture": {
+      "asset": ""
+     },
+     "metallic_texture_influence": 1.0,
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/Rubber_Smooth_Normal.png"
+     },
+     "ORM_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/Rubber_Smooth_ORM.png"
+     },
+     "reflection_roughness_constant": 1.0,
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": ""
+     }
+    },
+    "sub": "OmniPBR"
+   },
+   "M_RoughCotton_Pillows": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "albedo_desaturation": 0.5,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/cotton_roughly_woven_diff.jpg"
+     },
+     "diffuse_tint": [
+      1.0,
+      0.9861667156219482,
+      0.8438818454742432
+     ],
+     "enable_ORM_texture": false,
+     "metallic_texture": {
+      "asset": ""
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/cotton_roughly_woven_norm.jpg"
+     },
+     "ORM_texture": {
+      "asset": ""
+     },
+     "reflection_roughness_constant": 1.0,
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/cotton_roughly_woven_rough.jpg"
+     },
+     "texture_scale": [
+      2.0,
+      2.0
+     ]
+    },
+    "sub": "OmniPBR"
+   },
+   "M_Wool": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "albedo_brightness": 1.0,
+     "bump_factor": 1.0,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/felt_white_diff.jpg"
+     },
+     "diffuse_tint": [
+      0.886274516582489,
+      0.4627451002597809,
+      0.14509804546833038
+     ],
+     "enable_ORM_texture": false,
+     "metallic_texture": {
+      "asset": ""
+     },
+     "normalmap_texture": {
+      "asset": ""
+     },
+     "ORM_texture": {
+      "asset": ""
+     },
+     "reflection_roughness_constant": 1.0,
+     "reflection_roughness_texture_influence": 0.75,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/felt_white_diff.jpg"
+     },
+     "texture_scale": [
+      6.0,
+      6.0
+     ]
+    },
+    "sub": "OmniPBR"
+   },
+   "M_RoughCotton_Bed": {
+    "shader": "OmniPBR.mdl",
+    "inputs": {
+     "albedo_desaturation": 0.5,
+     "diffuse_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/cotton_roughly_woven_diff.jpg"
+     },
+     "diffuse_tint": [
+      0.11456497758626938,
+      0.1654839664697647,
+      0.2320675253868103
+     ],
+     "enable_ORM_texture": false,
+     "metallic_texture": {
+      "asset": ""
+     },
+     "normalmap_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/cotton_roughly_woven_norm.jpg"
+     },
+     "ORM_texture": {
+      "asset": ""
+     },
+     "reflection_roughness_constant": 1.0,
+     "reflection_roughness_texture_influence": 1.0,
+     "reflectionroughness_texture": {
+      "asset": "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/cotton_roughly_woven_rough.jpg"
+     },
+     "texture_scale": [
+      6.0,
+      6.0
+     ]
+    },
+    "sub": "OmniPBR"
+   }
+  }
+ }
+}

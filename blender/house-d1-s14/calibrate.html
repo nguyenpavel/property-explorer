@@ -1,0 +1,1165 @@
+<title>D1-S14 Scale Calibration</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Archivo+Narrow:wght@500;600&display=swap">
+<style>
+/* Layout: a first-person stage on the ground floor beside a settings sheet; the sheet stacks under the stage on phones */
+:root {
+  --bg: #eceef0; --panel: #f8f9fa; --ink: #1a1c1f; --muted: #5d636b; --line: #d4d8dd; --hover: #eef0f2;
+  --scene: #d9dde1; --reticle: #ffffff; --reticle-edge: rgba(0, 0, 0, .5);
+  --display: "Archivo Narrow", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body: "Archivo", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121417; --panel: #191c20; --ink: #e7e9ec; --muted: #9ba2aa; --line: #2c3137; --hover: #22262b;
+    --scene: #1c1f23; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121417; --panel: #191c20; --ink: #e7e9ec; --muted: #9ba2aa; --line: #2c3137; --hover: #22262b;
+  --scene: #1c1f23; color-scheme: dark;
+}
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 14px; line-height: 1.45; }
+.app { height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) 350px; }
+.stage { position: relative; min-width: 0; min-height: 0; background: var(--scene); overflow: hidden; }
+.stage canvas { display: block; width: 100%; height: 100%; touch-action: none; outline: none; }
+.sheet {
+  min-width: 0; overflow-y: auto; background: var(--panel); border-left: 1px solid var(--line);
+  padding-block: 22px; padding-left: 22px; padding-right: max(22px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 24px;
+}
+@media (max-width: 760px) {
+  .app { grid-template-columns: minmax(0, 1fr); grid-template-rows: 56% 44%; }
+  .sheet { border-left: 0; border-top: 1px solid var(--line); padding-block: 18px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+}
+
+.eyebrow, h2 { font-family: var(--display); font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+h1 { font-family: var(--display); font-weight: 600; font-size: 34px; line-height: 1.02; margin: 6px 0 0; text-wrap: balance; }
+h2 { margin-bottom: 12px; }
+.lede { margin: 10px 0 0; color: var(--muted); max-width: 65ch; }
+.steps { margin: 0; padding-left: 20px; display: grid; gap: 4px; color: var(--muted); }
+.steps strong { color: var(--ink); font-weight: 600; }
+section { display: grid; gap: 14px; }
+section > h2 { margin-bottom: -2px; }
+
+.field { display: grid; gap: 2px; }
+.field-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.field-head label { font-weight: 500; }
+.field-head output { font-family: var(--display); font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.field-note { margin: 0; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+input[type="range"] { width: 100%; margin: 6px 0 4px; accent-color: var(--ink); }
+
+.btn { font: inherit; font-weight: 500; padding: 6px 12px; border: 1px solid var(--line); border-radius: 4px; background: transparent; color: inherit; cursor: pointer; }
+.btn:hover { background: var(--hover); }
+.btn.primary { background: var(--ink); border-color: var(--ink); color: var(--panel); }
+.btn[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--panel); }
+.btn:disabled { opacity: .5; cursor: default; }
+.btn kbd { font-family: var(--display); font-weight: 600; color: var(--muted); margin-left: 6px; }
+.btn[aria-pressed="true"] kbd { color: inherit; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips .btn { padding: 3px 10px; font-size: 13px; font-variant-numeric: tabular-nums; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.grid2 .btn { text-align: left; }
+.row { display: flex; flex-wrap: wrap; gap: 6px; }
+.check { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.check input { accent-color: var(--ink); width: 16px; height: 16px; margin: 0; }
+
+.sizes { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.sizes li { display: flex; justify-content: space-between; gap: 12px; font-variant-numeric: tabular-nums; }
+.sizes li span:last-child { font-weight: 600; white-space: nowrap; }
+.summary { display: block; padding: 10px 12px; border: 1px solid var(--line); border-radius: 4px; font-variant-numeric: tabular-nums; }
+.note { margin: 0; color: var(--muted); font-size: 12px; max-width: 65ch; }
+
+.views {
+  position: absolute; top: 12px; left: max(12px, env(safe-area-inset-left, 0px)); display: flex; gap: 2px; padding: 3px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+}
+.views button {
+  font-family: var(--display); font-size: 13px; font-weight: 600; letter-spacing: .02em; padding: 6px 11px;
+  border: 0; border-radius: 4px; background: transparent; color: var(--muted); cursor: pointer;
+}
+.views button:hover { color: var(--ink); }
+.views button[aria-pressed="true"] { background: var(--ink); color: var(--panel); }
+.gauge {
+  position: absolute; top: 12px; right: max(12px, env(safe-area-inset-right, 0px)); width: 250px; max-width: calc(100% - 24px);
+  display: grid; gap: 2px; padding: 10px 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+}
+@media (max-width: 560px) { .gauge { top: 58px; right: auto; left: max(12px, env(safe-area-inset-left, 0px)); } }
+.gauge p { margin: 0; }
+.gauge .k { font-family: var(--display); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.gauge .name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gauge .nums { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.gauge .tape { margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.gauge .tape b { display: block; font-family: var(--display); font-size: 18px; font-weight: 600; color: var(--ink); }
+.reticle {
+  position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%;
+  border: 1.5px solid var(--reticle); box-shadow: 0 0 0 1px var(--reticle-edge), inset 0 0 0 1px var(--reticle-edge); pointer-events: none;
+}
+.tip { position: absolute; left: max(12px, env(safe-area-inset-left, 0px)); bottom: 10px; margin: 0; font-size: 12px; color: var(--muted); pointer-events: none; }
+.status {
+  position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; pointer-events: none;
+  font-family: var(--display); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted);
+}
+.walk-hud {
+  position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); width: max-content; max-width: calc(100% - 24px);
+  padding: 8px 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel);
+}
+.walk-hud p { margin: 0; font-size: 12px; color: var(--muted); }
+.walk-hud kbd { font-family: var(--display); font-weight: 600; color: var(--ink); }
+.walk-hud .prompt { display: block; margin-top: 2px; color: var(--ink); font-weight: 600; }
+.pad {
+  position: absolute; right: max(14px, env(safe-area-inset-right, 0px)); bottom: 74px;
+  display: grid; grid-template-columns: repeat(3, 48px); grid-template-rows: repeat(2, 48px); gap: 6px;
+}
+.pad button {
+  border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--ink);
+  font-size: 16px; touch-action: none; user-select: none; -webkit-user-select: none; cursor: pointer;
+}
+.pad [data-key="KeyW"] { grid-column: 2; grid-row: 1; }
+.pad [data-key="KeyA"] { grid-column: 1; grid-row: 2; }
+.pad [data-key="KeyS"] { grid-column: 2; grid-row: 2; }
+.pad [data-key="KeyD"] { grid-column: 3; grid-row: 2; }
+.pad [data-action] { font-family: var(--display); font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.pad [data-action="door"] { grid-column: 1; grid-row: 1; }
+.pad [data-action="ghost"] { grid-column: 3; grid-row: 1; }
+.pad [aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--panel); }
+.steps kbd { font-family: var(--display); font-weight: 600; color: var(--ink); }
+.stepper { display: inline-flex; align-items: center; gap: 8px; }
+.stepper .btn { padding: 0 10px; font-size: 16px; line-height: 26px; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+</style>
+
+<div class="app">
+  <div class="stage" id="stage">
+    <div class="views" role="group" aria-label="View">
+      <button type="button" data-mode="walk" aria-pressed="true">Walk</button>
+      <button type="button" data-mode="overview" aria-pressed="false">Overview</button>
+    </div>
+    <div class="gauge" id="gauge">
+      <p class="k">Looking at</p>
+      <p class="name" id="g-name">Nothing yet</p>
+      <p class="nums" id="g-nums">Aim the circle at anything</p>
+      <p class="nums" id="g-span" hidden></p>
+      <p class="tape" id="g-tape" hidden></p>
+    </div>
+    <div class="reticle" id="reticle"></div>
+    <p class="status" id="status">Loading the house…</p>
+    <p class="tip" id="tip" hidden>Drag to orbit · scroll to zoom · double-click a floor to stand there</p>
+    <div class="walk-hud" id="walk-hud">
+      <p><kbd>W A S D</kbd> walk · drag to look, or click to lock the mouse · <kbd>Shift</kbd> faster · <kbd>E</kbd> door · <kbd>M</kbd> tape · <kbd>P</kbd> person · <kbd>G</kbd> ghost · <kbd>, .</kbd> scale · <kbd>R F</kbd> camera height<span class="prompt" id="door-prompt" hidden></span></p>
+    </div>
+    <div class="pad" id="pad" hidden>
+      <button type="button" data-key="KeyW" aria-label="Walk forward">▲</button>
+      <button type="button" data-key="KeyA" aria-label="Step left">◀</button>
+      <button type="button" data-key="KeyS" aria-label="Walk back">▼</button>
+      <button type="button" data-key="KeyD" aria-label="Step right">▶</button>
+      <button type="button" data-action="door" aria-label="Open or close the nearest door">Door</button>
+      <button type="button" data-action="ghost" aria-pressed="false" aria-label="Ghost mode: walk through walls">Ghost</button>
+    </div>
+  </div>
+
+  <aside class="sheet">
+    <header>
+      <p class="eyebrow">House D1-S14 · ground floor</p>
+      <h1>Scale calibration</h1>
+      <p class="lede">Walk through the ground floor and tune the view until it feels like standing in it. Save the settings and the finished model will use them.</p>
+    </header>
+
+    <ol class="steps">
+      <li><strong>Set your height.</strong> The camera starts at your eye level.</li>
+      <li><strong>Walk into a room you can picture</strong>, like the kitchen. Change Scale and Camera height until it feels like the real thing. While walking, <kbd>,</kbd> and <kbd>.</kbd> move the walls closer or further apart, and <kbd>R</kbd> and <kbd>F</kbd> move the camera down or up.</li>
+      <li><strong>Walk at your normal pace</strong> and match the speed to it.</li>
+      <li><strong>Save</strong> when it feels right.</li>
+    </ol>
+
+    <section>
+      <h2>Calibrate</h2>
+      <div class="field">
+        <div class="field-head"><label for="plan">Scale</label><span class="stepper"><button type="button" class="btn" data-plan-step="-0.01" aria-label="Walls closer together">−</button><output id="plan-out" for="plan">115%</output><button type="button" class="btn" data-plan-step="0.01" aria-label="Walls further apart">+</button></span></div>
+        <input type="range" id="plan" min="0.6" max="1.6" step="0.01" value="1.15">
+        <p class="field-note" id="plan-note">Walls further apart: every distance across the floor × 1.15</p>
+      </div>
+      <div class="field">
+        <div class="field-head"><label for="eye">Camera height</label><output id="eye-out" for="eye">1.59 m</output></div>
+        <input type="range" id="eye" min="0.8" max="2.2" step="0.01" value="1.59">
+        <p class="field-note" id="eye-note">At your eyes · hold R or F to move it while walking</p>
+      </div>
+      <p class="note">Scale moves the walls further apart (above 100%) or closer together (below 100%). Heights never change. The areas on the floors, the tape and the distances always give the real sizes from the developer's plan.</p>
+    </section>
+
+    <section>
+      <h2>You</h2>
+      <div class="field">
+        <div class="field-head"><label for="height">Your height</label><output id="height-out" for="height">1.70 m</output></div>
+        <input type="range" id="height" min="1.40" max="2.10" step="0.01" value="1.70">
+        <p class="field-note" id="height-note">Eyes at 1.59 m</p>
+      </div>
+      <div class="chips" role="group" aria-label="Height presets" id="presets">
+        <button type="button" class="btn" data-height="1.6">1.60 m</button>
+        <button type="button" class="btn" data-height="1.7">1.70 m</button>
+        <button type="button" class="btn" data-height="1.8">1.80 m</button>
+        <button type="button" class="btn" data-height="1.9">1.90 m</button>
+        <button type="button" class="btn" data-height="2">2.00 m</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Walking</h2>
+      <div class="field">
+        <div class="field-head"><label for="speed">Walking speed</label><output id="speed-out" for="speed">1.4 m/s</output></div>
+        <input type="range" id="speed" min="0.6" max="2.4" step="0.1" value="1.4">
+        <p class="field-note" id="speed-note">5.0 km/h · Shift doubles it</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>House</h2>
+      <div class="field">
+        <div class="field-head"><label for="ceiling">Ceiling height</label><output id="ceiling-out" for="ceiling">2.75 m</output></div>
+        <input type="range" id="ceiling" min="2.5" max="3" step="0.05" value="2.75">
+        <p class="field-note" id="ceiling-note">Floor to floor 3.00 m · 17 stair risers of 176 mm</p>
+      </div>
+      <p class="note">The plans give no heights, so 2.75 m is an assumption.</p>
+      <label class="check" for="areas"><input type="checkbox" id="areas" checked> Room areas on the floors</label>
+      <label class="check" for="upper"><input type="checkbox" id="upper"> Show the upper floor</label>
+    </section>
+
+    <section>
+      <h2>Stand in</h2>
+      <div class="grid2" id="spots"></div>
+    </section>
+
+    <section>
+      <h2>Tools</h2>
+      <div class="row">
+        <button type="button" class="btn" id="tape-btn">Tape measure<kbd>M</kbd></button>
+        <button type="button" class="btn" id="person-btn">Place a person<kbd>P</kbd></button>
+        <button type="button" class="btn" id="ghost-btn" aria-pressed="false">Ghost mode<kbd>G</kbd></button>
+        <button type="button" class="btn" id="clear-btn">Clear people and tape</button>
+      </div>
+      <p class="note">The tape measures from point to point where the circle aims; press M once for each end. A placed person has your height and faces you, so their eyes sit on your eye line.</p>
+    </section>
+
+    <section>
+      <h2>Sizes to check</h2>
+      <ul class="sizes">
+        <li><span>Interior door, opening</span><span>0.80 × 2.10 m</span></li>
+        <li><span>Front door, height</span><span>2.20 m</span></li>
+        <li><span>Kitchen worktop</span><span>0.90 m</span></li>
+        <li><span>Dining table</span><span>0.75 m</span></li>
+        <li><span>Sofa seat</span><span>0.44 m</span></li>
+        <li><span>Window sill and head</span><span>0.85 / 2.30 m</span></li>
+        <li><span>Fridge</span><span>2.10 m</span></li>
+        <li><span>Ceiling</span><span id="size-ceiling">2.75 m</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Save</h2>
+      <output class="summary" id="summary"></output>
+      <div class="row">
+        <button type="button" class="btn primary" id="save" disabled>Save calibration</button>
+        <button type="button" class="btn" id="copy">Copy values</button>
+        <button type="button" class="btn" id="reset">Reset</button>
+      </div>
+      <p class="note" id="save-note">Checking for saved settings…</p>
+    </section>
+  </aside>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+// Plan pixel (3508 x 2479 sheets, 115 px per metre) -> world metres; y up, plan "down" is +z
+const S = 115, CX = 2321, CY = 1291;
+const P = (px, py, y = 0) => new THREE.Vector3((px - CX) / S, y, (py - CY) / S);
+const L2 = 3.0, CEIL1 = 2.75;      // as modelled: upper floor level, ground-floor ceiling
+const TALL = 2.45;                 // above every door and window head: only wall tops, slabs and upstairs
+const RADIUS = 0.15, STEP_UP = 0.45;
+const EYE_RATIO = 0.936;           // standing eye height over stature, adult average
+const SKY = new THREE.Color('#dfe5ea');
+const DEFAULTS = { height: 1.70, eye: 1.59, speed: 1.4, ceiling: CEIL1, plan: 1.15 };   // plan 1.15: the calibrated scale
+const FOV = 75;                    // degrees across the view, fixed: calibrate with spacing and height instead
+const SPOTS = [
+  { name: 'Entrance hall', at: [2240, 1880], yaw: 0 },
+  { name: 'Stair hall', at: [2268, 1400], yaw: Math.PI / 2 },
+  { name: 'Living room', at: [2290, 1060], yaw: 0.75 },
+  { name: 'Kitchen', at: [2490, 1460], yaw: 0.15 },
+  { name: 'WC', at: [2110, 1660], yaw: Math.PI / 2 },
+  { name: 'Terrace', at: [2470, 500], yaw: Math.PI },
+];
+
+const $ = (id) => document.getElementById(id);
+const stage = $('stage'), statusEl = $('status');
+const settings = { ...DEFAULTS };
+const eyeHeight = () => settings.eye;
+const naturalEye = () => Number((settings.height * EYE_RATIO).toFixed(2));
+const upperLevel = () => L2 + settings.ceiling - CEIL1;
+const metres = (v) => `${v.toFixed(2)} m`;
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+stage.prepend(renderer.domElement);
+const canvas = renderer.domElement;
+
+const scene = new THREE.Scene();
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+// A strong warm ground term stands in for light bounced off the floors, so ceilings read pale as in a real room
+scene.add(new THREE.HemisphereLight(0xffffff, 0xbdb6aa, 1.6));
+const sun = new THREE.DirectionalLight(0xffffff, 1.8);
+sun.position.set(-5, 13, 6);
+sun.target.position.set(0, 1, 0);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left: -12, right: 12, top: 12, bottom: -12, near: 1, far: 50 });   // covers the house at 150%
+sun.shadow.bias = -0.0003;
+sun.shadow.normalBias = 0.02;
+scene.add(sun, sun.target);
+
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(200, 200).rotateX(-Math.PI / 2),
+  new THREE.MeshStandardMaterial({ color: 0xc4c9bf, roughness: 1 }));
+ground.position.y = -0.305;
+ground.receiveShadow = true;
+ground.userData.title = 'Garden ground';
+scene.add(ground);
+
+const camera = new THREE.PerspectiveCamera(60, 1, 0.05, 300);
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.maxPolarAngle = Math.PI * 0.48;
+controls.minDistance = 2;
+controls.maxDistance = 60;
+controls.enabled = false;
+
+// ------------------------------------------------------------ floor textures (world-space UVs in metres)
+function canvasTexture(w, h, draw, periodU, periodV) {
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  draw(c.getContext('2d'), w, h);
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.repeat.set(1 / periodU, 1 / periodV);
+  t.userData.period = [periodU, periodV];
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  return t;
+}
+function planksTexture(shades, joint, plank, length) {
+  return canvasTexture(256, 640, (g, w, h) => {
+    const pw = w / 5;
+    [0, .5, .25, .75, .4].forEach((off, i) => {
+      for (let k = -2; k < 2; k++) {
+        const y0 = off * h + k * h / 2;
+        g.fillStyle = shades[(i + (k % 2 + 2) % 2) % shades.length];
+        g.fillRect(i * pw, y0, pw, h / 2);
+        g.fillStyle = joint;
+        g.fillRect(i * pw, y0, pw, 1.5);
+      }
+      g.fillStyle = joint;
+      g.fillRect(i * pw, 0, 1.5, h);
+    });
+  }, plank * 5, length * 2);
+}
+const tiles = (px, face, grout, size) => canvasTexture(px, px, (g, w) => {
+  g.fillStyle = grout; g.fillRect(0, 0, w, w);
+  g.fillStyle = face; g.fillRect(2, 2, w - 4, w - 4);
+}, size, size);
+const FLOOR_MAPS = {
+  'Oak planks': planksTexture(['#b59877', '#ad8f6d', '#b99c7a', '#b29470', '#ae9170'], '#86694c', 0.19, 1.2),
+  'Decking': planksTexture(['#7a5636', '#71502f', '#7e5a39', '#6c4b2d'], '#3a2818', 0.14, 1.2),
+  'Hall tiles': tiles(256, '#dcd7cf', '#b8b1a7', 0.6),
+  'Bath floor tiles': tiles(128, '#b9b9bc', '#97979c', 0.3),
+};
+const ceilingMat = new THREE.MeshStandardMaterial({ name: 'Ceiling', color: 0xf3f3f1, roughness: 0.95, envMapIntensity: 0.6 });
+
+// ------------------------------------------------------------ people: a plain figure scaled to a height
+// Built one metre tall, eyes (the dark band) at 0.936 of the height, facing -z
+const personMat = new THREE.MeshStandardMaterial({ color: 0x8e959c, roughness: 0.8 });
+const youMat = new THREE.MeshStandardMaterial({ color: 0xd9a300, roughness: 0.6 });
+const visorMat = new THREE.MeshStandardMaterial({ color: 0x1f2226, roughness: 0.4 });
+const limb = (r, y0, y1) => new THREE.CapsuleGeometry(r, y1 - y0 - 2 * r, 4, 12);
+const BODY = [
+  [limb(0.034, 0, 0.48), -0.05, 0.24], [limb(0.034, 0, 0.48), 0.05, 0.24],
+  [limb(0.085, 0.44, 0.83), 0, 0.635, 0.62],
+  [limb(0.026, 0.47, 0.82), -0.115, 0.645], [limb(0.026, 0.47, 0.82), 0.115, 0.645],
+  [limb(0.028, 0.80, 0.89), 0, 0.845],
+  [new THREE.SphereGeometry(0.066, 20, 14), 0, 0.934],
+];
+const visorGeo = new THREE.BoxGeometry(0.09, 0.02, 0.03);
+function makePerson(mat, height) {
+  const g = new THREE.Group();
+  for (const [geo, x, y, depth = 1] of BODY) {
+    const o = new THREE.Mesh(geo, mat);
+    o.position.set(x, y, 0);
+    o.scale.z = depth;
+    g.add(o);
+  }
+  const visor = new THREE.Mesh(visorGeo, visorMat);
+  visor.position.set(0, 0.936, -0.052);
+  g.add(visor);
+  g.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.userData.person = g; } });
+  g.scale.setScalar(height);
+  g.userData.height = height;
+  return g;
+}
+const you = makePerson(youMat, settings.height);
+you.visible = false;
+scene.add(you);
+const people = [];
+
+// ------------------------------------------------------------ tape measure
+const tapeMat = new THREE.MeshBasicMaterial({ color: 0xf2b600, depthTest: false, transparent: true });
+const dotGeo = new THREE.SphereGeometry(0.015, 12, 8);
+const tape = { a: null, b: null, group: new THREE.Group() };
+scene.add(tape.group);
+const UP = new THREE.Vector3(0, 1, 0);
+
+// ------------------------------------------------------------ room areas written on the floors
+// Number, name, area from the developer's table (m²), label centre in plan px clear of furniture, label width (m), storey
+const ROOMS = [
+  ['1.01', 'Entrance hall', 6.51, 2245, 1740, 1.4, 0],
+  ['1.02', 'Tech room', 2.78, 2092, 1845, 0.85, 0],
+  ['1.03', 'WC', 2.04, 2095, 1690, 0.85, 0],
+  ['1.04', 'Closet', 2.35, 2110, 1520, 0.9, 0],
+  ['1.05', 'Stair hall', 4.27, 2262, 1500, 1.0, 0],
+  ['1.06', 'Living + kitchen', 42.03, 2210, 1140, 2.2, 0],
+  ['1.07', 'Storeroom', 5.71, 2505, 1790, 1.2, 0],
+  ['2.01', 'Corridor + stair', 9.53, 2257, 1200, 0.9, 1],
+  ['2.02', 'Study', 9.34, 2125, 1700, 1.3, 1],
+  ['2.03', 'Room 1', 12.09, 2470, 1600, 1.3, 1],
+  ['2.04', 'WC', 1.46, 2375, 1320, 0.6, 1],
+  ['2.05', 'Bathroom', 5.22, 2500, 1250, 0.9, 1],
+  ['2.06', 'Bedroom', 12.55, 2545, 1010, 1.2, 1],
+  ['2.07', 'Room 2', 10.56, 2130, 900, 1.2, 1],
+  ['2.08', 'Bathroom', 4.34, 2100, 1130, 0.9, 1],
+];
+const labels = [];
+function drawLabel(l) {
+  const g = l.ctx, w = g.canvas.width;
+  g.clearRect(0, 0, w, g.canvas.height);
+  g.fillStyle = 'rgba(26, 28, 31, 0.82)';
+  g.textAlign = 'center';
+  g.font = '600 210px "Archivo Narrow", "Arial Narrow", sans-serif';
+  g.fillText(`${l.area.toFixed(2)} m²`, w / 2, 250, w - 40);
+  g.font = '500 92px "Archivo Narrow", "Arial Narrow", sans-serif';
+  g.fillText(`${l.no} ${l.name}`, w / 2, 400, w - 40);
+  l.tex.needsUpdate = true;
+}
+function addRoomLabels() {
+  for (const [no, name, area, px, py, size, storey] of ROOMS) {
+    const ctx = Object.assign(document.createElement('canvas'), { width: 1024, height: 512 }).getContext('2d');
+    const tex = new THREE.CanvasTexture(ctx.canvas);
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(size, size / 2).rotateX(-Math.PI / 2),
+      new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false, toneMapped: false }));
+    mesh.position.copy(P(px, py));
+    mesh.renderOrder = 1;
+    root.add(mesh);
+    const l = { no, name, area, storey, ctx, tex, mesh };
+    labels.push(l);
+    drawLabel(l);
+  }
+  placeLabels();
+  // Canvas text does not wait for web fonts; redraw once the lettering faces are in
+  Promise.all(['600 210px "Archivo Narrow"', '500 92px "Archivo Narrow"'].map((f) => document.fonts.load(f)))
+    .then(() => labels.forEach(drawLabel), () => {});
+}
+function placeLabels() {
+  const k = settings.plan;
+  for (const l of labels) {
+    l.mesh.position.y = (l.storey ? upperLevel() : 0) + 0.006;
+    l.mesh.scale.set(1 / k, 1, 1 / k);       // the plan stretches, the lettering keeps its size
+  }
+}
+
+// ------------------------------------------------------------ model
+let root = null;
+const meshes = [], walkables = [], solids = [], stretch = [], doors = [], wallMeshes = [];
+let activeWalkables = [], activeWalls = [], pickables = [];
+
+// The model is glTF with its buffer as a base64 data: URI. The artifact sandbox blocks
+// fetching data: URLs, so decode it here and hand the loader a GLB.
+function packGLB(doc, bin) {
+  const json = new TextEncoder().encode(JSON.stringify(doc));
+  const jsonPad = (4 - json.length % 4) % 4, binPad = (4 - bin.length % 4) % 4;
+  const binAt = 20 + json.length + jsonPad, total = binAt + 8 + bin.length + binPad;
+  const out = new Uint8Array(total), dv = new DataView(out.buffer);
+  dv.setUint32(0, 0x46546C67, true);
+  dv.setUint32(4, 2, true);
+  dv.setUint32(8, total, true);
+  dv.setUint32(12, json.length + jsonPad, true);
+  dv.setUint32(16, 0x4E4F534A, true);
+  out.set(json, 20);
+  out.fill(0x20, 20 + json.length, binAt);
+  dv.setUint32(binAt, bin.length + binPad, true);
+  dv.setUint32(binAt + 4, 0x004E4942, true);
+  out.set(bin, binAt + 8);
+  return out.buffer;
+}
+async function loadModel() {
+  const res = await fetch('house-d1-s14.json');
+  if (!res.ok) throw new Error(`house-d1-s14.json returned HTTP ${res.status}`);
+  const doc = await res.json();
+  const uri = doc.buffers[0].uri;
+  const bin = Uint8Array.from(atob(uri.slice(uri.indexOf(',') + 1)), (c) => c.charCodeAt(0));
+  delete doc.buffers[0].uri;
+  doc.buffers[0].byteLength = bin.length;
+  return new GLTFLoader().parseAsync(packGLB(doc, bin), '');
+}
+
+const layerOf = (group) => (group === 'Roof' ? 'roof' : group === 'Slabs' ? 'slab' : group.startsWith('2NP') ? 'upper' : 'ground');
+
+function setupModel(gltf) {
+  root = gltf.scene;
+  root.updateMatrixWorld(true);
+  const nodes = gltf.parser.json.nodes;
+  root.traverse((o) => { if (o.isMesh) meshes.push(o); });
+  const seen = new Set();
+  for (const o of meshes) {
+    const d = o.userData, group = d.group || '';
+    const idx = gltf.parser.associations.get(o)?.nodes;
+    d.title = (idx !== undefined && nodes[idx]?.name) || o.name.replace(/_/g, ' ');
+    d.layer = layerOf(group);
+    if (d.layer === 'slab') o.material = ceilingMat;
+    const m = o.material;
+    o.castShadow = !m.transparent && d.layer === 'ground';      // keep the interiors sunlit
+    o.receiveShadow = true;
+    if (m.name === 'Plaster' || m.name === 'Glass') wallMeshes.push(o);     // what stops a wall-to-wall reading
+    o.geometry.computeBoundingBox();
+    const box = o.geometry.boundingBox.clone().applyMatrix4(o.matrixWorld);
+    if (/Floors$|^Stairs$|^Site$|^Slabs$/.test(group)) walkables.push(o);
+    else if (d.layer !== 'roof' && !d.door_id && !d.door_part) solids.push({ o, box: new THREE.Box3() });
+    // Everything that reaches above the door heads follows the ceiling height; the stair stretches to it
+    const stair = group === 'Stairs';
+    if (group !== 'Site' && (stair || box.max.y > TALL)) {
+      o.geometry = o.geometry.clone();
+      const pos = o.geometry.attributes.position, orig = new Float32Array(pos.count * 3);
+      for (let i = 0; i < pos.count; i++) orig.set([pos.getX(i), pos.getY(i), pos.getZ(i)], i * 3);
+      stretch.push({ o, stair, orig, m: o.matrixWorld.clone(), inv: o.matrixWorld.clone().invert() });
+    }
+    if (seen.has(m)) continue;
+    seen.add(m);
+    if (FLOOR_MAPS[m.name]) {
+      m.map = FLOOR_MAPS[m.name];
+      m.color.set(0xffffff);
+      m.metalness = 0;
+      m.roughness = 0.65;
+    }
+    if (m.transparent) m.depthWrite = false;
+    m.envMapIntensity = 0.6;
+    m.needsUpdate = true;
+  }
+  setupDoors();
+  scene.add(root);
+}
+
+// ------------------------------------------------------------ doors (hinge data comes from the model)
+function setupDoors() {
+  const parts = {};
+  root.traverse((o) => { if (o.userData.door_part) (parts[o.userData.door_part] ||= []).push(o); });
+  root.traverse((o) => {
+    const d = o.userData;
+    if (!d.door_id) return;
+    doors.push({ id: d.door_id, label: d.door_label, level0: d.level, level: d.level, close: d.close_angle, leaf: o,
+      hinge: new THREE.Vector3(d.hinge_x, 0, d.hinge_z), at: new THREE.Vector3(), parts: [o, ...(parts[d.door_id] || [])] });
+  });
+  for (const door of doors) {
+    door.pivot = new THREE.Group();
+    door.pivot.position.copy(door.hinge);
+    root.add(door.pivot);
+    door.pivot.updateMatrixWorld(true);
+    door.parts.forEach((p) => door.pivot.attach(p));
+    door.open = true;
+    door.angle = 0;
+  }
+}
+function updateDoors(dt) {
+  for (const d of doors) {
+    const step = dt * 2.4, gap = (d.open ? 0 : d.close) - d.angle;
+    if (Math.abs(gap) < 1e-4) continue;
+    d.angle += Math.max(-step, Math.min(step, gap));
+    d.pivot.rotation.y = d.angle;
+    d.pivot.updateMatrixWorld(true);
+  }
+}
+function toggleDoor(d) { if (d) d.open = !d.open; }
+
+// ------------------------------------------------------------ calibration
+const v = new THREE.Vector3();
+function applyCeiling() {
+  const delta = settings.ceiling - CEIL1, f = (L2 + delta) / L2;
+  for (const s of stretch) {
+    const pos = s.o.geometry.attributes.position;
+    for (let i = 0; i < pos.count; i++) {
+      v.fromArray(s.orig, i * 3).applyMatrix4(s.m);
+      if (s.stair) v.y *= f;
+      else if (v.y > TALL) v.y += delta;
+      v.applyMatrix4(s.inv);
+      pos.setXYZ(i, v.x, v.y, v.z);
+    }
+    pos.needsUpdate = true;
+    s.o.geometry.computeBoundingBox();
+    s.o.geometry.computeBoundingSphere();
+  }
+  for (const d of doors) d.level = d.level0 > 0 ? d.level0 + delta : d.level0;
+  placeLabels();
+  rebuildColliders();
+}
+function applyPlanScale(k) {
+  if (!root) return;
+  const r = k / root.scale.x;
+  if (Math.abs(r - 1) < 1e-9) return;
+  root.scale.set(k, 1, k);
+  walk.pos.x *= r;
+  walk.pos.z *= r;
+  for (const p of people) { p.position.x *= r; p.position.z *= r; }
+  // Floor UVs are plan metres, so shrink the pattern back to real plank and tile sizes
+  for (const t of Object.values(FLOOR_MAPS)) t.repeat.set(k / t.userData.period[0], k / t.userData.period[1]);
+  placeLabels();
+  clearTape();
+  rebuildColliders();
+}
+function rebuildColliders() {
+  if (!root) return;
+  root.updateMatrixWorld(true);
+  for (const s of solids) s.box.copy(s.o.geometry.boundingBox).applyMatrix4(s.o.matrixWorld);
+  for (const d of doors) {
+    d.pivot.getWorldPosition(v);
+    d.at.set(v.x, d.level, v.z);
+  }
+}
+function applyFov() {
+  if (mode !== 'walk') return;
+  const h = THREE.MathUtils.degToRad(FOV), a = camera.aspect;
+  camera.fov = THREE.MathUtils.radToDeg(a >= 1 ? 2 * Math.atan(Math.tan(h / 2) / a) : h);
+  camera.updateProjectionMatrix();
+}
+const lensMM = () => 18 / Math.tan(THREE.MathUtils.degToRad(FOV) / 2);
+// Readouts give true plan metres: undo the plan scale across, keep up and down as they are
+function realSpan(a, b) {
+  const h = Math.hypot(b.x - a.x, b.z - a.z) / settings.plan, up = Math.abs(b.y - a.y);
+  return { h, v: up, len: Math.hypot(h, up) };
+}
+
+// ------------------------------------------------------------ settings panel
+const inputs = { height: $('height'), eye: $('eye'), speed: $('speed'), ceiling: $('ceiling'), plan: $('plan') };
+let touched = false;
+function renderSettings() {
+  const s = settings;
+  $('height-out').textContent = metres(s.height);
+  $('height-note').textContent = `Puts your eyes at ${metres(naturalEye())}`;
+  $('eye-out').textContent = metres(s.eye);
+  const off = Math.round((s.eye - naturalEye()) * 100);
+  $('eye-note').textContent = off === 0 ? 'At your eyes · hold R or F to move it while walking'
+    : `${Math.abs(off)} cm ${off > 0 ? 'above' : 'below'} your eyes · R and F move it`;
+  document.querySelectorAll('[data-height]').forEach((b) =>
+    b.setAttribute('aria-pressed', String(Math.abs(parseFloat(b.dataset.height) - s.height) < 0.005)));
+  $('speed-out').textContent = `${s.speed.toFixed(1)} m/s`;
+  $('speed-note').textContent = `${(s.speed * 3.6).toFixed(1)} km/h · Shift doubles it`;
+  $('ceiling-out').textContent = metres(s.ceiling);
+  $('ceiling-note').textContent = `Floor to floor ${metres(upperLevel())} · 17 stair risers of ${Math.round(upperLevel() / 17 * 1000)} mm`;
+  $('size-ceiling').textContent = metres(s.ceiling);
+  $('plan-out').textContent = `${Math.round(s.plan * 100)}%`;
+  $('plan-note').textContent = Math.abs(s.plan - 1) < 0.001 ? 'Walls at their true distances'
+    : `Walls ${s.plan > 1 ? 'further apart' : 'closer together'}: every distance across the floor × ${s.plan.toFixed(2)}`;
+  $('summary').textContent = summaryText();
+}
+function summaryText() {
+  const s = settings;
+  return `Height ${metres(s.height)} · camera ${metres(s.eye)} · scale ${Math.round(s.plan * 100)}% · ` +
+    `ceiling ${metres(s.ceiling)} · walking ${s.speed.toFixed(1)} m/s · field of view fixed at ${FOV}°`;
+}
+function applySettings(next) {
+  for (const key of Object.keys(DEFAULTS)) {
+    const val = Number(next[key]);
+    if (Number.isFinite(val)) settings[key] = Math.min(+inputs[key].max, Math.max(+inputs[key].min, val));
+    inputs[key].value = settings[key];
+  }
+  you.scale.setScalar(settings.height);
+  applyFov();
+  if (root) { applyCeiling(); applyPlanScale(settings.plan); }
+  renderSettings();
+}
+for (const [key, el] of Object.entries(inputs)) {
+  el.addEventListener('input', () => {
+    touched = true;
+    const before = upperLevel();
+    settings[key] = parseFloat(el.value);
+    if (key === 'height') {
+      you.scale.setScalar(settings.height);
+      settings.eye = naturalEye();          // a new height puts the camera back at your eyes
+      inputs.eye.value = settings.eye;
+    }
+    if (key === 'ceiling' && root) {
+      if (walk.feet > 1.5) { walk.feet += upperLevel() - before; walk.pos.y += upperLevel() - before; }
+      applyCeiling();
+    }
+    if (key === 'plan') applyPlanScale(settings.plan);
+    renderSettings();
+  });
+}
+document.querySelectorAll('[data-height]').forEach((b) => b.addEventListener('click', () => {
+  touched = true;
+  const h = parseFloat(b.dataset.height);
+  applySettings({ ...settings, height: h, eye: Number((h * EYE_RATIO).toFixed(2)) });
+}));
+function setPlan(value) {
+  touched = true;
+  settings.plan = Math.round(Math.min(+inputs.plan.max, Math.max(+inputs.plan.min, value)) * 100) / 100;
+  inputs.plan.value = settings.plan;
+  applyPlanScale(settings.plan);
+  renderSettings();
+}
+document.querySelectorAll('[data-plan-step]').forEach((b) => b.addEventListener('click', () => setPlan(settings.plan + parseFloat(b.dataset.planStep))));
+function setEye(value) {
+  touched = true;
+  settings.eye = Math.min(+inputs.eye.max, Math.max(+inputs.eye.min, value));
+  inputs.eye.value = settings.eye;
+  renderSettings();
+}
+$('upper').addEventListener('change', applyVisibility);
+$('areas').addEventListener('change', applyVisibility);
+$('reset').addEventListener('click', () => { touched = true; applySettings(DEFAULTS); note('Back to the starting values.'); });
+
+// ------------------------------------------------------------ view modes and visibility
+let mode = 'walk';
+const walk = { pos: P(2240, 1880, 0), feet: 0, yaw: 0, pitch: 0, ghost: false, keys: new Set(), dragging: false, lastX: 0, lastY: 0, prompt: '' };
+walk.pos.y = eyeHeight();
+function applyVisibility() {
+  const upperOn = $('upper').checked, up = walk.feet > 1.5;
+  const show = mode === 'walk'
+    ? { ground: true, slab: true, upper: upperOn, roof: upperOn }
+    : { ground: true, slab: up, upper: upperOn && up, roof: false };
+  for (const o of meshes) o.visible = show[o.userData.layer];
+  const areasOn = $('areas').checked;
+  for (const l of labels) l.mesh.visible = areasOn && (l.storey ? show.upper : show.ground);
+  activeWalkables = walkables.filter((o) => o.visible);
+  activeWalls = wallMeshes.filter((o) => o.visible);
+  refreshPickables();
+  you.visible = mode === 'overview';
+}
+function refreshPickables() {
+  pickables = meshes.filter((o) => o.visible);
+  for (const p of people) p.traverse((o) => { if (o.isMesh) pickables.push(o); });
+  pickables.push(ground);
+}
+function setMode(next) {
+  mode = next;
+  document.querySelectorAll('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
+  const walking = mode === 'walk';
+  $('walk-hud').hidden = $('gauge').hidden = $('reticle').hidden = !walking;
+  $('tip').hidden = walking;
+  $('pad').hidden = !walking || !matchMedia('(pointer: coarse)').matches;
+  controls.enabled = !walking;
+  walk.keys.clear();
+  if (walking) {
+    applyFov();
+  } else {
+    if (document.pointerLockElement) document.exitPointerLock();
+    camera.fov = 35;
+    camera.updateProjectionMatrix();
+    const k = settings.plan, target = P(2321, 1291, (walk.feet > 1.5 ? upperLevel() : 0) + 0.6);
+    target.x *= k;
+    target.z *= k;
+    const dist = 7.2 * k / Math.sin(Math.min(THREE.MathUtils.degToRad(35), 2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(17.5)) * camera.aspect)) / 2);
+    controls.target.copy(target);
+    camera.position.copy(target).addScaledVector(new THREE.Vector3(-0.62, 1.15, 0.75).normalize(), dist);
+    camera.rotation.set(0, 0, 0);
+  }
+  applyBackground();
+  applyVisibility();
+}
+document.querySelectorAll('[data-mode]').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
+
+function standAt(x, z, yaw) {
+  walk.feet = 0;
+  const g = groundAt(x, z);
+  walk.feet = g ?? 0;
+  walk.pos.set(x, walk.feet + eyeHeight(), z);
+  if (yaw !== undefined) { walk.yaw = yaw; walk.pitch = 0; }
+  setMode('walk');
+}
+for (const spot of SPOTS) {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'btn';
+  b.textContent = spot.name;
+  b.addEventListener('click', () => {
+    const p = P(...spot.at);
+    standAt(p.x * settings.plan, p.z * settings.plan, spot.yaw);
+  });
+  $('spots').append(b);
+}
+
+// ------------------------------------------------------------ walking
+const MOVE_KEYS = { KeyW: 'f', ArrowUp: 'f', KeyS: 'b', ArrowDown: 'b', KeyA: 'l', ArrowLeft: 'l', KeyD: 'r', ArrowRight: 'r', KeyR: 'up', KeyF: 'down' };
+const ray = new THREE.Raycaster(), down = new THREE.Vector3(0, -1, 0), probe = new THREE.Vector3();
+const doorBox = new THREE.Box3();
+
+// Highest floor, tread or deck below knee height: stairs lift you, gaps let you drop
+function groundAt(x, z) {
+  ray.set(probe.set(x, walk.feet + STEP_UP, z), down);
+  ray.far = 8;
+  const hit = ray.intersectObjects(activeWalkables, false)[0];
+  return hit ? hit.point.y : null;
+}
+function blocked(x, z) {
+  const lo = walk.feet + 0.3, hi = walk.feet + settings.height;      // between the knees and the top of the head
+  const hit = (b) => b.min.y < hi && b.max.y > lo &&
+    x > b.min.x - RADIUS && x < b.max.x + RADIUS && z > b.min.z - RADIUS && z < b.max.z + RADIUS;
+  for (const s of solids) if (s.o.visible && hit(s.box)) return true;
+  for (const d of doors) {
+    if (Math.abs(d.angle) < 0.05 || !d.leaf.visible) continue;      // an open leaf lies against the wall
+    if (hit(doorBox.setFromObject(d.leaf))) return true;
+  }
+  return false;
+}
+function nearestDoor() {
+  let best = null, bestDist = 1.6;
+  for (const d of doors) {
+    if (!d.leaf.visible || Math.abs(d.level - walk.feet) > 1.2) continue;
+    const dist = Math.hypot(walk.pos.x - d.at.x, walk.pos.z - d.at.z);
+    if (dist < bestDist) { best = d; bestDist = dist; }
+  }
+  return best;
+}
+function aimCamera() {
+  camera.rotation.set(walk.pitch, walk.yaw, 0, 'YXZ');
+}
+function updateWalk(dt) {
+  const k = walk.keys, p = walk.pos;
+  const f = (k.has('f') ? 1 : 0) - (k.has('b') ? 1 : 0), s = (k.has('r') ? 1 : 0) - (k.has('l') ? 1 : 0);
+  if (f || s) {
+    const step = settings.speed * (k.has('run') ? 2 : 1) * dt / Math.hypot(f, s);
+    const sin = Math.sin(walk.yaw), cos = Math.cos(walk.yaw);
+    const dx = (-sin * f + cos * s) * step, dz = (-cos * f - sin * s) * step;
+    // Ghost mode ignores collisions; so does anyone already inside something (a door shut on them)
+    const free = walk.ghost || blocked(p.x, p.z);
+    if (free || !blocked(p.x + dx, p.z)) p.x += dx;      // test each axis alone, so you slide along walls
+    if (free || !blocked(p.x, p.z + dz)) p.z += dz;
+  }
+  const lift = (k.has('up') ? 1 : 0) - (k.has('down') ? 1 : 0);
+  if (lift) setEye(settings.eye + lift * 0.4 * dt);
+  const g = groundAt(p.x, p.z);
+  if (g !== null) walk.feet = g > walk.feet ? g : Math.max(g, walk.feet - 5 * dt);
+  p.y += (walk.feet + eyeHeight() - p.y) * Math.min(1, dt * 14);
+  camera.position.copy(p);
+  aimCamera();
+  const d = nearestDoor();
+  const prompt = d ? `E: ${d.open ? 'close' : 'open'} the ${d.label.toLowerCase()}` : '';
+  if (prompt !== walk.prompt) {
+    walk.prompt = prompt;
+    $('door-prompt').textContent = prompt;
+    $('door-prompt').hidden = !prompt;
+  }
+}
+
+// ------------------------------------------------------------ what the circle points at
+const look = new THREE.Raycaster(), centre = new THREE.Vector2();
+let aim = null, gaugeName = '', gaugeNums = '', gaugeSpan = '';
+const span = new THREE.Raycaster(), flat = new THREE.Vector3();
+span.far = 60;
+function labelOf(hit) {
+  const o = hit.object, d = o.userData, group = d.group || '';
+  if (d.person) return `Person, ${metres(d.person.userData.height)} tall`;
+  if (d.door_id) return d.door_label;
+  if (d.door_part) return 'Door handle';
+  if (group.endsWith('Floors')) return 'Floor';
+  if (group === 'Slabs') return hit.face && hit.face.normal.y < 0 ? 'Ceiling' : 'Floor slab';
+  if (group === 'Stairs') return `Stair tread ${parseInt(d.title.replace(/\D+/g, ''), 10)} of 17`;
+  return d.title.replace(/\.\d{3}$/, '').replace(/ \d+(?=\s|$)/g, '');
+}
+function updateGauge() {
+  look.setFromCamera(centre, camera);
+  look.far = 80;
+  aim = look.intersectObjects(pickables, false)[0] || null;
+  let name = 'Sky', nums = 'Aim the circle at anything';
+  if (aim) {
+    const floor = aim.point.y >= upperLevel() - 0.01 ? upperLevel() : 0;
+    name = labelOf(aim);
+    nums = `${metres(aim.point.y - floor)} above the floor · ${metres(realSpan(camera.position, aim.point).len)} away`;
+  }
+  if (name !== gaugeName) $('g-name').textContent = gaugeName = name;
+  if (nums !== gaugeNums) $('g-nums').textContent = gaugeNums = nums;
+  // Wall to wall along the view, level at eye height: walls and windows stop it, open doorways don't
+  flat.set(-Math.sin(walk.yaw), 0, -Math.cos(walk.yaw));
+  span.set(camera.position, flat);
+  const ahead = span.intersectObjects(activeWalls, false)[0];
+  span.set(camera.position, flat.negate());
+  const behind = span.intersectObjects(activeWalls, false)[0];
+  let across = '';
+  if (ahead && behind) {
+    const shown = ahead.distance + behind.distance, real = shown / settings.plan;
+    across = Math.abs(settings.plan - 1) < 0.001 ? `Wall to wall along your view: ${metres(real)}`
+      : `Wall to wall along your view: ${metres(real)} real, shown as ${metres(shown)}`;
+  }
+  if (across !== gaugeSpan) {
+    $('g-span').textContent = gaugeSpan = across;
+    $('g-span').hidden = !across;
+  }
+}
+
+// ------------------------------------------------------------ tools
+function clearTape() {
+  tape.a = tape.b = null;
+  for (const c of [...tape.group.children]) {
+    tape.group.remove(c);
+    if (c.geometry !== dotGeo) c.geometry.dispose();
+  }
+  showTape();
+}
+function tapeDot(at) {
+  const dot = new THREE.Mesh(dotGeo, tapeMat);
+  dot.position.copy(at);
+  dot.renderOrder = 10;
+  tape.group.add(dot);
+}
+function tapeMark() {
+  if (mode !== 'walk' || !aim) return;
+  if (!tape.a || tape.b) {
+    clearTape();
+    tape.a = aim.point.clone();
+    tapeDot(tape.a);
+  } else {
+    tape.b = aim.point.clone();
+    tapeDot(tape.b);
+    const span = tape.b.clone().sub(tape.a), len = span.length();
+    if (len > 1e-4) {
+      const bar = new THREE.Mesh(new THREE.CylinderGeometry(0.004, 0.004, len, 8), tapeMat);
+      bar.position.lerpVectors(tape.a, tape.b, 0.5);
+      bar.quaternion.setFromUnitVectors(UP, span.normalize());
+      bar.renderOrder = 10;
+      tape.group.add(bar);
+    }
+  }
+  showTape();
+}
+function showTape() {
+  const el = $('g-tape');
+  el.hidden = !tape.a;
+  if (!tape.a) return;
+  if (!tape.b) { el.textContent = 'Tape: aim at the other end and press M'; return; }
+  const s = realSpan(tape.a, tape.b);
+  el.replaceChildren(Object.assign(document.createElement('b'), { textContent: metres(s.len) }),
+    `horizontal ${metres(s.h)} · vertical ${metres(s.v)}`);
+}
+function placePerson() {
+  if (!root) return;
+  if (people.length >= 8) scene.remove(people.shift());
+  const x = walk.pos.x - Math.sin(walk.yaw) * 1.5, z = walk.pos.z - Math.cos(walk.yaw) * 1.5;
+  const p = makePerson(personMat, settings.height);
+  p.position.set(x, groundAt(x, z) ?? walk.feet, z);
+  p.rotation.y = walk.yaw + Math.PI;
+  scene.add(p);
+  people.push(p);
+  refreshPickables();
+}
+function clearPeople() {
+  people.splice(0).forEach((p) => scene.remove(p));
+  refreshPickables();
+}
+const ghostButtons = [$('ghost-btn'), $('pad').querySelector('[data-action="ghost"]')];
+function setGhost(on) {
+  walk.ghost = on;
+  ghostButtons.forEach((b) => b.setAttribute('aria-pressed', String(on)));
+}
+ghostButtons.forEach((b) => b.addEventListener('click', () => setGhost(!walk.ghost)));
+$('tape-btn').addEventListener('click', tapeMark);
+$('person-btn').addEventListener('click', placePerson);
+$('clear-btn').addEventListener('click', () => { clearPeople(); clearTape(); });
+$('pad').querySelector('[data-action="door"]').addEventListener('click', () => toggleDoor(nearestDoor()));
+
+// ------------------------------------------------------------ input
+canvas.addEventListener('pointerdown', (e) => {
+  if (mode !== 'walk') return;
+  walk.dragging = true;
+  walk.lastX = e.clientX;
+  walk.lastY = e.clientY;
+  if (e.pointerType === 'mouse' && !document.pointerLockElement && canvas.requestPointerLock) {
+    try { canvas.requestPointerLock()?.catch?.(() => {}); } catch { /* pointer lock is optional */ }
+  }
+});
+canvas.addEventListener('pointermove', (e) => {
+  if (mode !== 'walk') return;
+  let dx, dy;
+  if (document.pointerLockElement === canvas) { dx = e.movementX; dy = e.movementY; }
+  else if (walk.dragging) { dx = e.clientX - walk.lastX; dy = e.clientY - walk.lastY; }
+  else return;
+  walk.lastX = e.clientX;
+  walk.lastY = e.clientY;
+  walk.yaw -= dx * 0.0028;
+  walk.pitch = Math.max(-1.4, Math.min(1.4, walk.pitch - dy * 0.0028));
+});
+for (const ev of ['pointerup', 'pointercancel']) canvas.addEventListener(ev, () => { walk.dragging = false; });
+canvas.addEventListener('dblclick', (e) => {
+  if (mode !== 'overview') return;
+  const r = canvas.getBoundingClientRect();
+  look.setFromCamera(new THREE.Vector2((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1), camera);
+  look.far = 300;
+  const hit = look.intersectObjects(activeWalkables, false)[0];
+  if (!hit) return;
+  walk.feet = hit.point.y;
+  walk.pos.set(hit.point.x, hit.point.y + eyeHeight(), hit.point.z);
+  setMode('walk');
+});
+addEventListener('keydown', (e) => {
+  if (mode !== 'walk') return;
+  const inField = e.target instanceof Element && e.target.closest('input, textarea, select');
+  if (inField && e.code.startsWith('Arrow')) return;          // arrows belong to the focused slider
+  if (e.code === 'Comma' || e.code === 'Period') { setPlan(settings.plan + (e.code === 'Period' ? 0.01 : -0.01)); return; }
+  if (!e.repeat) {
+    if (e.code === 'KeyE') { toggleDoor(nearestDoor()); return; }
+    if (e.code === 'KeyG') { setGhost(!walk.ghost); return; }
+    if (e.code === 'KeyM') { tapeMark(); return; }
+    if (e.code === 'KeyP') { placePerson(); return; }
+  }
+  const k = MOVE_KEYS[e.code] || (e.key === 'Shift' ? 'run' : null);
+  if (k) { walk.keys.add(k); e.preventDefault(); }
+});
+addEventListener('keyup', (e) => {
+  const k = MOVE_KEYS[e.code] || (e.key === 'Shift' ? 'run' : null);
+  if (k) walk.keys.delete(k);
+});
+addEventListener('blur', () => walk.keys.clear());
+$('pad').querySelectorAll('button[data-key]').forEach((b) => {
+  const k = MOVE_KEYS[b.dataset.key];
+  b.addEventListener('pointerdown', (e) => { e.preventDefault(); walk.keys.add(k); });
+  for (const ev of ['pointerup', 'pointerleave', 'pointercancel']) b.addEventListener(ev, () => walk.keys.delete(k));
+});
+
+// ------------------------------------------------------------ saving (the artifact's shared store, read back by Claude)
+let db = null;
+const note = (text) => { $('save-note').textContent = text; };
+const calibrationDoc = () => db.doc('calibration/current');
+async function connectStore() {
+  try { db = (await window.claude?.use?.('db')) ?? null; } catch { db = null; }
+  if (!db) {
+    $('save').hidden = true;
+    note('Saving needs this page open on claude.ai while signed in. Use Copy values and paste them into the chat instead.');
+    return;
+  }
+  const slow = setTimeout(() => note('Saved settings can’t be reached yet. You can still calibrate and save.'), 10000);
+  try {
+    const snap = await calibrationDoc().get();
+    clearTimeout(slow);
+    $('save').disabled = false;
+    if (!snap.exists) { note('Nothing saved yet.'); return; }
+    const saved = snap.data();
+    const when = saved.savedAt ? new Date(saved.savedAt).toLocaleString() : 'earlier';
+    if (!touched) {
+      applySettings(saved);
+      note(`Loaded the calibration saved ${when}.`);
+    } else {
+      note(`A calibration was saved ${when}. Saving now replaces it.`);
+    }
+  } catch (err) {
+    clearTimeout(slow);
+    $('save').disabled = false;
+    note(`Saved settings didn’t load (${err?.code || 'error'}). You can still save.`);
+  }
+}
+$('save').addEventListener('click', async () => {
+  if (!db) return;
+  const s = settings, round = (x, n = 3) => Number(x.toFixed(n));
+  $('save').disabled = true;
+  note('Saving…');
+  try {
+    await calibrationDoc().set({
+      height: s.height, eye: round(eyeHeight()), fov: FOV, fov_vertical: round(camera.fov, 1), lens_mm: round(lensMM(), 1),
+      speed: s.speed, ceiling: s.ceiling, plan: s.plan, view_px: [Math.round(width), Math.round(height)],
+      savedAt: new Date().toISOString(),
+    });
+    note(`Saved at ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}. Tell Claude in the chat when you’re happy with it.`);
+  } catch (err) {
+    note(err?.code === 'invalid_argument'
+      ? 'This view can’t save. Use Copy values and paste them into the chat.'
+      : `Saving failed (${err?.code || 'error'}). Try again.`);
+  } finally {
+    $('save').disabled = false;
+  }
+});
+$('copy').addEventListener('click', () => {
+  const text = summaryText();
+  const selectIt = () => {
+    const range = document.createRange();
+    range.selectNodeContents($('summary'));
+    const sel = getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    note('The values are selected. Press Ctrl+C or ⌘C to copy them.');
+  };
+  try {
+    navigator.clipboard.writeText(text).then(() => note('Copied. Paste the values into the chat.'), selectIt);
+  } catch { selectIt(); }
+});
+
+// ------------------------------------------------------------ frame
+function applyBackground() {
+  scene.background = mode === 'walk' ? SKY
+    : new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--scene').trim() || '#d9dde1');
+}
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyBackground);
+new MutationObserver(applyBackground).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+let width = 1, height = 1;
+new ResizeObserver(() => {
+  width = stage.clientWidth || 1;
+  height = stage.clientHeight || 1;
+  renderer.setSize(width, height, false);
+  camera.aspect = width / height;
+  if (mode === 'walk') applyFov();
+  else camera.updateProjectionMatrix();
+  renderSettings();
+}).observe(stage);
+
+let ready = false, last = performance.now();
+setMode('walk');
+renderSettings();
+connectStore();
+loadModel().then((gltf) => {
+  setupModel(gltf);
+  addRoomLabels();
+  applyCeiling();
+  applyPlanScale(settings.plan);
+  rebuildColliders();
+  applyVisibility();
+  ready = true;
+  statusEl.hidden = true;
+}).catch((err) => {
+  console.error(err);
+  statusEl.textContent = `The model did not load (${err?.message || err}). Reload the page to try again.`;
+});
+
+renderer.setAnimationLoop((now) => {
+  const dt = Math.min(0.1, (now - last) / 1000);
+  last = now;
+  if (ready) updateDoors(dt);
+  if (mode === 'walk') {
+    if (ready) { updateWalk(dt); updateGauge(); }
+    else { camera.position.copy(walk.pos); aimCamera(); }
+  } else {
+    you.position.set(walk.pos.x, walk.feet, walk.pos.z);
+    you.rotation.y = walk.yaw;
+    controls.update();
+  }
+  renderer.render(scene, camera);
+});
+</script>

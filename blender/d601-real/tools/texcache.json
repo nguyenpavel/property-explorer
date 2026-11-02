@@ -1,0 +1,339 @@
+{
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Maplewood/Textures/MaplewoodSofa_Fabric_A.png": {
+  "color": "MaplewoodSofa_Fabric_A_b6b8c6_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Maplewood/Textures/MaplewoodSofa_Fabric_N.png": {
+  "normal": "MaplewoodSofa_Fabric_N_1596ef_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Maplewood/Textures/MaplewoodSofa_Fabric_R.png": {
+  "data": "MaplewoodSofa_Fabric_R_54fcf3_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Maplewood/Textures/MaplewoodSofa_Wood_A.png": {
+  "color": "MaplewoodSofa_Wood_A_b7f549_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Maplewood/Textures/MaplewoodSofa_Wood_N.png": {
+  "normal": "MaplewoodSofa_Wood_N_f179bf_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Maplewood/Textures/MaplewoodSofa_Wood_R.png": {
+  "data": "MaplewoodSofa_Wood_R_dce8ad_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Appleseed/Textures/Appleseed_CoffeeTable_Metal_A.png": {
+  "color": "Appleseed_CoffeeTable_Metal_A_58e121_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Appleseed/Textures/Appleseed_CoffeeTable_Metal_M.png": {
+  "data": "Appleseed_CoffeeTable_Metal_M_49e40c_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Appleseed/Textures/Appleseed_CoffeeTable_Metal_N.png": {
+  "normal": "Appleseed_CoffeeTable_Metal_N_8e8a3b_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Appleseed/Textures/Appleseed_CoffeeTable_Metal_R.png": {
+  "data": "Appleseed_CoffeeTable_Metal_R_5e191f_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Appleseed/Textures/Appleseed_CoffeeTable_Wood_A.png": {
+  "color": "Appleseed_CoffeeTable_Wood_A_b4a067_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Appleseed/Textures/Appleseed_CoffeeTable_Wood_M.png": {
+  "data": "Appleseed_CoffeeTable_Wood_M_87afce_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Appleseed/Textures/Appleseed_CoffeeTable_Wood_N.png": {
+  "normal": "Appleseed_CoffeeTable_Wood_N_a92d09_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/FurnitureSets/Appleseed/Textures/Appleseed_CoffeeTable_Wood_R.png": {
+  "data": "Appleseed_CoffeeTable_Wood_R_b0ea5e_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_TableTop_BaseColor.png": {
+  "color": "ER_TableTop_BaseColor_07434e_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_TableTop_Normal.png": {
+  "normal": "ER_TableTop_Normal_fe381f_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_TableTop_Roughness.png": {
+  "data": "ER_TableTop_Roughness_cdcf0a_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_Table_WhiteWood_BaseColor.png": {
+  "color": "ER_Table_WhiteWood_BaseColor_b2cf1a_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_Table_WhiteWood_Normal.png": {
+  "normal": "ER_Table_WhiteWood_Normal_3f17c2_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_Table_WhiteWood_Roughness.png": {
+  "data": "ER_Table_WhiteWood_Roughness_bc3d3e_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_Chair_DarkLeather_BaseColor.png": {
+  "color": "ER_Chair_DarkLeather_BaseColor_a8bca1_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_Chair_DarkLeather_Normal.png": {
+  "normal": "ER_Chair_DarkLeather_Normal_1e28ed_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_Chair_DarkLeather_Roughness.png": {
+  "data": "ER_Chair_DarkLeather_Roughness_61a2d5_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_Chair_WhiteWood_BaseColor.png": {
+  "color": "ER_Chair_WhiteWood_BaseColor_f76a4d_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_Chair_WhiteWood_Normal.png": {
+  "normal": "ER_Chair_WhiteWood_Normal_29dfbe_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/DiningSets/EastRural/Textures/ER_Chair_WhiteWood_Roughness.png": {
+  "data": "ER_Chair_WhiteWood_Roughness_eb7149_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/MediaTables/Textures/Soulard_Metal_BaseColor.png": {
+  "color": "Soulard_Metal_BaseColor_c699d8_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/MediaTables/Textures/Soulard_Metal_Normal.png": {
+  "normal": "Soulard_Metal_Normal_e6e479_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/MediaTables/Textures/Soulard_Metal_Roughness.png": {
+  "data": "Soulard_Metal_Roughness_e991ca_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/MediaTables/Textures/Soulard_Wood_BaseColor.png": {
+  "color": "Soulard_Wood_BaseColor_341f79_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/MediaTables/Textures/Soulard_Wood_Normal.png": {
+  "normal": "Soulard_Wood_Normal_fdcef6_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/MediaTables/Textures/Soulard_Wood_Roughness.png": {
+  "data": "Soulard_Wood_Roughness_028881_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/textures/TV_Wall_Screen_BaseColor.tga": {
+  "color": "TV_Wall_Screen_BaseColor_cfe448_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/textures/TV_Wall_Screen_N.tga": {
+  "normal": "TV_Wall_Screen_N_aef3de_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/textures/TV_Wall_Screen_R.tga": {
+  "data": "TV_Wall_Screen_R_a08ddf_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/textures/TV_Wall_Back_BaseColor.tga": {
+  "color": "TV_Wall_Back_BaseColor_7d38de_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/textures/TV_Wall_Back_N.tga": {
+  "normal": "TV_Wall_Back_N_a469b1_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/textures/TV_Wall_Back_R.tga": {
+  "data": "TV_Wall_Back_R_306fa4_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/textures/TV_Wall_Main_BaseColor.tga": {
+  "color": "TV_Wall_Main_BaseColor_fb73de_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/textures/TV_Wall_Main_N.tga": {
+  "normal": "TV_Wall_Main_N_be0a4c_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Electronics/Televisions/textures/TV_Wall_Main_R.tga": {
+  "data": "TV_Wall_Main_R_4fd2d7_512.jpg"
+ },
+ "d:/Downloads/SimReady_Furniture_Misc_01_NVD@10010/Assets/simready_content/common_assets/props/contemporary_lowhalfdesk/Textures/ContemporaryOfficeLoweredDeskHalf_P_A.png": {
+  "color": "ContemporaryOfficeLoweredDeskHalf_P_A_4658c3_1024.jpg"
+ },
+ "d:/Downloads/SimReady_Furniture_Misc_01_NVD@10010/Assets/simready_content/common_assets/props/contemporary_lowhalfdesk/Textures/ContemporaryOfficeLoweredDeskHalf_P_N.png": {
+  "normal": "ContemporaryOfficeLoweredDeskHalf_P_N_222988_512.jpg"
+ },
+ "d:/Downloads/SimReady_Furniture_Misc_01_NVD@10010/Assets/simready_content/common_assets/props/contemporary_lowhalfdesk/Textures/ContemporaryOfficeLoweredDeskHalf_P_SG.png": {
+  "data": "ContemporaryOfficeLoweredDeskHalf_P_SG_cd2c97_512.jpg"
+ },
+ "d:/Downloads/SimReady_Furniture_Misc_01_NVD@10010/Assets/simready_content/common_assets/props/contemporary_lowhalfdesk/Textures/ContemporaryOfficeLoweredDeskHalf_W_A.png": {
+  "color": "ContemporaryOfficeLoweredDeskHalf_W_A_ee497d_1024.jpg"
+ },
+ "d:/Downloads/SimReady_Furniture_Misc_01_NVD@10010/Assets/simready_content/common_assets/props/contemporary_lowhalfdesk/Textures/ContemporaryOfficeLoweredDeskHalf_W_N.png": {
+  "normal": "ContemporaryOfficeLoweredDeskHalf_W_N_350a05_512.jpg"
+ },
+ "d:/Downloads/SimReady_Furniture_Misc_01_NVD@10010/Assets/simready_content/common_assets/props/contemporary_lowhalfdesk/Textures/ContemporaryOfficeLoweredDeskHalf_W_SG.png": {
+  "data": "ContemporaryOfficeLoweredDeskHalf_W_SG_8d42b5_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Chairs/Textures/Chair_Desk_BaseColor.png": {
+  "color": "Chair_Desk_BaseColor_9a1d6e_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Chairs/Textures/Chair_Desk_Normal.png": {
+  "normal": "Chair_Desk_Normal_903adc_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Chairs/Textures/Chair_Desk_ORM.png": {
+  "data": "Chair_Desk_ORM_39bc19_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/EndTables/textures/Festus_BaseColor.png": {
+  "color": "Festus_BaseColor_be5ad2_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/EndTables/textures/Festus_Normal.png": {
+  "normal": "Festus_Normal_a3e999_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/EndTables/textures/Festus_ORM.png": {
+  "data": "Festus_ORM_df10f0_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Table Lamps/textures/Theory_Metal_body_A.png": {
+  "color": "Theory_Metal_body_A_808e49_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Table Lamps/textures/Theory_Metal_body_SG.png": {
+  "data": "Theory_Metal_body_SG_2a9d47_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Table Lamps/textures/Theory_Bulb_metal_silver_A.png": {
+  "color": "Theory_Bulb_metal_silver_A_f0c3c4_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Table Lamps/textures/Theory_Bulb_metal_silver_N.png": {
+  "normal": "Theory_Bulb_metal_silver_N_63c810_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Table Lamps/textures/Theory_Bulb_metal_silver_SG.png": {
+  "data": "Theory_Bulb_metal_silver_SG_278aa7_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Table Lamps/textures/Theory_Bulb_metal_copper_A.png": {
+  "color": "Theory_Bulb_metal_copper_A_11cf63_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Table Lamps/textures/Theory_Bulb_metal_copper_N.png": {
+  "normal": "Theory_Bulb_metal_copper_N_3733ff_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Table Lamps/textures/Theory_Bulb_metal_copper_SG.png": {
+  "data": "Theory_Bulb_metal_copper_SG_500cfb_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_marble_A.png": {
+  "color": "FloorLamp_marble_A_c40127_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_marble_N.png": {
+  "normal": "FloorLamp_marble_N_c255da_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_marble_R.png": {
+  "data": "FloorLamp_marble_R_60c24b_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_nikle_A.png": {
+  "color": "FloorLamp_nikle_A_ff8e3d_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_nikle_M.png": {
+  "data": "FloorLamp_nikle_M_04beac_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_nikle_N.png": {
+  "normal": "FloorLamp_nikle_N_4b2604_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_nikle_R.png": {
+  "data": "FloorLamp_nikle_R_5dbe14_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_whitecotton_A.png": {
+  "color": "FloorLamp_whitecotton_A_2dad45_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Floor Lamps/Textures/FloorLamp_whitecotton_RG.png": {
+  "data": "FloorLamp_whitecotton_RG_5c9a21_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Chandeliers/Textures/Chandelier_BaseColor.png": {
+  "color": "Chandelier_BaseColor_67adc8_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Chandeliers/Textures/Chandelier_Normal.png": {
+  "normal": "Chandelier_Normal_aac63b_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Lighting/Chandeliers/Textures/Chandelier_ORM.png": {
+  "data": "Chandelier_ORM_4d97ec_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Textures/plant02_leaves_basecolor.png": {
+  "color": "plant02_leaves_basecolor_dd1ebf_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Textures/plant02_leaves_normal.png": {
+  "normal": "plant02_leaves_normal_11059b_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Textures/Plant_dirt_1.jpg": {
+  "color": "Plant_dirt_1_c61baa_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Textures/Plant_dirt_1_bump.jpg": {
+  "normal": "Plant_dirt_1_bump_8d73ff_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Textures/marble.png": {
+  "color": "marble_51d37d_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Textures/plant01_leaves_basecolor.png": {
+  "color": "plant01_leaves_basecolor_222d78_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Plants/Textures/plant01_leaves_normal.png": {
+  "normal": "plant01_leaves_normal_3f2ec4_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Rugs/Textures/BlueRug_BaseColor.png": {
+  "color": "BlueRug_BaseColor_ab8fda_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Rugs/Textures/BlueRug_N.png": {
+  "normal": "BlueRug_N_d36afb_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Rugs/Textures/BlueRug_R.png": {
+  "data": "BlueRug_R_230821_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/BW_Wide_01.png": {
+  "color": "BW_Wide_01_ec4ab6_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_FrameBoard_White_BaseColor.tga": {
+  "color": "FramedPoster_FrameBoard_White_BaseColor_8bb5a7_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_FrameBoard_White_N.tga": {
+  "normal": "FramedPoster_FrameBoard_White_N_206b26_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_FrameBoard_White_R.tga": {
+  "data": "FramedPoster_FrameBoard_White_R_048a9c_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_Frame_BaseColor.tga": {
+  "color": "FramedPoster_Frame_BaseColor_75e780_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_Frame_N.tga": {
+  "normal": "FramedPoster_Frame_N_b1fa4f_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/FramedPoster_Frame_R.tga": {
+  "data": "FramedPoster_Frame_R_c03f24_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/BW_Wide_03.png": {
+  "color": "BW_Wide_03_128e02_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/BW_Tall_01.png": {
+  "color": "BW_Tall_01_988fe4_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/Painting_BaseColor.png": {
+  "color": "Painting_BaseColor_3674c9_1024.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/Painting_Normal.png": {
+  "normal": "Painting_Normal_7d38e4_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Decor/Pictures/textures/Painting_ORM.png": {
+  "data": "Painting_ORM_50a45b_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Kitchen/KitchenFaucets/Textures/faucet01_albedo.png": {
+  "color": "faucet01_albedo_c151c4_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Kitchen/KitchenFaucets/Textures/faucet01_metal.png": {
+  "data": "faucet01_metal_3ff77a_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Kitchen/KitchenFaucets/Textures/faucet01_normal.png": {
+  "normal": "faucet01_normal_ed625a_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Kitchen/KitchenFaucets/Textures/faucet01_rough.png": {
+  "data": "faucet01_rough_4adc9c_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/Iron_BaseColor.png": {
+  "color": "Iron_BaseColor_ccee28_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/Iron_N.png": {
+  "normal": "Iron_N_2c6f68_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/Iron_ORM.png": {
+  "data": "Iron_ORM_a09626_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/Ash_BaseColor.png": {
+  "color": "Ash_BaseColor_f0255d_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/Ash_Normal.png": {
+  "normal": "Ash_Normal_40e2c2_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/Ash_ORM.png": {
+  "data": "Ash_ORM_cc445b_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/Rubber_Smooth_BaseColor.png": {
+  "color": "Rubber_Smooth_BaseColor_4df6e5_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/Rubber_Smooth_Normal.png": {
+  "normal": "Rubber_Smooth_Normal_b2a692_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/Rubber_Smooth_ORM.png": {
+  "data": "Rubber_Smooth_ORM_9f22c9_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/cotton_roughly_woven_diff.jpg": {
+  "color": "cotton_roughly_woven_diff_7c96bc_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/cotton_roughly_woven_norm.jpg": {
+  "normal": "cotton_roughly_woven_norm_f2c8fb_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/cotton_roughly_woven_rough.jpg": {
+  "data": "cotton_roughly_woven_rough_3de4d0_512.jpg"
+ },
+ "d:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential/Furniture/Beds/Textures/felt_white_diff.jpg": {
+  "color": "felt_white_diff_0b7e80_512.jpg",
+  "data": "felt_white_diff_0b7e80_512.jpg"
+ }
+}

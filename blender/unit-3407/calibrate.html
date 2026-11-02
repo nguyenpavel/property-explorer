@@ -1,0 +1,997 @@
+<title>Unit 3407 Calibration</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Archivo+Narrow:wght@500;600&display=swap">
+<style>
+/* Layout: the walk view fills the stage; a sheet of calibration instruments sits beside it and stacks below on phones */
+:root {
+  --bg: #eceef0; --panel: #f8f9fa; --ink: #1a1c1f; --muted: #5d636b; --line: #d4d8dd; --hover: #eef0f2;
+  --scene: #d9dde1; --laser: #e5484d;
+  --display: "Archivo Narrow", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body: "Archivo", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121417; --panel: #191c20; --ink: #e7e9ec; --muted: #9ba2aa; --line: #2c3137; --hover: #22262b;
+    --scene: #1c1f23; --laser: #ff6369; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121417; --panel: #191c20; --ink: #e7e9ec; --muted: #9ba2aa; --line: #2c3137; --hover: #22262b;
+  --scene: #1c1f23; --laser: #ff6369; color-scheme: dark;
+}
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 14px; line-height: 1.45; }
+.app { height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) 340px; }
+.stage { position: relative; min-width: 0; min-height: 0; background: var(--scene); overflow: hidden; }
+.stage canvas { display: block; width: 100%; height: 100%; touch-action: none; outline: none; cursor: crosshair; }
+.sheet {
+  min-width: 0; overflow-y: auto; background: var(--panel); border-left: 1px solid var(--line);
+  padding-block: 22px; padding-left: 22px; padding-right: max(22px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 22px;
+}
+@media (max-width: 760px) {
+  .app { grid-template-columns: minmax(0, 1fr); grid-template-rows: 58% 42%; }
+  .sheet { border-left: 0; border-top: 1px solid var(--line); padding-block: 18px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+}
+
+.eyebrow, h2 { font-family: var(--display); font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+h1 { font-family: var(--display); font-weight: 600; font-size: 34px; line-height: 1.02; margin: 6px 0 0; text-wrap: balance; }
+h2 { margin-bottom: 10px; }
+.lede { margin: 10px 0 0; color: var(--muted); max-width: 65ch; }
+.note { margin: 6px 0 0; color: var(--muted); font-size: 12px; max-width: 65ch; }
+.note strong { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+.field { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-top: 12px; }
+.field:first-of-type { margin-top: 0; }
+.field label { min-width: 0; }
+.field output { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+input[type="range"] { width: 100%; margin: 6px 0 0; accent-color: var(--ink); }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
+.chips button {
+  font-family: var(--display); font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums;
+  padding: 5px 10px; border: 1px solid var(--line); border-radius: 4px; background: transparent; color: var(--muted); cursor: pointer;
+}
+.chips button:hover { color: var(--ink); background: var(--hover); }
+.chips button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--panel); }
+
+.btn { font: inherit; font-weight: 500; padding: 6px 12px; border: 1px solid var(--line); border-radius: 4px; background: transparent; color: inherit; cursor: pointer; }
+.btn:hover { background: var(--hover); }
+.btn:disabled { opacity: .5; cursor: default; }
+.btn.primary { min-width: 78px; background: var(--ink); border-color: var(--ink); color: var(--panel); }
+.btn.primary:hover { opacity: .9; }
+.btn[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--panel); }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+details.fit { margin-top: 12px; border: 1px solid var(--line); border-radius: 6px; }
+details.fit summary { padding: 8px 12px; cursor: pointer; font-weight: 500; }
+.fit-body { padding: 0 12px 12px; display: grid; gap: 8px; }
+.pair { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.pair span { white-space: nowrap; color: var(--muted); }
+.pair input { width: 72px; font: inherit; font-variant-numeric: tabular-nums; padding: 4px 6px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg); color: var(--ink); }
+.fit-body .btn { justify-self: start; }
+
+.options { display: grid; gap: 10px; }
+.check { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.check input { accent-color: var(--ink); width: 16px; height: 16px; margin: 0; flex: none; }
+.sizes { margin: 0; display: grid; gap: 4px; }
+.sizes div { display: flex; justify-content: space-between; gap: 12px; }
+.sizes dt { min-width: 0; color: var(--muted); }
+.sizes dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.summary { margin: 0; padding: 10px 12px; border-radius: 6px; background: var(--hover); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+
+.spots {
+  position: absolute; top: 12px; left: max(12px, env(safe-area-inset-left, 0px)); display: flex; flex-wrap: wrap; align-items: center; gap: 2px; padding: 3px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 6px; max-width: calc(100% - 24px);
+}
+.spots span { padding: 0 8px 0 9px; font-size: 12px; color: var(--muted); }
+.spots button {
+  font-family: var(--display); font-size: 13px; font-weight: 600; letter-spacing: .02em; padding: 6px 11px;
+  border: 0; border-radius: 4px; background: transparent; color: var(--muted); cursor: pointer;
+}
+.spots button:hover { color: var(--ink); background: var(--hover); }
+.horizon { position: absolute; left: 0; right: 0; top: 50%; height: 0; border-top: 1px solid var(--laser); pointer-events: none; }
+.horizon span {
+  position: absolute; right: max(12px, env(safe-area-inset-right, 0px)); bottom: 3px; padding: 1px 6px; border-radius: 3px;
+  font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--laser); background: var(--panel);
+}
+.reticle { position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; border: 1.5px solid #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, .55); pointer-events: none; }
+.reading {
+  position: absolute; left: 50%; top: calc(50% + 14px); transform: translateX(-50%); margin: 0; padding: 2px 8px; border-radius: 4px; max-width: calc(100% - 24px);
+  background: var(--panel); border: 1px solid var(--line); font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: none;
+}
+.status {
+  position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; margin: 0; text-align: center; pointer-events: none; background: var(--scene);
+  font-family: var(--display); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted);
+}
+.hud {
+  position: absolute; left: 50%; bottom: max(14px, env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); width: max-content; max-width: calc(100% - 24px);
+  display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel);
+}
+.hud p { margin: 0; min-width: 0; font-size: 12px; color: var(--muted); }
+.hud kbd { font-family: var(--display); font-weight: 600; color: var(--ink); }
+.hud .prompt { display: block; margin-top: 2px; color: var(--ink); font-weight: 600; }
+.pad {
+  position: absolute; right: max(14px, env(safe-area-inset-right, 0px)); bottom: 74px;
+  display: grid; grid-template-columns: repeat(3, 48px); grid-template-rows: repeat(2, 48px); gap: 6px;
+}
+.pad button { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--ink); font-size: 16px; touch-action: none; user-select: none; -webkit-user-select: none; cursor: pointer; }
+.pad [data-key="KeyW"] { grid-column: 2; grid-row: 1; }
+.pad [data-key="KeyA"] { grid-column: 1; grid-row: 2; }
+.pad [data-key="KeyS"] { grid-column: 2; grid-row: 2; }
+.pad [data-key="KeyD"] { grid-column: 3; grid-row: 2; }
+.pad [data-action] { font-family: var(--display); font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.pad [data-action="door"] { grid-column: 1; grid-row: 1; }
+.pad [data-action="ghost"] { grid-column: 3; grid-row: 1; }
+.pad [aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--panel); }
+@media (max-width: 760px) { .hud p { display: none; } .hud { padding: 6px; } }
+button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+</style>
+
+<div class="app">
+  <div class="stage" id="stage">
+    <div class="horizon" id="horizon"><span id="horizon-label">Eye level 1.59 m</span></div>
+    <div class="reticle" id="reticle" aria-hidden="true"></div>
+    <p class="reading" id="reading" hidden></p>
+    <div class="spots" role="group" aria-label="Stand at">
+      <span>Stand at</span>
+      <button type="button" data-spot="door">Front door</button>
+      <button type="button" data-spot="room">Room</button>
+      <button type="button" data-spot="window">Window</button>
+      <button type="button" data-spot="bath">Bathroom</button>
+    </div>
+    <p class="status" id="status">Loading the model…</p>
+    <div class="hud">
+      <p><kbd>W A S D</kbd> walk · click the view to look with the mouse · <kbd>Shift</kbd> hurry · <kbd>E</kbd> door · <kbd>G</kbd> ghost · <kbd>Esc</kbd> frees the mouse<span class="prompt" id="door-prompt" hidden></span></p>
+      <button type="button" class="btn" id="ghost" aria-pressed="false">Ghost mode</button>
+    </div>
+    <div class="pad" id="pad" hidden>
+      <button type="button" data-key="KeyW" aria-label="Walk forward">▲</button>
+      <button type="button" data-key="KeyA" aria-label="Step left">◀</button>
+      <button type="button" data-key="KeyS" aria-label="Walk back">▼</button>
+      <button type="button" data-key="KeyD" aria-label="Step right">▶</button>
+      <button type="button" data-action="door" aria-label="Open or close the door you are facing">Door</button>
+      <button type="button" data-action="ghost" aria-pressed="false" aria-label="Ghost mode: walk through walls">Ghost</button>
+    </div>
+  </div>
+
+  <aside class="sheet">
+    <header>
+      <p class="eyebrow">vbloku · Unit 3407 · Walk calibration</p>
+      <h1>Set the walk to your body</h1>
+      <p class="lede">Walk the unit and adjust these until the rooms feel the size they would if you stood in them. The values you save go into the final walk-through.</p>
+    </header>
+
+    <section>
+      <h2>Your body</h2>
+      <div class="chips" role="group" aria-label="Height presets">
+        <button type="button" data-height="160">1.60</button>
+        <button type="button" data-height="170">1.70</button>
+        <button type="button" data-height="180">1.80</button>
+        <button type="button" data-height="190">1.90</button>
+        <button type="button" data-height="200">2.00</button>
+      </div>
+      <div class="field"><label for="height">Height</label><output for="height" id="height-out"></output></div>
+      <input type="range" id="height" min="140" max="210" step="1" value="170">
+      <div class="field"><label for="eye">Eyes below the top of your head</label><output for="eye" id="eye-out"></output></div>
+      <input type="range" id="eye" min="7" max="16" step="0.5" value="11">
+      <p class="note">The camera sits at your eye height: <strong id="eye-height"></strong>.</p>
+      <div class="field"><label for="shoulders">Shoulder width</label><output for="shoulders" id="shoulders-out"></output></div>
+      <input type="range" id="shoulders" min="30" max="60" step="1" value="41">
+      <p class="note">Sets how close you get to walls and which gaps you fit through.</p>
+    </section>
+
+    <section>
+      <h2>Field of view</h2>
+      <div class="field"><label for="fov">Across the view</label><output for="fov" id="fov-out"></output></div>
+      <input type="range" id="fov" min="30" max="110" step="1" value="70">
+      <p class="note" id="fov-note"></p>
+      <details class="fit" id="fit">
+        <summary>Match my screen</summary>
+        <div class="fit-body">
+          <div class="pair"><label for="screen-in">Screen size (diagonal)</label><span><input type="number" id="screen-in" min="5" max="120" step="0.1" value="24"> in</span></div>
+          <div class="pair"><label for="distance">Eyes to screen</label><span><input type="number" id="distance" min="20" max="400" step="1" value="60"> cm</span></div>
+          <p class="note" id="fit-note"></p>
+          <button type="button" class="btn" id="fit-use">Use this angle</button>
+          <p class="note">At this angle the screen acts like a window, so sizes and distances are true, but you lose the side vision you have in a real room. Wider angles show more and make rooms look deeper.</p>
+        </div>
+      </details>
+    </section>
+
+    <section>
+      <h2>Walking</h2>
+      <div class="field"><label for="speed">Speed</label><output for="speed" id="speed-out"></output></div>
+      <input type="range" id="speed" min="0.5" max="2" step="0.05" value="1.3">
+      <label class="check" for="bob" style="margin-top: 12px"><input type="checkbox" id="bob"> Head bob while walking</label>
+    </section>
+
+    <section>
+      <h2>Model</h2>
+      <div class="field"><label for="scale">Scale</label><output for="scale" id="scale-out"></output></div>
+      <input type="range" id="scale" min="0.8" max="1.6" step="0.01" value="1">
+      <p class="note" id="scale-note"></p>
+      <div class="field"><label for="ceiling">Ceiling height</label><output for="ceiling" id="ceiling-out"></output></div>
+      <input type="range" id="ceiling" min="2.4" max="3.4" step="0.01" value="2.7">
+      <p class="note">The plan gives no heights, so 2.70 m is a guess. If the real rooms felt taller, raise it: a higher ceiling makes the same floor feel much larger.</p>
+    </section>
+
+    <section class="options">
+      <h2>Measuring aids</h2>
+      <label class="check" for="aid-horizon"><input type="checkbox" id="aid-horizon" checked> Laser line at your eye level</label>
+      <label class="check" for="aid-tapes"><input type="checkbox" id="aid-tapes" checked> Tape measures on three walls</label>
+      <label class="check" for="aid-floor"><input type="checkbox" id="aid-floor" checked> Room sizes on the floor</label>
+      <label class="check" for="aid-figure"><input type="checkbox" id="aid-figure" checked> A figure of your height in the room</label>
+      <label class="check" for="aid-reading"><input type="checkbox" id="aid-reading" checked> Distance to what you look at</label>
+      <p class="note">The laser line marks everything at your eye height, however far away. Where it crosses a tape measure, the tape reads your eye height.</p>
+    </section>
+
+    <section>
+      <h2>Sizes to compare</h2>
+      <dl class="sizes">
+        <div><dt>Front door leaf</dt><dd>0.90 × 1.97 m</dd></div>
+        <div><dt>Bathroom door leaf</dt><dd>0.80 × 1.97 m</dd></div>
+        <div><dt>Door handles</dt><dd>1.00 m up</dd></div>
+        <div><dt>Kitchen worktop</dt><dd>0.90 m up</dd></div>
+        <div><dt>Bed</dt><dd>1.40 × 2.00 m</dd></div>
+        <div><dt>Room 01, wall to wall</dt><dd>2.71 m</dd></div>
+        <div><dt>Room 01, window to bathroom wall</dt><dd>5.44 m</dd></div>
+        <div><dt>Ceiling (your setting)</dt><dd id="ceiling-size">2.70 m</dd></div>
+      </dl>
+    </section>
+
+    <section>
+      <h2>Your calibration</h2>
+      <p class="summary" id="summary"></p>
+      <div class="actions">
+        <button type="button" class="btn primary" id="save" hidden>Save</button>
+        <button type="button" class="btn" id="copy">Copy values</button>
+        <button type="button" class="btn" id="reset">Reset</button>
+      </div>
+      <p class="note" id="save-note"></p>
+    </section>
+  </aside>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+// PDF point on the 1:60 sheet -> model metres (1 pt = 21.167 mm); y up, page "down" is +z
+const K = 25.4 / 72 * 60 / 1000;
+const P = (px, py, y = 0) => new THREE.Vector3((px - 633.32) * K, y, (py - 252.92) * K);
+
+const DEFAULTS = { heightCm: 170, eyeBelowCm: 11, shoulderCm: 41, hfov: 70, speed: 1.3, bob: false, scale: 1, ceilingM: 2.7, screenIn: 24, distanceCm: 60 };
+const RANGES = { heightCm: [140, 210], eyeBelowCm: [7, 16], shoulderCm: [30, 60], hfov: [30, 110], speed: [0.5, 2], scale: [0.8, 1.6], ceilingM: [2.4, 3.4], screenIn: [5, 120], distanceCm: [20, 400] };
+const MODEL_CEILING = 2.7;     // the height build_unit.py assumed; walls that reach it stretch to ceilingM
+const cal = { ...DEFAULTS };
+// Eye drop and shoulders follow the height until you set them yourself
+const linked = { eye: true, shoulders: true };
+const derivedEye = (h) => Math.round(h * 0.065 * 2) / 2;
+const derivedShoulders = (h) => Math.round(h * 0.24);
+const eyeHeight = () => (cal.heightCm - cal.eyeBelowCm) / 100;
+const radius = () => cal.shoulderCm / 200;
+
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = (id) => document.getElementById(id);
+const stage = $('stage'), statusEl = $('status');
+
+// ------------------------------------------------------------ renderer and scene
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+stage.prepend(renderer.domElement);
+const canvas = renderer.domElement;
+
+const scene = new THREE.Scene();
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+scene.add(new THREE.HemisphereLight(0xffffff, 0x8b9097, 0.5));
+const sun = new THREE.DirectionalLight(0xffffff, 2.0);
+sun.position.set(-4, 11, 5);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left: -7, right: 7, top: 7, bottom: -7, near: 1, far: 30 });
+sun.shadow.bias = -0.0003;
+sun.shadow.normalBias = 0.02;
+scene.add(sun, sun.target);
+
+const camera = new THREE.PerspectiveCamera(50, 1, 0.05, 100);
+camera.rotation.order = 'YXZ';
+
+// Everything built from the plan lives in `world`, so the model-size check scales it as one
+const world = new THREE.Group();
+scene.add(world);
+
+// ------------------------------------------------------------ floor textures (world-space UVs in metres)
+function canvasTexture(w, h, draw, periodU, periodV) {
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  draw(c.getContext('2d'), w, h);
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.repeat.set(1 / periodU, 1 / periodV);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  return t;
+}
+const planks = canvasTexture(256, 640, (g, w, h) => {
+  const pw = w / 5, shades = [['#b59877', '#ad8f6d'], ['#b99c7a', '#b29470'], ['#ae9170', '#b79b79'], ['#b49673', '#ab8e6c'], ['#b89b78', '#b09372']];
+  [0, .5, .25, .75, .4].forEach((off, i) => {
+    for (let k = -2; k < 2; k++) {
+      const y0 = off * h + k * h / 2;
+      g.fillStyle = shades[i][(k % 2 + 2) % 2];
+      g.fillRect(i * pw, y0, pw, h / 2);
+      g.fillStyle = '#86694c';
+      g.fillRect(i * pw, y0, pw, 1.5);
+    }
+    for (let n = 0; n < 7; n++) {
+      g.fillStyle = `rgba(90, 64, 40, ${0.05 + 0.05 * ((i * 7 + n * 3) % 4) / 3})`;
+      g.fillRect(i * pw + 4 + ((n * 37 + i * 13) % (pw - 8)), 0, 1, h);
+    }
+    g.fillStyle = '#86694c';
+    g.fillRect(i * pw, 0, 1.5, h);
+  });
+}, 0.95, 2.4);
+const tiles = (px, face, grout, size) => canvasTexture(px, px, (g, w) => {
+  g.fillStyle = grout; g.fillRect(0, 0, w, w);
+  g.fillStyle = face; g.fillRect(2, 2, w - 4, w - 4);
+}, size, size);
+const FLOOR_MAPS = {
+  'Oak planks': planks,
+  'Hall tiles': tiles(256, '#dcd7cf', '#b8b1a7', 0.6),
+  'Bath floor tiles': tiles(128, '#b9b9bc', '#97979c', 0.3),
+};
+
+// ------------------------------------------------------------ ceiling
+// No light reaches a ceiling's underside here, so a little emission stands in for the bounce
+const ceiling = new THREE.Mesh(new THREE.BoxGeometry(1, 0.05, 1),
+  new THREE.MeshStandardMaterial({ color: 0xf1f1ef, roughness: 0.9, emissive: 0xa0a09e }));
+{
+  const a = P(563.72, 40.88), b = P(705, 464.96);
+  ceiling.scale.set(b.x - a.x, 1, b.z - a.z);
+  ceiling.position.set((a.x + b.x) / 2, MODEL_CEILING + 0.025, (a.z + b.z) / 2);
+  ceiling.name = 'Ceiling';
+  world.add(ceiling);
+}
+const stretched = [];          // wall meshes whose top vertices sit at the model ceiling
+let overhead = null, overheadY = 0;
+function applyCeiling() {
+  const h = cal.ceilingM;
+  ceiling.position.y = h + 0.025;
+  for (const s of stretched) {
+    const pos = s.geo.attributes.position;
+    for (const i of s.idx) pos.setY(i, h - s.base);
+    pos.needsUpdate = true;
+    s.geo.computeBoundingBox();
+    s.geo.computeBoundingSphere();
+  }
+  if (overhead) overhead.position.y = overheadY + h - MODEL_CEILING;   // hangs from the ceiling
+}
+
+// ------------------------------------------------------------ room sizes on the floor, drawn in plan points
+const FLOOR_BOUNDS = [563.72, 40.88, 705, 464.96];
+const marksCanvas = document.createElement('canvas');
+const marksTex = new THREE.CanvasTexture(marksCanvas);
+marksTex.colorSpace = THREE.SRGBColorSpace;
+marksTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+const marks = new THREE.Mesh(new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2),
+  new THREE.MeshBasicMaterial({ map: marksTex, transparent: true, depthWrite: false, toneMapped: false }));
+{
+  const a = P(FLOOR_BOUNDS[0], FLOOR_BOUNDS[1]), b = P(FLOOR_BOUNDS[2], FLOOR_BOUNDS[3]);
+  marks.scale.set(b.x - a.x, 1, b.z - a.z);
+  marks.position.set((a.x + b.x) / 2, 0.014, (a.z + b.z) / 2);   // just above the rug
+  marks.renderOrder = 1;
+  marks.name = 'Room sizes';
+  world.add(marks);
+}
+function drawFloorMarks() {
+  const [x0, y0, x1, y1] = FLOOR_BOUNDS, ppt = 8;
+  marksCanvas.width = Math.round((x1 - x0) * ppt);
+  marksCanvas.height = Math.round((y1 - y0) * ppt);
+  const g = marksCanvas.getContext('2d');
+  g.scale(ppt, ppt);
+  g.translate(-x0, -y0);
+  g.strokeStyle = g.fillStyle = 'rgba(30, 32, 36, 0.85)';
+  g.lineWidth = 0.3;
+  g.textAlign = 'center';
+  const font = (size, weight = 600) => `${weight} ${size}px "Archivo Narrow", "Arial Narrow", sans-serif`;
+  // Architect's dimension line: 45-degree ticks at the ends, the length written beside the line.
+  // Lines along the room read from the front door towards the window.
+  function dim(ax, ay, bx, by, at = 0.5) {
+    g.beginPath(); g.moveTo(ax, ay); g.lineTo(bx, by); g.stroke();
+    for (const [x, y] of [[ax, ay], [bx, by]]) { g.beginPath(); g.moveTo(x - 1.6, y + 1.6); g.lineTo(x + 1.6, y - 1.6); g.stroke(); }
+    g.save();
+    g.translate(ax + (bx - ax) * at, ay + (by - ay) * at);
+    if (ax === bx) g.rotate(-Math.PI / 2);
+    g.font = font(3.6);
+    g.textBaseline = 'bottom';
+    g.fillText(`${(Math.hypot(bx - ax, by - ay) * K).toFixed(2)} m`, 0, -0.9);
+    g.restore();
+  }
+  function area(x, y, size, big, small) {
+    g.textBaseline = 'alphabetic';
+    g.font = font(size);
+    g.fillText(big, x, y);
+    g.font = font(size * 0.34, 500);
+    g.fillText(small, x, y + size * 0.5);
+  }
+  // Areas are the developer's figures from the PDF's room table
+  area(626, 228, 10.5, '18.4 m²', '01 POKOJ SE ZÁDVEŘÍM');
+  area(606, 396, 7.5, '3.7 m²', '02 KOUPELNA S WC');
+  dim(572.48, 100, 700.28, 100, 0.33);        // room 01, wall to wall
+  dim(664, 57.68, 664, 286.16);               // window to the way into the hall
+  dim(664, 286.16, 664, 459.8, 0.45);         // hall, to the front door
+  dim(642.08, 345, 700.28, 345, 0.78);        // hall width
+  dim(567.8, 365, 637.4, 365, 0.6);           // bathroom width
+  dim(630, 319.16, 630, 459.8, 0.62);         // bathroom length
+  marksTex.needsUpdate = true;
+}
+drawFloorMarks();
+
+// ------------------------------------------------------------ tape measures, 0 to 2.56 m in model metres
+const tapes = new THREE.Group();
+world.add(tapes);
+{
+  const pxPerCm = 16, c = document.createElement('canvas');
+  c.width = 128; c.height = 256 * pxPerCm;
+  const g = c.getContext('2d');
+  g.fillStyle = '#f2c94c';
+  g.fillRect(0, 0, c.width, c.height);
+  g.fillStyle = '#1a1a1a';
+  g.font = '600 30px "Archivo Narrow", "Arial Narrow", sans-serif';
+  g.textBaseline = 'middle';
+  for (let cm = 1; cm < 256; cm++) {
+    const y = (256 - cm) * pxPerCm, len = cm % 10 === 0 ? 70 : cm % 5 === 0 ? 46 : 28;
+    g.fillRect(0, y - 1, len, 2);
+    if (cm % 10 === 0) g.fillText(String(cm), 74, y);
+  }
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  const mat = new THREE.MeshStandardMaterial({ map: tex, roughness: 0.6 });
+  // On the hall partition by the front door, the room's right wall, and the bathroom wall by the WC
+  for (const [px, py, faces] of [[642.08 + 0.15, 432, 1], [700.28 - 0.15, 150, -1], [637.2 - 0.15, 428, -1]]) {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(0.05, 2.56).rotateY(faces * Math.PI / 2), mat);
+    m.position.copy(P(px, py, 1.28));
+    m.name = 'Tape measure';
+    m.receiveShadow = true;
+    tapes.add(m);
+  }
+}
+
+// ------------------------------------------------------------ a figure of your height, on the rug in the room
+const figure = new THREE.Group();
+figure.position.copy(P(665, 150));
+world.add(figure);
+{
+  // Built 1 unit tall; scaled to your height
+  const mat = new THREE.MeshStandardMaterial({ color: 0x7d8a99, roughness: 0.8 });
+  const part = (geo, x, y, z = 0, sx = 1, sz = 1) => {
+    const m = new THREE.Mesh(geo, mat);
+    m.position.set(x, y, z);
+    m.scale.set(sx, 1, sz);
+    m.castShadow = true;
+    m.name = 'You';
+    figure.add(m);
+  };
+  part(new THREE.SphereGeometry(0.065, 24, 16), 0, 0.935);
+  part(new THREE.CylinderGeometry(0.025, 0.028, 0.06, 12), 0, 0.85);
+  part(new THREE.CapsuleGeometry(0.07, 0.17, 6, 16), 0, 0.69, 0, 1.45, 0.8);
+  for (const s of [-1, 1]) {
+    part(new THREE.CapsuleGeometry(0.036, 0.42, 6, 12), s * 0.052, 0.29);
+    part(new THREE.BoxGeometry(0.06, 0.03, 0.14), s * 0.052, 0.015, 0.03);
+    part(new THREE.CapsuleGeometry(0.026, 0.3, 6, 12), s * 0.124, 0.64);
+  }
+}
+const tagCanvas = document.createElement('canvas');
+tagCanvas.width = 512; tagCanvas.height = 128;
+const tagTex = new THREE.CanvasTexture(tagCanvas);
+tagTex.colorSpace = THREE.SRGBColorSpace;
+const tag = new THREE.Sprite(new THREE.SpriteMaterial({ map: tagTex, toneMapped: false }));
+tag.name = 'You';
+world.add(tag);
+function drawTag() {
+  const g = tagCanvas.getContext('2d');
+  g.clearRect(0, 0, 512, 128);
+  g.fillStyle = 'rgba(26, 28, 31, 0.88)';
+  g.beginPath();
+  g.roundRect(56, 24, 400, 80, 16);
+  g.fill();
+  g.fillStyle = '#ffffff';
+  g.font = '600 48px "Archivo Narrow", "Arial Narrow", sans-serif';
+  g.textAlign = 'center';
+  g.textBaseline = 'middle';
+  g.fillText(`You, ${(cal.heightCm / 100).toFixed(2)} m`, 256, 66);
+  tagTex.needsUpdate = true;
+}
+
+// ------------------------------------------------------------ model
+// unit-3407.json is glTF with its buffer as a base64 data: URI. The artifact sandbox
+// blocks fetching data: URLs, so decode it here and hand the loader a GLB.
+function packGLB(doc, bin) {
+  const json = new TextEncoder().encode(JSON.stringify(doc));
+  const jsonPad = (4 - json.length % 4) % 4, binPad = (4 - bin.length % 4) % 4;
+  const binAt = 20 + json.length + jsonPad, total = binAt + 8 + bin.length + binPad;
+  const out = new Uint8Array(total), dv = new DataView(out.buffer);
+  dv.setUint32(0, 0x46546C67, true);
+  dv.setUint32(4, 2, true);
+  dv.setUint32(8, total, true);
+  dv.setUint32(12, json.length + jsonPad, true);
+  dv.setUint32(16, 0x4E4F534A, true);
+  out.set(json, 20);
+  out.fill(0x20, 20 + json.length, binAt);
+  dv.setUint32(binAt, bin.length + binPad, true);
+  dv.setUint32(binAt + 4, 0x004E4942, true);
+  out.set(bin, binAt + 8);
+  return out.buffer;
+}
+async function loadModel() {
+  const res = await fetch('unit-3407.json');
+  if (!res.ok) throw new Error(`unit-3407.json returned HTTP ${res.status}`);
+  const doc = await res.json();
+  const uri = doc.buffers[0].uri;
+  const bin = Uint8Array.from(atob(uri.slice(uri.indexOf(',') + 1)), (c) => c.charCodeAt(0));
+  delete doc.buffers[0].uri;
+  doc.buffers[0].byteLength = bin.length;
+  return new GLTFLoader().parseAsync(packGLB(doc, bin), '');
+}
+
+// Leaves are modelled open, the way the plan draws them; here they start shut so the hall is clear
+const DOORS = [
+  { id: 'entrance', name: 'front door', parts: ['Entrance_door', 'Entrance_handle_in', 'Entrance_handle_out'], hinge: [692.25, 459.8], closed: Math.PI / 2, at: [671.9, 462.4] },
+  { id: 'bathroom', name: 'bathroom door', parts: ['Bathroom_door', 'Bathroom_handle_in', 'Bathroom_handle_out'], hinge: [642.08, 408.92], closed: Math.PI / 2, at: [639.74, 390.02] },
+];
+const doorParts = new Set();
+const obstacles = [];          // model-space floor-plan boxes of anything between knee and chest height
+
+function setupModel(gltf) {
+  const root = gltf.scene;
+  world.add(root);
+  world.updateMatrixWorld(true);
+  const meshes = [], seen = new Set();
+  root.traverse((o) => {
+    if (!o.isMesh) return;
+    meshes.push(o);
+    const m = o.material;
+    o.castShadow = !m.transparent;
+    o.receiveShadow = true;
+    if (seen.has(m)) return;
+    seen.add(m);
+    if (FLOOR_MAPS[m.name]) {
+      m.map = FLOOR_MAPS[m.name];
+      m.color.set(0xffffff);
+      m.metalness = 0;
+      m.roughness = 0.65;
+    }
+    if (m.transparent) m.depthWrite = false;
+    m.envMapIntensity = 0.6;
+    m.needsUpdate = true;
+  });
+  for (const d of DOORS) {
+    d.pivot = new THREE.Group();
+    d.pivot.position.copy(P(...d.hinge));
+    root.add(d.pivot);
+    d.pivot.updateMatrixWorld(true);
+    d.leaf = root.getObjectByName(d.parts[0]);
+    for (const name of d.parts) {
+      const o = root.getObjectByName(name);
+      if (o) { d.pivot.attach(o); doorParts.add(o); }
+    }
+    d.open = false;
+    d.angle = d.closed;
+    d.pivot.rotation.y = d.closed;
+    d.atPos = P(...d.at);
+  }
+  for (const o of meshes) {
+    if (doorParts.has(o)) continue;
+    if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
+    const b = o.geometry.boundingBox.clone().applyMatrix4(o.matrixWorld);
+    if (b.min.y < 1.2 && b.max.y > 0.25) obstacles.push(b);
+    // Meshes are unrotated boxes straight under the glTF root, so model y = position.y + vertex y
+    if (o.name.startsWith('Overhead_unit')) { overhead = o; overheadY = o.position.y; continue; }
+    const pos = o.geometry.attributes.position, idx = [];
+    for (let i = 0; i < pos.count; i++) if (Math.abs(o.position.y + pos.getY(i) - MODEL_CEILING) < 0.002) idx.push(i);
+    if (idx.length) stretched.push({ geo: o.geometry, idx, base: o.position.y });
+  }
+  applyCeiling();
+}
+
+// ------------------------------------------------------------ doors
+function updateDoors(dt) {
+  for (const d of DOORS) {
+    if (!d.pivot) continue;
+    const step = dt * 2.4, gap = (d.open ? 0 : d.closed) - d.angle;
+    if (Math.abs(gap) < 1e-4) continue;
+    d.angle += Math.max(-step, Math.min(step, gap));
+    d.pivot.rotation.y = d.angle;
+    d.pivot.updateMatrixWorld(true);
+  }
+}
+function toggleDoor(d) {
+  if (d?.pivot) d.open = !d.open;
+}
+// The two doors are close together, so E picks the one you are looking at: its opening
+// or its leaf within 1.8 m, whichever lies nearer the middle of the view.
+const doorBox = new THREE.Box3(), leafCenter = new THREE.Vector3(), atWorld = new THREE.Vector3();
+function nearestDoor() {
+  const lookX = -Math.sin(walk.yaw), lookZ = -Math.cos(walk.yaw);
+  let best = null, bestCos = -Infinity;
+  for (const d of DOORS) {
+    if (!d.atPos || !d.leaf) continue;
+    doorBox.setFromObject(d.leaf).getCenter(leafCenter);
+    atWorld.copy(d.atPos).multiplyScalar(cal.scale);
+    for (const p of [atWorld, leafCenter]) {
+      const dx = p.x - camera.position.x, dz = p.z - camera.position.z, dist = Math.hypot(dx, dz);
+      const cos = dist < 1e-3 ? 1 : (dx * lookX + dz * lookZ) / dist;
+      if (dist < 1.8 && (cos > 0.2 || dist < 0.7) && cos > bestCos) { best = d; bestCos = cos; }
+    }
+  }
+  return best;
+}
+
+// ------------------------------------------------------------ walking
+const walk = { ghost: false, yaw: 0, pitch: 0, keys: new Set(), dragging: false, lastX: 0, lastY: 0, prompt: '', phase: 0, bob: 0 };
+const MOVE_KEYS = { KeyW: 'f', ArrowUp: 'f', KeyS: 'b', ArrowDown: 'b', KeyA: 'l', ArrowLeft: 'l', KeyD: 'r', ArrowRight: 'r' };
+const SPOTS = {
+  door: { at: [671.9, 446], yaw: 0 },            // just inside the front door, facing the room
+  room: { at: [660, 230], yaw: 0 },              // past the wardrobe, facing the window
+  window: { at: [610, 95], yaw: Math.PI },       // by the window, looking back to the hall
+  bath: { at: [620, 400], yaw: Math.PI / 2 },    // in the bathroom, facing the basin
+};
+function standAt(name) {
+  const s = SPOTS[name], p = P(...s.at).multiplyScalar(cal.scale);
+  camera.position.set(p.x, eyeHeight(), p.z);
+  walk.yaw = s.yaw;
+  walk.pitch = 0;
+}
+
+// Collisions are tested in model space, so the model-size check scales you instead of every box
+function blocked(x, z) {
+  const s = cal.scale, r = radius(), mx = x / s, mz = z / s, mr = r / s;
+  for (const b of obstacles) {
+    if (mx > b.min.x - mr && mx < b.max.x + mr && mz > b.min.z - mr && mz < b.max.z + mr) return true;
+  }
+  for (const d of DOORS) {
+    if (!d.leaf) continue;
+    doorBox.setFromObject(d.leaf);
+    if (x > doorBox.min.x - r && x < doorBox.max.x + r && z > doorBox.min.z - r && z < doorBox.max.z + r) return true;
+  }
+  return false;
+}
+function updateWalk(dt) {
+  const k = walk.keys;
+  const f = (k.has('f') ? 1 : 0) - (k.has('b') ? 1 : 0), s = (k.has('r') ? 1 : 0) - (k.has('l') ? 1 : 0);
+  let moved = 0;
+  if (f || s) {
+    const v = cal.speed * (k.has('run') ? 1.8 : 1) * dt / Math.hypot(f, s);
+    const sin = Math.sin(walk.yaw), cos = Math.cos(walk.yaw);
+    const dx = (-sin * f + cos * s) * v, dz = (-cos * f - sin * s) * v;
+    const p = camera.position, x0 = p.x, z0 = p.z;
+    // Ghost mode ignores collisions; so does anyone already inside something (a door shut on them)
+    const free = walk.ghost || blocked(p.x, p.z);
+    if (free || !blocked(p.x + dx, p.z)) p.x += dx;      // test each axis alone, so you slide along walls
+    if (free || !blocked(p.x, p.z + dz)) p.z += dz;
+    moved = Math.hypot(p.x - x0, p.z - z0);
+  }
+  // One bob per step; a step is about 0.415 x your height
+  walk.phase += moved / (0.415 * cal.heightCm / 100);
+  walk.bob += ((moved > 0 && cal.bob && !reduceMotion ? 1 : 0) - walk.bob) * Math.min(1, dt * 6);
+  camera.position.y = eyeHeight() + 0.02 * walk.bob * Math.sin(2 * Math.PI * walk.phase);
+  camera.rotation.set(walk.pitch, walk.yaw, 0, 'YXZ');
+  const d = nearestDoor();
+  const prompt = d ? `E: ${d.open ? 'close' : 'open'} the ${d.name}` : '';
+  if (prompt !== walk.prompt) {
+    walk.prompt = prompt;
+    $('door-prompt').textContent = prompt;
+    $('door-prompt').hidden = !prompt;
+  }
+}
+
+const ghostButtons = [$('ghost'), document.querySelector('.pad [data-action="ghost"]')];
+function setGhost(on) {
+  walk.ghost = on;
+  ghostButtons.forEach((b) => b.setAttribute('aria-pressed', String(on)));
+  $('ghost').textContent = on ? 'Ghost mode on' : 'Ghost mode';
+}
+ghostButtons.forEach((b) => b.addEventListener('click', () => setGhost(!walk.ghost)));
+document.querySelector('.pad [data-action="door"]').addEventListener('click', () => toggleDoor(nearestDoor()));
+document.querySelectorAll('[data-spot]').forEach((b) => b.addEventListener('click', () => standAt(b.dataset.spot)));
+
+canvas.addEventListener('pointerdown', (e) => {
+  walk.dragging = true;
+  walk.lastX = e.clientX;
+  walk.lastY = e.clientY;
+  document.activeElement?.blur?.();
+  if (e.pointerType === 'mouse' && !document.pointerLockElement && canvas.requestPointerLock) {
+    try { canvas.requestPointerLock()?.catch?.(() => {}); } catch { /* pointer lock is optional */ }
+  }
+});
+canvas.addEventListener('pointermove', (e) => {
+  let dx, dy;
+  if (document.pointerLockElement === canvas) { dx = e.movementX; dy = e.movementY; }
+  else if (walk.dragging) { dx = e.clientX - walk.lastX; dy = e.clientY - walk.lastY; }
+  else return;
+  walk.lastX = e.clientX;
+  walk.lastY = e.clientY;
+  walk.yaw -= dx * 0.0028;
+  walk.pitch = Math.max(-1.4, Math.min(1.4, walk.pitch - dy * 0.0028));
+});
+for (const ev of ['pointerup', 'pointercancel']) canvas.addEventListener(ev, () => { walk.dragging = false; });
+const typing = (e) => !document.pointerLockElement && e.target.closest?.('input, textarea, select, summary');
+addEventListener('keydown', (e) => {
+  if (typing(e)) return;
+  if (e.code === 'KeyE' && !e.repeat) { toggleDoor(nearestDoor()); return; }
+  if (e.code === 'KeyG' && !e.repeat) { setGhost(!walk.ghost); return; }
+  const k = MOVE_KEYS[e.code] || (e.key === 'Shift' ? 'run' : null);
+  if (k) { walk.keys.add(k); e.preventDefault(); }
+});
+addEventListener('keyup', (e) => {
+  const k = MOVE_KEYS[e.code] || (e.key === 'Shift' ? 'run' : null);
+  if (k) walk.keys.delete(k);
+});
+addEventListener('blur', () => walk.keys.clear());
+const pad = $('pad');
+pad.hidden = !matchMedia('(pointer: coarse)').matches;
+pad.querySelectorAll('button[data-key]').forEach((b) => {
+  const k = MOVE_KEYS[b.dataset.key];
+  b.addEventListener('pointerdown', (e) => { e.preventDefault(); walk.keys.add(k); });
+  for (const ev of ['pointerup', 'pointerleave', 'pointercancel']) b.addEventListener(ev, () => walk.keys.delete(k));
+});
+
+// ------------------------------------------------------------ calibration controls
+const inputs = {
+  heightCm: $('height'), eyeBelowCm: $('eye'), shoulderCm: $('shoulders'), hfov: $('fov'), speed: $('speed'),
+  scale: $('scale'), ceilingM: $('ceiling'), screenIn: $('screen-in'), distanceCm: $('distance'),
+};
+const vfovDeg = () => THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(cal.hfov) / 2) / camera.aspect));
+function screenFit() {
+  // screen.width and the stage are both in CSS pixels, so their ratio survives zoom and display scaling
+  const sw = screen.width || 1920, sh = screen.height || 1080;
+  const screenWcm = cal.screenIn * 2.54 * sw / Math.hypot(sw, sh);
+  const viewWcm = screenWcm * Math.min(1, (stage.clientWidth || sw) / sw);
+  return { viewWcm, fov: Math.round(THREE.MathUtils.radToDeg(2 * Math.atan(viewWcm / 2 / cal.distanceCm))) };
+}
+function summaryText() {
+  return `${(cal.heightCm / 100).toFixed(2)} m tall, eyes at ${eyeHeight().toFixed(2)} m, shoulders ${cal.shoulderCm} cm · `
+    + `field of view ${cal.hfov}° across (${Math.round(vfovDeg())}° up and down in this window) · `
+    + `walking ${cal.speed.toFixed(2)} m/s${cal.bob ? ' with head bob' : ''} · model scale ${cal.scale.toFixed(2)} · ceiling ${cal.ceilingM.toFixed(2)} m`;
+}
+function render() {
+  for (const [key, el] of Object.entries(inputs)) if (document.activeElement !== el) el.value = cal[key];
+  $('bob').checked = cal.bob;
+  $('height-out').textContent = `${(cal.heightCm / 100).toFixed(2)} m`;
+  $('eye-out').textContent = `${cal.eyeBelowCm} cm`;
+  $('eye-height').textContent = `${eyeHeight().toFixed(2)} m`;
+  $('shoulders-out').textContent = `${cal.shoulderCm} cm`;
+  $('fov-out').textContent = `${cal.hfov}°`;
+  $('fov-note').textContent = `Up and down, this window shows ${Math.round(vfovDeg())}°. A narrower angle makes everything look bigger on screen; a wider one shows more of the room.`;
+  $('speed-out').textContent = `${cal.speed.toFixed(2)} m/s`;
+  $('scale-out').textContent = `${cal.scale.toFixed(2)} ×`;
+  $('scale-note').textContent = (Math.abs(cal.scale - 1) < 0.005
+    ? '1.00 is the true size, measured from the 1:60 PDF. '
+    : `At ${cal.scale.toFixed(2)} you see the flat as someone ${(cal.heightCm / 100 / cal.scale).toFixed(2)} m tall would. `)
+    + 'The model grows around the spot you stand on, so things do not get bigger on screen: your eyes sit lower in the room instead. To make everything look bigger on screen, narrow the field of view.';
+  $('ceiling-out').textContent = $('ceiling-size').textContent = `${cal.ceilingM.toFixed(2)} m`;
+  const fit = screenFit();
+  $('fit-note').textContent = `This 3D view is about ${Math.round(fit.viewWcm)} cm wide on your screen. Seen from ${cal.distanceCm} cm away, it covers ${fit.fov}°.`;
+  $('fit-use').textContent = `Use ${fit.fov}°`;
+  document.querySelectorAll('[data-height]').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.height === cal.heightCm)));
+  $('horizon-label').textContent = `Eye level ${eyeHeight().toFixed(2)} m`;
+  $('summary').textContent = summaryText();
+}
+function applyView() {
+  camera.fov = vfovDeg();
+  camera.updateProjectionMatrix();
+  world.scale.setScalar(cal.scale);
+  figure.scale.setScalar(cal.heightCm / 100 / cal.scale);
+  tag.position.set(figure.position.x, (cal.heightCm / 100 + 0.16) / cal.scale, figure.position.z);
+  tag.scale.set(0.56 / cal.scale, 0.14 / cal.scale, 1);
+  drawTag();
+}
+function set(key, value) {
+  const [lo, hi] = RANGES[key] || [-Infinity, Infinity];
+  value = Math.min(hi, Math.max(lo, value));
+  if (key === 'scale') {
+    // Keep standing on the same spot of the plan when the model grows or shrinks
+    const k = value / cal.scale;
+    camera.position.x *= k;
+    camera.position.z *= k;
+  }
+  cal[key] = value;
+  if (key === 'ceilingM') applyCeiling();
+  if (key === 'heightCm') {
+    if (linked.eye) cal.eyeBelowCm = derivedEye(value);
+    if (linked.shoulders) cal.shoulderCm = derivedShoulders(value);
+  }
+  applyView();
+  render();
+}
+inputs.heightCm.addEventListener('input', () => set('heightCm', +inputs.heightCm.value));
+inputs.eyeBelowCm.addEventListener('input', () => { linked.eye = false; set('eyeBelowCm', +inputs.eyeBelowCm.value); });
+inputs.shoulderCm.addEventListener('input', () => { linked.shoulders = false; set('shoulderCm', +inputs.shoulderCm.value); });
+inputs.hfov.addEventListener('input', () => set('hfov', +inputs.hfov.value));
+inputs.speed.addEventListener('input', () => set('speed', +inputs.speed.value));
+inputs.scale.addEventListener('input', () => set('scale', +inputs.scale.value));
+inputs.ceilingM.addEventListener('input', () => set('ceilingM', +inputs.ceilingM.value));
+for (const key of ['screenIn', 'distanceCm']) {
+  inputs[key].addEventListener('input', () => { const v = parseFloat(inputs[key].value); if (v > 0) set(key, v); });
+  inputs[key].addEventListener('change', render);
+}
+$('bob').addEventListener('change', () => { cal.bob = $('bob').checked; render(); });
+document.querySelectorAll('[data-height]').forEach((b) => b.addEventListener('click', () => set('heightCm', +b.dataset.height)));
+$('fit-use').addEventListener('click', () => set('hfov', screenFit().fov));
+$('reset').addEventListener('click', () => {
+  const k = DEFAULTS.scale / cal.scale;
+  camera.position.x *= k;
+  camera.position.z *= k;
+  Object.assign(cal, DEFAULTS);
+  linked.eye = linked.shoulders = true;
+  applyCeiling();
+  applyView();
+  render();
+  saveNote('Back to the starting values. Your saved calibration is unchanged until you save again.');
+});
+
+const horizon = $('horizon'), reading = $('reading'), reticle = $('reticle');
+const aid = { horizon: $('aid-horizon'), tapes: $('aid-tapes'), floor: $('aid-floor'), figure: $('aid-figure'), reading: $('aid-reading') };
+function applyAids() {
+  horizon.hidden = !aid.horizon.checked;
+  tapes.visible = aid.tapes.checked;
+  marks.visible = aid.floor.checked;
+  figure.visible = tag.visible = aid.figure.checked;
+  reading.hidden = reticle.hidden = !aid.reading.checked;
+}
+Object.values(aid).forEach((el) => el.addEventListener('change', applyAids));
+applyAids();
+
+// The horizon of a level camera is the line of everything at eye height
+function placeHorizon(height) {
+  if (horizon.hidden) return;
+  const y = height / 2 * (1 + Math.tan(walk.pitch) / Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2));
+  horizon.style.visibility = y >= 0 && y <= height ? 'visible' : 'hidden';
+  horizon.style.top = `${y}px`;
+}
+
+const raycaster = new THREE.Raycaster(), center = new THREE.Vector2();
+raycaster.far = 40;
+const shown = (o) => { for (; o; o = o.parent) if (!o.visible) return false; return true; };
+let lastPick = 0;
+function pick(now) {
+  if (reading.hidden || now - lastPick < 120) return;
+  lastPick = now;
+  raycaster.setFromCamera(center, camera);
+  const hit = raycaster.intersectObject(world, true).find((h) => shown(h.object) && !h.object.isSprite && h.object !== marks);
+  reading.textContent = hit ? `${hit.distance.toFixed(2)} m · ${hit.object.name.replace(/_/g, ' ')}` : 'Nothing within 40 m';
+}
+
+// ------------------------------------------------------------ saving (artifact db) and copying
+const saveBtn = $('save'), saveNote = (text) => { $('save-note').textContent = text; };
+let db = null;
+const KEYS = Object.keys(DEFAULTS);
+function adopt(data) {
+  const before = cal.scale;
+  for (const key of KEYS) {
+    const v = data?.[key];
+    if (key === 'bob') { if (typeof v === 'boolean') cal.bob = v; continue; }
+    if (typeof v === 'number' && Number.isFinite(v)) {
+      const [lo, hi] = RANGES[key];
+      cal[key] = Math.min(hi, Math.max(lo, v));
+    }
+  }
+  linked.eye = linked.shoulders = false;
+  camera.position.x *= cal.scale / before;
+  camera.position.z *= cal.scale / before;
+  applyCeiling();
+  applyView();
+  render();
+}
+const when = (iso) => {
+  const d = new Date(iso);
+  return Number.isNaN(+d) ? 'earlier' : d.toLocaleString([], { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+};
+saveNote('Copy values works everywhere. Saving needs the page open on claude.ai.');
+(async () => {
+  try { db = await window.claude?.use?.('db'); } catch { db = null; }
+  if (!db) return;
+  saveBtn.hidden = false;
+  saveNote('Looking for a saved calibration…');
+  const timer = setTimeout(() => saveNote('Your saved calibration has not loaded yet. You can still walk and save.'), 10000);
+  try {
+    const snap = await db.doc('calibration/current').get();
+    clearTimeout(timer);
+    if (snap.exists) {
+      adopt(snap.data());
+      saveNote(`Loaded the calibration you saved ${when(snap.data().savedAt)}.`);
+    } else {
+      saveNote('Nothing saved yet. Save when the rooms feel right; Claude reads the saved values to build the final walk-through.');
+    }
+  } catch (e) {
+    clearTimeout(timer);
+    saveNote(`Your saved calibration could not be read (${e?.code || 'error'}). You can still walk and save.`);
+  }
+})();
+saveBtn.addEventListener('click', async () => {
+  if (!db) return;
+  saveBtn.disabled = true;
+  saveNote('Saving…');
+  const body = { savedAt: new Date().toISOString(), eyeHeightM: +eyeHeight().toFixed(3), vfovInThisWindow: Math.round(vfovDeg()) };
+  for (const key of KEYS) body[key] = cal[key];
+  try {
+    await db.doc('calibration/current').set(body);
+    saveNote(`Saved ${when(body.savedAt)}. Claude can read these values now.`);
+  } catch (e) {
+    saveNote(e?.code === 'invalid_argument'
+      ? 'This page is view-only for you, so it cannot save. Use Copy values instead.'
+      : `Saving did not work (${e?.code || 'error'}). Try again in a moment, or use Copy values.`);
+  } finally {
+    saveBtn.disabled = false;
+  }
+});
+$('copy').addEventListener('click', async () => {
+  const text = summaryText();
+  try {
+    await navigator.clipboard.writeText(text);
+    saveNote('Copied. Paste it into the chat.');
+  } catch {
+    const range = document.createRange();
+    range.selectNodeContents($('summary'));
+    getSelection().removeAllRanges();
+    getSelection().addRange(range);
+    saveNote('Your browser blocked copying, so the values are selected. Press Ctrl+C or Cmd+C.');
+  }
+});
+
+// ------------------------------------------------------------ theme, size, loop
+function applyTheme() {
+  scene.background = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--scene').trim() || '#d9dde1');
+}
+applyTheme();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+new MutationObserver(applyTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+let width = 1, height = 1;
+new ResizeObserver(() => {
+  width = stage.clientWidth || 1;
+  height = stage.clientHeight || 1;
+  renderer.setSize(width, height, false);
+  camera.aspect = width / height;
+  applyView();
+  render();
+}).observe(stage);
+document.fonts?.ready?.then(() => { drawTag(); drawFloorMarks(); });
+
+applyView();
+render();
+standAt('door');
+let ready = false, last = performance.now();
+loadModel().then((gltf) => {
+  setupModel(gltf);
+  ready = true;
+  statusEl.hidden = true;
+}).catch((err) => {
+  console.error(err);
+  statusEl.textContent = `The model did not load (${err?.message || err}). Reload the page to try again.`;
+});
+
+renderer.setAnimationLoop((now) => {
+  const dt = Math.min(0.1, (now - last) / 1000);
+  last = now;
+  if (ready) {
+    updateDoors(dt);
+    updateWalk(dt);
+  }
+  placeHorizon(height);
+  pick(now);
+  renderer.render(scene, camera);
+});
+</script>

@@ -1,0 +1,104 @@
+ASSET Arnold.usd | 2.55 x 1.09 x 1.02 m | up Z mpu 0.01 | meshes 10 tris 523597 | mats 2
+   TEX MDL=OmniPBR.mdl ORM_texture=Iron_ORM.png ORM_texture=Leather_Brown_ORM.png diffuse_texture=Iron_BaseColor.png diffuse_texture=Leather_Brown_BaseColor.png normalmap_texture=Iron_N.png normalmap_texture=Leather_Brown_N.png
+ASSET Moline.usd | 2.59 x 0.99 x 0.97 m | up Z mpu 0.01 | meshes 9 tris 26018 | mats 3
+   TEX MDL=OmniPBR.mdl diffuse_texture=Moline_leather_sofa_BaseColor.png diffuse_texture=Moline_metal_sofa_BaseColor.png diffuse_texture=Moline_wood_sofa_BaseColor.png metallic_texture=Moline_metal_sofa_M.png normalmap_texture=Moline_leather_sofa_N.png normalmap_texture=Moline_wood_sofa_N.png reflectionroughness_texture=Moline_leather_sofa_R.png reflectionroughness_texture=Moline_metal_sofa_R.png reflectionroughness_texture=Moline_wood_sofa_R.png
+ASSET Make.usd | 1.02 x 1.02 x 0.24 m | up Z mpu 0.009999999776482582 | meshes 2 tris 356352 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=Make_white_stone_A.png normalmap_texture=Make_white_stone_N.png reflectionroughness_texture=Make_white_stone_SG.png
+ASSET Midtown.usd | 1.01 x 0.94 x 0.36 m | up Z mpu 0.009999999776482582 | meshes 2 tris 2816 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=Midtown_Legs_BaseColor.tga diffuse_texture=Midtown_Top_BaseColor.tga metallic_texture=Midtown_Legs_M.tga reflectionroughness_texture=Midtown_Legs_R.tga reflectionroughness_texture=Midtown_Top_R.tga
+ASSET Daybed.usd | 2.47 x 1.51 x 0.65 m | up Z mpu 0.01 | meshes 48 tris 978588 | mats 6
+   TEX MDL=OmniPBR.mdl ORM_texture=Ash_ORM.png ORM_texture=Iron_ORM.png ORM_texture=Rubber_Smooth_ORM.png diffuse_texture=Ash_BaseColor.png diffuse_texture=Iron_BaseColor.png diffuse_texture=Rubber_Smooth_BaseColor.png diffuse_texture=cotton_roughly_woven_diff.jpg diffuse_texture=felt_white_diff.jpg normalmap_texture=Ash_Normal.png normalmap_texture=Iron_N.png normalmap_texture=Rubber_Smooth_Normal.png normalmap_texture=cotton_roughly_woven_norm.jpg reflectionroughness_texture=cotton_roughly_woven_rough.jpg reflectionroughness_texture=felt_white_diff.jpg
+ASSET Desk_01.usd | 0.64 x 1.91 x 0.78 m | up Z mpu 0.01 | meshes 8 tris 3120 | mats 1
+   TEX MDL=OmniPBR.mdl ORM_texture=Walnut_ORM.png diffuse_texture=Walnut_BaseColor.png normalmap_texture=Walnut_N.png
+ASSET Chair_Desk.usd | 0.67 x 0.65 x 0.86 m | up Z mpu 0.01 | meshes 3 tris 10458 | mats 3
+   TEX MDL=OmniPBR.mdl ORM_texture=Chair_Desk_ORM.png diffuse_texture=Chair_Desk_BaseColor.png normalmap_texture=Chair_Desk_Normal.png
+ASSET CreveCoeur.usd | 1.49 x 0.34 x 0.43 m | up Z mpu 0.009999999776482582 | meshes 5 tris 28880 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=CreveCoeur_PB_BaseColor.png diffuse_texture=CreveCoeur_Wood_BaseColor.png normalmap_texture=CreveCoeur_PB_Normal.png normalmap_texture=CreveCoeur_Wood_Normal.png reflectionroughness_texture=CreveCoeur_PB_Roughness.png reflectionroughness_texture=CreveCoeur_Wood_Roughness.png
+ASSET Huntliegh.usd | 0.45 x 1.82 x 0.56 m | up Z mpu 0.009999999776482582 | meshes 4 tris 3156 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=Huntleigh_Body_BaseColor.png diffuse_texture=Huntleigh_Legs_BaseColor.png metallic_texture=Huntleigh_Legs_M.png normalmap_texture=Huntleigh_Body_N.png normalmap_texture=Huntleigh_Legs_N.png reflectionroughness_texture=Huntleigh_Body_R.png reflectionroughness_texture=Huntleigh_Legs_R.png
+ASSET Manchester.usd | 1.93 x 0.51 x 0.56 m | up Z mpu 0.009999999776482582 | meshes 3 tris 12336 | mats 3
+   TEX MDL=OmniPBR.mdl diffuse_texture=Manchester_Shelves_BaseColor.png diffuse_texture=Manchester_Support_BaseColor.png metallic_texture=Manchester_Support_Metallic.png normalmap_texture=Manchester_Shelves_Normal.png normalmap_texture=Manchester_Support_Normal.png reflectionroughness_texture=Manchester_Shelves_Roughness.png reflectionroughness_texture=Manchester_Support_Roughness.png
+ASSET Soulard.usd | 1.52 x 0.41 x 0.56 m | up Z mpu 0.009999999776482582 | meshes 9 tris 12896 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=Soulard_Metal_BaseColor.png diffuse_texture=Soulard_Wood_BaseColor.png normalmap_texture=Soulard_Metal_Normal.png normalmap_texture=Soulard_Wood_Normal.png reflectionroughness_texture=Soulard_Metal_Roughness.png reflectionroughness_texture=Soulard_Wood_Roughness.png
+ASSET Ellendale.usd | 0.53 x 0.49 x 0.69 m | up Z mpu 0.009999999776482582 | meshes 2 tris 3288 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=Ellendale_Legs_BaseColor.png diffuse_texture=Ellendale_Top_BaseColor.tga metallic_texture=Ellendale_Legs_M.png normalmap_texture=Ellendale_Top_N.tga reflectionroughness_texture=Ellendale_Legs_R.png reflectionroughness_texture=Ellendale_Top_R.tga
+ASSET Festus01.usd | 0.38 x 0.38 x 0.46 m | up Z mpu 0.01 | meshes 1 tris 44 | mats 1
+   TEX MDL=OmniPBR.mdl ORM_texture=Festus_ORM.png diffuse_texture=Festus_BaseColor.png normalmap_texture=Festus_Normal.png
+ASSET fridge.usd | 1.87 x 0.70 x 1.84 m | up Z mpu 0.01 | meshes 48 tris 819128 | mats 12
+   TEX MDL=OmniGlass.mdl MDL=OmniPBR.mdl diffuse_texture=fridge_AluminiumBase_BaseColor.png diffuse_texture=fridge_AluminiumShiny_BaseColor.png diffuse_texture=fridge_ControlPanel_BaseColor.png diffuse_texture=fridge_PlasticDarkSoft_BaseColor.png diffuse_texture=fridge_PlasticWhiteHard_BaseColor.png diffuse_texture=fridge_StainlessSteel_BaseColor.png metallic_texture=fridge_AluminiumBase_Metallic.png metallic_texture=fridge_AluminiumShiny_Metallic.png metallic_texture=fridge_StainlessSteel_Metallic.png normalmap_texture=fridge_AluminiumBase_Normal.png normalmap_texture=fridge_AluminiumShiny_Normal.pn
+ASSET stove.usd | 1.22 x 0.69 x 0.96 m | up Z mpu 0.01 | meshes 53 tris 1016658 | mats 21
+   TEX MDL=OmniGlass.mdl MDL=OmniPBR.mdl detail_normalmap_texture=stove_AluminiumBase_Normal.png diffuse_texture=stove_AluminiumBase_BaseColor.png diffuse_texture=stove_AluminiumShiny_BaseColor.png diffuse_texture=stove_ControlPanel_BaseColor.png diffuse_texture=stove_Insulation_BaseColor.png diffuse_texture=stove_MetalDarkPaintedRough_BaseColor.png diffuse_texture=stove_MetalDarkPainted_BaseColor.png diffuse_texture=stove_MetalGrid_BaseColor.png diffuse_texture=stove_PlasticDarkHard_BaseColor.png diffuse_texture=stove_PlasticDarkSoft_BaseColor.png diffuse_texture=stove_StainlessSteel_BaseColor.png e
+ASSET wall_oven.usd | 0.74 x 0.68 x 0.74 m | up Z mpu 0.01 | meshes 31 tris 390390 | mats 16
+   TEX MDL=OmniGlass.mdl MDL=OmniPBR.mdl diffuse_texture=wall_oven_AluminiumBase_BaseColor.png diffuse_texture=wall_oven_AluminiumShiny_BaseColor.png diffuse_texture=wall_oven_ControlPanel_BaseColor.png diffuse_texture=wall_oven_Insulation_BaseColor.png diffuse_texture=wall_oven_MetalDarkPaintedRough_BaseColor.png diffuse_texture=wall_oven_MetalDarkPainted_BaseColor.png diffuse_texture=wall_oven_MetalGrid_BaseColor.png diffuse_texture=wall_oven_PlasticDarkSoft_BaseColor.png diffuse_texture=wall_oven_StainlessSteel_BaseColor.png metallic_texture=wall_oven_AluminiumBase_Metallic.png metallic_texture=wa
+ASSET microwave.usd | 0.75 x 0.54 x 0.47 m | up Z mpu 0.01 | meshes 7 tris 118760 | mats 12
+   TEX MDL=OmniGlass.mdl MDL=OmniPBR.mdl detail_normalmap_texture=microwave_AluminiumBase_Normal.png diffuse_texture=microwave_AluminiumBase_BaseColor.png diffuse_texture=microwave_AluminiumShiny_BaseColor.png diffuse_texture=microwave_ControlPanel_BaseColor.png diffuse_texture=microwave_Interior_BaseColor.png diffuse_texture=microwave_MetalDarkPainted_BaseColor.png diffuse_texture=microwave_PlasticDarkHard_BaseColor.png diffuse_texture=microwave_PlasticDarkSoft_BaseColor.png diffuse_texture=microwave_StainlessSteel_BaseColor.png emissive_color_texture=microwave_ControlPanel_Emissive.png glass_color_
+ASSET dishwasher_A.usd | 0.59 x 0.60 x 0.41 m | up Z mpu 0.009999999776482582 | meshes 10 tris 290072 | mats 11
+   TEX Warning: in _ReportErrors at line 3172 of C:\db\build\S\VS1564R\build\usd\src\external_usd\pxr\usd\usd\stage.cpp -- In </Tagging/ThumbRig/studio_lights>: Could not open asset @d:/Downloads/SimReady_Furniture_Misc_01_NVD@10010/Assets/simready_content/common_tools/content_tagging/studio_lights/studio_lights.usd@ for reference introduced by @d:/Downloads/SimReady_Furniture_Misc_01_NVD@10010/Assets/simready_content/common_tools/content_tagging/thumbnail_rigs/thumb_rig_prop.usd@</Tagging/ThumbRig/studio_lights>. (instantiating stage on stage @d:/Downloads/SimReady_Furniture_Misc_01_NVD@10010/Assets/simready_content/common_assets/props/crestwood_sofa/crestwood_sofa.usd@ <0000017CB9D39D00>)
+ASSET venthood.usd | 1.60 x 0.72 x 2.13 m | up Z mpu 0.01 | meshes 11 tris 3284599 | mats 7
+   TEX MDL=OmniGlass.mdl MDL=OmniPBR.mdl diffuse_texture=Vent_Top_albedo.<UDIM>.png diffuse_texture=Venthood_albedo.png metallic_texture=Vent_Top_metal.<UDIM>.png metallic_texture=Venthood_metal.png normalmap_texture=Vent_Top_normal.<UDIM>.png normalmap_texture=Venthood_normal.png reflectionroughness_texture=Vent_Top_rough.<UDIM>.png reflectionroughness_texture=Venthood_rough.png roughness_texture=Vent_Top_rough.png
+ASSET faucet_01.usd | 0.13 x 0.36 x 0.29 m | up Z mpu 0.01 | meshes 2 tris 3422602 | mats 1
+   TEX MDL=OmniPBR.mdl diffuse_texture=faucet01_albedo.png metallic_texture=faucet01_metal.png normalmap_texture=faucet01_normal.png reflectionroughness_texture=faucet01_rough.png
+ASSET faucet_02.usd | 0.12 x 0.33 x 0.27 m | up Z mpu 0.01 | meshes 2 tris 3425640 | mats 1
+   TEX MDL=OmniPBR.mdl diffuse_texture=faucet02_albedo.png metallic_texture=faucet02_metal.png normalmap_texture=faucet02_normal.png reflectionroughness_texture=faucet02_rough.png
+ASSET TV_Wall.usd | 0.05 x 1.44 x 0.81 m | up Z mpu 0.01 | meshes 1 tris 4010 | mats 3
+   TEX MDL=OmniPBR.mdl diffuse_texture=TV_Wall_Back_BaseColor.tga diffuse_texture=TV_Wall_Main_BaseColor.tga diffuse_texture=TV_Wall_Screen_BaseColor.tga normalmap_texture=TV_Wall_Back_N.tga normalmap_texture=TV_Wall_Main_N.tga normalmap_texture=TV_Wall_Screen_N.tga reflectionroughness_texture=TV_Wall_Back_R.tga reflectionroughness_texture=TV_Wall_Main_R.tga reflectionroughness_texture=TV_Wall_Screen_R.tga
+ASSET Plant_01.usd | 0.69 x 0.68 x 0.51 m | up Z mpu 0.009999999776482582 | meshes 4 tris 574518 | mats 4
+   TEX MDL=OmniPBR.mdl diffuse_texture=Plant_dirt_1.jpg diffuse_texture=marble.png diffuse_texture=plant01_leaves_basecolor.png normalmap_texture=Plant_dirt_1_bump.jpg normalmap_texture=plant01_leaves_normal.png
+ASSET Plant_02.usd | 0.45 x 0.41 x 0.51 m | up Z mpu 0.009999999776482582 | meshes 3 tris 12888 | mats 3
+   TEX MDL=OmniPBR.mdl diffuse_texture=Plant_dirt_1.jpg diffuse_texture=marble.png diffuse_texture=plant02_leaves_basecolor.png normalmap_texture=Plant_dirt_1_bump.jpg normalmap_texture=plant02_leaves_normal.png
+ASSET YuccaCane.usd | -6805646932770576960115759526208077824.00 x -6805646932770576960115759526208077824.00 x -6805646932770576960115759526208077824.00 m | up Z mpu 0.01 | meshes 6 tris 202736 | mats 3
+   TEX MDL=OmniPBR.mdl diffuse_texture=flowerpot_basecolor.png diffuse_texture=yuccabark_basecolor.png diffuse_texture=yuccaleaves_basecolor.png normalmap_texture=flowerpot_normal.png normalmap_texture=yuccabark_normal.png normalmap_texture=yuccaleaves_normal.png reflectionroughness_texture=flowerpot_roughness.png reflectionroughness_texture=yuccabark_roughness.png reflectionroughness_texture=yuccaleaves_roughness.png
+ASSET Rug_01.usd | 4.50 x 3.00 x 0.00 m | up Z mpu 0.01 | meshes 2 tris 4805 | mats 1
+   TEX MDL=Carpet_Berber_Multi.mdl
+ASSET Blue_Rugs.usd | 2.44 x 3.05 x 0.00 m | up Z mpu 0.009999999776482582 | meshes 1 tris 3584 | mats 1
+   TEX MDL=OmniPBR.mdl diffuse_texture=BlueRug_BaseColor.png normalmap_texture=BlueRug_N.png reflectionroughness_texture=BlueRug_R.png
+ASSET ArcFloorLamp.usd | 1.25 x 0.46 x 1.80 m | up Z mpu 0.009999999776482582 | meshes 4 tris 259014 | mats 4
+   TEX MDL=OmniGlass.mdl MDL=OmniPBR.mdl MDL=OmniSurface.mdl diffuse_reflection_color_image=ArcFloorLamp_Chup_A.png diffuse_texture=ArcFloorLamp_Chome_A.png diffuse_texture=ArcFloorLamp_Metal_A.png metallic_texture=ArcFloorLamp_Metal_M.png normalmap_texture=ArcFloorLamp_Chome_N.png normalmap_texture=ArcFloorLamp_Metal_N.png reflectionroughness_texture=ArcFloorLamp_Metal_R.png specular_reflection_roughness_image=ArcFloorLamp_Chup_R.png
+ASSET FloorLamp.usd | 0.48 x 0.48 x 1.59 m | up Z mpu 0.009999999776482582 | meshes 5 tris 70660 | mats 4
+   TEX MDL=OmniGlass.mdl MDL=OmniPBR.mdl MDL=OmniSurface.mdl coat_normal_image=FloorLamp_whitecotton_N.png diffuse_reflection_color_image=FloorLamp_whitecotton_A.png diffuse_texture=FloorLamp_marble_A.png diffuse_texture=FloorLamp_nikle_A.png metallic_texture=FloorLamp_nikle_M.png normalmap_texture=FloorLamp_marble_N.png normalmap_texture=FloorLamp_nikle_N.png reflectionroughness_texture=FloorLamp_marble_R.png reflectionroughness_texture=FloorLamp_nikle_R.png specular_reflection_roughness_image=FloorLamp_whitecotton_RG.png
+ASSET Theory.usd | 0.25 x 0.33 x 0.44 m | up Z mpu 0.009999999776482582 | meshes 7 tris 48280 | mats 5
+   TEX MDL=OmniGlass.mdl MDL=OmniPBR.mdl diffuse_texture=Theory_Bulb_metal_copper_A.png diffuse_texture=Theory_Bulb_metal_silver_A.png diffuse_texture=Theory_Metal_body_A.png normalmap_texture=Theory_Bulb_metal_copper_N.png normalmap_texture=Theory_Bulb_metal_silver_N.png reflectionroughness_texture=Theory_Bulb_metal_copper_SG.png reflectionroughness_texture=Theory_Bulb_metal_silver_SG.png reflectionroughness_texture=Theory_Metal_body_SG.png
+ASSET BlackLamp.usd | 0.41 x 0.23 x 0.79 m | up Z mpu 0.009999999776482582 | meshes 9 tris 131932 | mats 7
+   TEX MDL=OmniGlass.mdl MDL=OmniPBR.mdl MDL=OmniSurface.mdl diffuse_reflection_color_image=BlackRectangleLamp_LampShade_A.png diffuse_texture=BlackRectangleLamp_MetalCopper_A.png diffuse_texture=BlackRectangleLamp_MetalDarkBrown_A.png diffuse_texture=BlackRectangleLamp_MetalSilver_A.png diffuse_texture=BlackRectangleLamp_PlasticBlack_A.png metallic_texture=BlackRectangleLamp_MetalCopper_M.png metallic_texture=BlackRectangleLamp_MetalSilver_M.png normalmap_texture=BlackRectangleLamp_MetalCopper_N.png normalmap_texture=BlackRectangleLamp_MetalSilver_N.png normalmap_texture=BlackRectangleLamp_PlasticBl
+ASSET Painting_01.usd | 0.05 x 1.41 x 1.05 m | up Z mpu 0.009999999776482582 | meshes 1 tris 50 | mats 2
+   TEX MDL=OmniPBR.mdl ORM_texture=Oak_ORM.png ORM_texture=Painting_ORM.png diffuse_texture=Oak_BaseColor.png diffuse_texture=Painting_BaseColor.png normalmap_texture=Oak_N.png normalmap_texture=Painting_Normal.png
+ASSET FramedPicture_Wide01.usd | 0.99 x 0.03 x 0.45 m | up Z mpu 0.009999999776482582 | meshes 4 tris 756 | mats 4
+   TEX MDL=OmniGlass.mdl MDL=OmniPBR.mdl diffuse_texture=BW_Wide_01.png diffuse_texture=FramedPoster_FrameBoard_White_BaseColor.tga diffuse_texture=FramedPoster_Frame_BaseColor.tga normalmap_texture=FramedPoster_FrameBoard_White_N.tga normalmap_texture=FramedPoster_Frame_N.tga reflectionroughness_texture=FramedPoster_FrameBoard_White_R.tga reflectionroughness_texture=FramedPoster_Frame_R.tga
+ASSET FramedPicture_Tall01.usd | 0.45 x 0.03 x 0.99 m | up Z mpu 0.009999999776482582 | meshes 4 tris 756 | mats 4
+   TEX MDL=OmniGlass.mdl MDL=OmniPBR.mdl diffuse_texture=BW_Tall_01.png diffuse_texture=FramedPoster_FrameBoard_White_BaseColor.tga diffuse_texture=FramedPoster_Frame_BaseColor.tga normalmap_texture=FramedPoster_FrameBoard_White_N.tga normalmap_texture=FramedPoster_Frame_N.tga reflectionroughness_texture=FramedPoster_FrameBoard_White_R.tga reflectionroughness_texture=FramedPoster_Frame_R.tga
+ASSET DoorHandle_Left.usd | 0.12 x 0.28 x 0.16 m | up Z mpu 0.009999999776482582 | meshes 3 tris 3388 | mats 1
+   TEX MDL=OmniPBR.mdl ORM_texture=Steel_Stainless_ORM.png diffuse_texture=Steel_Stainless_BaseColor.png normalmap_texture=Steel_Stainless_N.png
+ASSET curtain_valance.usd | 2.07 x 0.13 x 0.47 m | up Z mpu 0.01 | meshes 24 tris 2655680 | mats 1
+   TEX MDL=OmniPBR.mdl diffuse_texture=curtain_valance_BaseColor.png metallic_texture=curtain_valance_Metallic.png normalmap_texture=curtain_valance_Normal.png reflectionroughness_texture=curtain_valance_Roughness.png
+ASSET CurtainRod_OrbEnds.usd | 2.37 x 0.10 x 0.07 m | up Z mpu 0.009999999776482582 | meshes 5 tris 4532 | mats 1
+   TEX MDL=OmniPBR.mdl
+ASSET MirrorRound.usd | 0.72 x 0.72 x 0.02 m | up Z mpu 0.01 | meshes 2 tris 52000 | mats 3
+   TEX MDL=OmniPBR.mdl
+ASSET Clayton.usd | 0.20 x 0.20 x 1.15 m | up Z mpu 0.009999999776482582 | meshes 2 tris 26532 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=Clayton_Shelves_BaseColor.png diffuse_texture=Clayton_Support_BaseColor.png normalmap_texture=Clayton_Shelves_Normal.png normalmap_texture=Clayton_Support_Normal.png reflectionroughness_texture=Clayton_Shelves_Roughness.png reflectionroughness_texture=Clayton_Support_Roughness.png
+ASSET crestwood_sofa.usd | 17.97 x 15.26 x 6.40 m | up Z mpu 1.0 | meshes 2 tris 4 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=srs_logo.png opacity_texture=camera_frame_alpha.png opacity_texture=srs_logo_alpha.png
+ASSET appleseed_coffeetable.usd | 17.85 x 14.70 x 6.40 m | up Z mpu 1.0 | meshes 2 tris 4 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=srs_logo.png opacity_texture=camera_frame_alpha.png opacity_texture=srs_logo_alpha.png
+ASSET dellwood_diningtable.usd | 18.01 x 14.96 x 6.40 m | up Z mpu 1.0 | meshes 2 tris 4 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=srs_logo.png opacity_texture=camera_frame_alpha.png opacity_texture=srs_logo_alpha.png
+ASSET dellwood_diningchair.usd | 17.82 x 14.36 x 6.40 m | up Z mpu 1.0 | meshes 2 tris 4 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=srs_logo.png opacity_texture=camera_frame_alpha.png opacity_texture=srs_logo_alpha.png
+ASSET dellwood_coffeetable.usd | 17.74 x 14.57 x 6.40 m | up Z mpu 1.0 | meshes 2 tris 4 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=srs_logo.png opacity_texture=camera_frame_alpha.png opacity_texture=srs_logo_alpha.png
+ASSET desperes_chair.usd | 17.76 x 14.27 x 6.40 m | up Z mpu 1.0 | meshes 2 tris 4 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=srs_logo.png opacity_texture=camera_frame_alpha.png opacity_texture=srs_logo_alpha.png
+ASSET desk_01.usd | 17.80 x 15.00 x 6.40 m | up Z mpu 1.0 | meshes 2 tris 4 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=srs_logo.png opacity_texture=camera_frame_alpha.png opacity_texture=srs_logo_alpha.png
+ASSET contemporary_lowhalfdesk.usd | 17.78 x 14.50 x 6.40 m | up Z mpu 1.0 | meshes 2 tris 4 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=srs_logo.png opacity_texture=camera_frame_alpha.png opacity_texture=srs_logo_alpha.png
+ASSET petite_loveseat.usd | 17.83 x 14.75 x 6.40 m | up Z mpu 1.0 | meshes 2 tris 4 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=srs_logo.png opacity_texture=camera_frame_alpha.png opacity_texture=srs_logo_alpha.png
+ASSET monarch.usd | 17.78 x 14.31 x 6.40 m | up Z mpu 1.0 | meshes 2 tris 4 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=srs_logo.png opacity_texture=camera_frame_alpha.png opacity_texture=srs_logo_alpha.png
+ASSET modern.usd | 17.93 x 15.54 x 6.40 m | up Z mpu 1.0 | meshes 2 tris 4 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=srs_logo.png opacity_texture=camera_frame_alpha.png opacity_texture=srs_logo_alpha.png
+ASSET salon.usd | 18.69 x 18.44 x 6.40 m | up Z mpu 1.0 | meshes 2 tris 4 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=srs_logo.png opacity_texture=camera_frame_alpha.png opacity_texture=srs_logo_alpha.png
+ASSET whitehome01.usd | 17.71 x 14.79 x 6.40 m | up Z mpu 1.0 | meshes 2 tris 4 | mats 2
+   TEX MDL=OmniPBR.mdl diffuse_texture=srs_logo.png opacity_texture=camera_frame_alpha.png opacity_texture=srs_logo_alpha.png

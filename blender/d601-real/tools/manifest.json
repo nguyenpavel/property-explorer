@@ -1,0 +1,31 @@
+{
+  "_note": "Assets from the NVIDIA Residential_NVD and SimReady_Furniture_Misc_01_NVD packs used in D.601. tris = triangle budget after decimation; tex = longest side of the base colour map.",
+  "roots": {
+    "R": "D:/Downloads/Residential_NVD@10012/Assets/ArchVis/Residential",
+    "S": "D:/Downloads/SimReady_Furniture_Misc_01_NVD@10010/Assets/simready_content/common_assets/props"
+  },
+  "assets": {
+    "sofa":          {"usd": "R/Furniture/FurnitureSets/Maplewood/Maplewood_Sofa.usd", "tris": 40000, "tex": 1024},
+    "coffee_table":  {"usd": "R/Furniture/FurnitureSets/Appleseed/Appleseed_CoffeeTable.usd", "tris": 12000, "tex": 1024},
+    "dining_table":  {"usd": "R/Furniture/DiningSets/EastRural/EastRural_Table.usd", "tris": 6000, "tex": 1024},
+    "dining_chair":  {"usd": "R/Furniture/DiningSets/EastRural/EastRural_Chair.usd", "tris": 9000, "tex": 512},
+    "media_unit":    {"usd": "R/Furniture/MediaTables/Soulard.usd", "tris": 13000, "tex": 1024},
+    "tv":            {"usd": "R/Electronics/Televisions/TV_Wall.usd", "tris": 4100, "tex": 1024},
+    "desk":          {"usd": "S/contemporary_lowhalfdesk/contemporary_lowhalfdesk_base.usd", "tris": 8000, "tex": 1024},
+    "desk_chair":    {"usd": "R/Furniture/Chairs/Chair_Desk.usd", "tris": 10500, "tex": 512},
+    "nightstand":    {"usd": "R/Furniture/EndTables/Festus01.usd", "tris": 100, "tex": 512},
+    "table_lamp":    {"usd": "R/Lighting/Table Lamps/Theory.usd", "tris": 9000, "tex": 512},
+    "floor_lamp":    {"usd": "R/Lighting/Floor Lamps/FloorLamp.usd", "tris": 12000, "tex": 512},
+    "pendant":       {"usd": "R/Lighting/Chandeliers/Chandelier_Spiral.usd", "tris": 3100, "tex": 512},
+    "plant":         {"usd": "R/Plants/Plant_02.usd", "tris": 13000, "tex": 512},
+    "plant_big":     {"usd": "R/Plants/Plant_01.usd", "tris": 24000, "tex": 1024},
+    "rug":           {"usd": "R/Decor/Rugs/Blue_Rugs.usd", "tris": 3600, "tex": 1024},
+    "picture_wide":  {"usd": "R/Decor/Pictures/FramedPicture_Wide01.usd", "tris": 800, "tex": 1024},
+    "picture_wide2": {"usd": "R/Decor/Pictures/FramedPicture_Wide03.usd", "tris": 800, "tex": 1024},
+    "picture_tall":  {"usd": "R/Decor/Pictures/FramedPicture_Tall01.usd", "tris": 800, "tex": 1024},
+    "painting":      {"usd": "R/Decor/Pictures/Painting_01.usd", "tris": 100, "tex": 1024},
+    "mirror":        {"usd": "R/Decor/Mirrors/MirrorRound.usd", "tris": 6000, "tex": 512},
+    "faucet":        {"usd": "R/Kitchen/KitchenFaucets/faucet_01.usd", "tris": 30000, "tex": 512},
+    "daybed_fabric": {"usd": "R/Furniture/Beds/Daybed.usd", "tris": 0, "tex": 512, "materials_only": true}
+  }
+}

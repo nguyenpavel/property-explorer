@@ -1,0 +1,503 @@
+<title>Metropolis Tower Unit 10</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Archivo+Narrow:wght@500;600&display=swap">
+<style>
+/* Layout: a full-height 3D stage beside a narrow spec sheet, like a drawing with its title block; stacks on phones */
+:root {
+  --bg: #eceef0; --panel: #f8f9fa; --ink: #1a1c1f; --muted: #5d636b; --line: #d4d8dd; --hover: #eef0f2;
+  --scene: #e2e5e8; --tag-bg: rgba(248, 249, 250, .9);
+  --room1: #d6c4b8; --room2: #ece8e2; --room3: #e4ded6;
+  --display: "Archivo Narrow", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body: "Archivo", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121417; --panel: #191c20; --ink: #e7e9ec; --muted: #9ba2aa; --line: #2c3137; --hover: #22262b;
+    --scene: #1c1f23; --tag-bg: rgba(25, 28, 32, .9); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121417; --panel: #191c20; --ink: #e7e9ec; --muted: #9ba2aa; --line: #2c3137; --hover: #22262b;
+  --scene: #1c1f23; --tag-bg: rgba(25, 28, 32, .9); color-scheme: dark;
+}
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 14px; line-height: 1.45; }
+.app { height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) 340px; }
+.stage { position: relative; min-width: 0; min-height: 0; background: var(--scene); overflow: hidden; }
+.stage canvas { display: block; width: 100%; height: 100%; touch-action: none; outline: none; }
+.sheet {
+  min-width: 0; overflow-y: auto; background: var(--panel); border-left: 1px solid var(--line);
+  padding-block: 22px; padding-left: 22px; padding-right: max(22px, env(safe-area-inset-right, 0px));
+  display: flex; flex-direction: column; gap: 22px;
+}
+@media (max-width: 760px) {
+  .app { grid-template-columns: minmax(0, 1fr); grid-template-rows: 58% 42%; }
+  .sheet { border-left: 0; border-top: 1px solid var(--line); padding-block: 18px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+}
+
+.eyebrow, h2 { font-family: var(--display); font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+h1 { font-family: var(--display); font-weight: 600; font-size: 36px; line-height: 1; margin: 6px 0 0; text-wrap: balance; }
+h2 { margin-bottom: 10px; }
+.facts { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; gap: 4px 12px; margin: 16px 0 0; }
+.facts dt { font-size: 11px; color: var(--muted); }
+.facts dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.rooms { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.room {
+  width: 100%; display: grid; grid-template-columns: 14px 34px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 9px 10px; border: 1px solid var(--line); border-radius: 4px; background: transparent;
+  color: inherit; font: inherit; text-align: left; cursor: pointer;
+}
+.room:hover { background: var(--hover); }
+.room[aria-pressed="true"] { border-color: var(--ink); background: var(--hover); }
+.swatch { width: 14px; height: 14px; border-radius: 2px; background: var(--sw); border: 1px solid rgba(0, 0, 0, .18); }
+.no { font-family: var(--display); font-weight: 600; font-variant-numeric: tabular-nums; }
+.name small { display: block; color: var(--muted); font-size: 12px; }
+.area { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.control { display: grid; gap: 8px; }
+.control label { display: flex; justify-content: space-between; gap: 12px; }
+.control output { font-weight: 600; font-variant-numeric: tabular-nums; }
+input[type="range"] { width: 100%; accent-color: var(--ink); }
+.hint { margin: 0; color: var(--muted); font-size: 12px; }
+.row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-top: 4px; }
+.check { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+.check input { accent-color: var(--ink); width: 16px; height: 16px; margin: 0; }
+.btn { font: inherit; font-weight: 500; padding: 6px 12px; border: 1px solid var(--line); border-radius: 4px; background: transparent; color: inherit; cursor: pointer; }
+.btn:hover { background: var(--hover); }
+
+.dims ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.dims li { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 7px; border-bottom: 1px dashed var(--line); font-variant-numeric: tabular-nums; }
+.dims li span:last-child { font-weight: 600; text-align: right; }
+.note { margin: 0; color: var(--muted); font-size: 12px; max-width: 65ch; }
+.note a { color: var(--ink); }
+
+.views {
+  position: absolute; top: 12px; left: max(12px, env(safe-area-inset-left, 0px)); display: flex; gap: 2px; padding: 3px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+}
+.views button {
+  font-family: var(--display); font-size: 13px; font-weight: 600; letter-spacing: .02em; padding: 6px 11px;
+  border: 0; border-radius: 4px; background: transparent; color: var(--muted); cursor: pointer;
+}
+.views button:hover { color: var(--ink); }
+.views button[aria-pressed="true"] { background: var(--ink); color: var(--panel); }
+.tip { position: absolute; left: max(12px, env(safe-area-inset-left, 0px)); bottom: 10px; margin: 0; font-size: 12px; color: var(--muted); pointer-events: none; }
+.status {
+  position: absolute; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; pointer-events: none;
+  font-family: var(--display); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted);
+}
+.tag {
+  position: absolute; left: 0; top: 0; pointer-events: none; white-space: nowrap; will-change: transform;
+  padding: 2px 7px; border-radius: 3px; border: 1px solid var(--line); background: var(--tag-bg); color: var(--ink);
+  font-family: var(--display); font-weight: 600; font-size: 14px; font-variant-numeric: tabular-nums;
+}
+.tag small { font-weight: 500; color: var(--muted); margin-left: 5px; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+</style>
+
+<div class="app">
+  <div class="stage" id="stage">
+    <div class="views" role="group" aria-label="Camera view">
+      <button type="button" id="v-plan" data-view="plan" aria-pressed="false">Plan</button>
+      <button type="button" id="v-overview" data-view="overview" aria-pressed="false">3D</button>
+      <button type="button" id="v-entrance" data-view="entrance" aria-pressed="false">From entrance</button>
+    </div>
+    <div class="tag" id="tag-r1" hidden>10.1<small>18.0 m²</small></div>
+    <div class="tag" id="tag-r2" hidden>10.2<small>3.9 m²</small></div>
+    <div class="tag" id="tag-r3" hidden>10.3<small>4.5 m²</small></div>
+    <p class="status" id="status">Loading 3D model…</p>
+    <p class="tip">Drag to orbit · scroll or pinch to zoom · right-drag to pan</p>
+  </div>
+
+  <aside class="sheet">
+    <header>
+      <p class="eyebrow">Metropolis Tower · Building A · Praha 10 – Malešice</p>
+      <h1>Unit 10</h1>
+      <dl class="facts">
+        <div><dt>Layout</dt><dd>1+kk</dd></div>
+        <div><dt>Floor</dt><dd>2.NP</dd></div>
+        <div><dt>Floor area</dt><dd>29.0 m²</dd></div>
+        <div><dt>Usable</dt><dd>26.4 m²</dd></div>
+      </dl>
+    </header>
+
+    <section>
+      <h2>Rooms</h2>
+      <ul class="rooms">
+        <li><button type="button" class="room" id="room-r1" data-view="r1" aria-pressed="false" style="--sw: var(--room1)">
+          <span class="swatch"></span><span class="no">10.1</span>
+          <span class="name">Obývací pokoj + KK<small>Living room with kitchenette</small></span><span class="area">18.0 m²</span></button></li>
+        <li><button type="button" class="room" id="room-r2" data-view="r2" aria-pressed="false" style="--sw: var(--room2)">
+          <span class="swatch"></span><span class="no">10.2</span>
+          <span class="name">Koupelna + WC<small>Bathroom with shower and WC</small></span><span class="area">3.9 m²</span></button></li>
+        <li><button type="button" class="room" id="room-r3" data-view="r3" aria-pressed="false" style="--sw: var(--room3)">
+          <span class="swatch"></span><span class="no">10.3</span>
+          <span class="name">Předsíň<small>Entrance hall with wardrobe</small></span><span class="area">4.5 m²</span></button></li>
+      </ul>
+    </section>
+
+    <section class="control">
+      <h2>Section cut</h2>
+      <label for="cut">Walls cut at <output id="cut-out" for="cut">2.70 m</output></label>
+      <input type="range" id="cut" min="0.3" max="2.7" step="0.05" value="2.7">
+      <p class="hint">Everything the cut passes through is filled solid black, the way the floor plan draws walls.</p>
+      <div class="row">
+        <label class="check" for="spin"><input type="checkbox" id="spin" checked> Rotate slowly</label>
+        <button type="button" class="btn" id="replay">Replay intro</button>
+      </div>
+    </section>
+
+    <section class="dims">
+      <h2>From the 1:50 plan</h2>
+      <ul>
+        <li><span>Interior width</span><span>1 960 + 1 690 mm</span></li>
+        <li><span>Living room length</span><span>4 690 mm</span></li>
+        <li><span>Window</span><span>2 300 × 1 500 mm, sill 870</span></li>
+        <li><span>Doors (hall · room · bath)</span><span>900 · 800 · 700 × 2 100</span></li>
+        <li><span>Hall and bathroom ceiling</span><span>2 350 mm</span></li>
+      </ul>
+    </section>
+
+    <p class="note">Modelled in Blender from the developer's floor plan dated 18 Sep 2026; plan dimensions are to unplastered walls. Furniture and finishes are illustrative, and the living room's 2.70 m ceiling is an assumption. <a href="https://www.central-group.cz/byt-detail/217-01-010" target="_blank" rel="noopener">Listing 217-01-010</a></p>
+  </aside>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+// Plan pixel (1200 x 2280 source image, 220 px per metre) -> world metres; glTF is y-up, plan "down" is +z
+const S = 220;
+const P = (px, py, y = 0) => new THREE.Vector3((px - 600) / S, y, (py - 1140) / S);
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const stage = document.getElementById('stage');
+const statusEl = document.getElementById('status');
+const cutInput = document.getElementById('cut');
+const cutOut = document.getElementById('cut-out');
+const spin = document.getElementById('spin');
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, stencil: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.localClippingEnabled = true;
+stage.prepend(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+scene.add(new THREE.HemisphereLight(0xffffff, 0x8b9097, 0.5));
+const sun = new THREE.DirectionalLight(0xffffff, 2.0);
+sun.position.set(-4, 11, 5);
+sun.target.position.set(0, 0, 0.3);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left: -7, right: 7, top: 7, bottom: -7, near: 1, far: 30 });
+sun.shadow.bias = -0.0003;
+sun.shadow.normalBias = 0.02;
+scene.add(sun, sun.target);
+
+const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 200);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.maxPolarAngle = Math.PI * 0.48;
+controls.minDistance = 2;
+controls.maxDistance = 45;
+controls.autoRotateSpeed = 0.6;
+
+// Section plane: everything above `constant` metres is cut away. It must never sit
+// exactly on a face (wall tops are at 2.70, worktops at 0.90...): a coplanar plane
+// clips that face pixel by pixel and the black poché beneath flickers through.
+const WALL_TOP = 2.7;
+const cut = new THREE.Plane(new THREE.Vector3(0, -1, 0), 100);
+let cutHeight = WALL_TOP;
+function setCut(h) {
+  cutHeight = h;
+  cut.constant = h >= WALL_TOP - 1e-3 ? 100 : h + 0.0123;
+  cutInput.value = h;
+  cutOut.textContent = h.toFixed(2) + ' m';
+}
+
+// ------------------------------------------------------------ floor textures (world-space UVs in metres)
+function canvasTexture(w, h, draw, periodU, periodV) {
+  const c = document.createElement('canvas');
+  c.width = w; c.height = h;
+  draw(c.getContext('2d'), w, h);
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.repeat.set(1 / periodU, 1 / periodV);
+  t.colorSpace = THREE.SRGBColorSpace;
+  t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  return t;
+}
+// Five 19 cm oak planks, 1.2 m long with staggered joints; one tile = 0.95 x 2.4 m
+const planks = canvasTexture(256, 640, (g, w, h) => {
+  const pw = w / 5, shades = [['#b59877', '#ad8f6d'], ['#b99c7a', '#b29470'], ['#ae9170', '#b79b79'], ['#b49673', '#ab8e6c'], ['#b89b78', '#b09372']];
+  [0, .5, .25, .75, .4].forEach((off, i) => {
+    for (let k = -2; k < 2; k++) {
+      const y0 = off * h + k * h / 2;
+      g.fillStyle = shades[i][(k % 2 + 2) % 2];
+      g.fillRect(i * pw, y0, pw, h / 2);
+      g.fillStyle = '#86694c';
+      g.fillRect(i * pw, y0, pw, 1.5);
+    }
+    for (let n = 0; n < 7; n++) {
+      g.fillStyle = `rgba(90, 64, 40, ${0.05 + 0.05 * ((i * 7 + n * 3) % 4) / 3})`;
+      g.fillRect(i * pw + 4 + ((n * 37 + i * 13) % (pw - 8)), 0, 1, h);
+    }
+    g.fillStyle = '#86694c';
+    g.fillRect(i * pw, 0, 1.5, h);
+  });
+}, 0.95, 2.4);
+const tiles = (px, face, grout, size) => canvasTexture(px, px, (g, w) => {
+  g.fillStyle = grout; g.fillRect(0, 0, w, w);
+  g.fillStyle = face; g.fillRect(2, 2, w - 4, w - 4);
+}, size, size);
+const FLOOR_MAPS = {
+  'Oak planks': planks,
+  'Hall tiles': tiles(256, '#dcd7cf', '#b8b1a7', 0.6),
+  'Bath floor tiles': tiles(128, '#b9b9bc', '#97979c', 0.3),
+};
+
+// Section caps. Each clipped solid is drawn twice more into the stencil buffer only:
+// back faces +1, front faces -1. Where a view ray meets the cut inside a solid the
+// count is non-zero, and one flat cap is drawn there at the cut height. (Shading back
+// faces dark instead z-fights wherever solids touch: walls on the slab, wall to wall.)
+function sectionCaps(plane, color) {
+  const pass = (side, op) => new THREE.MeshBasicMaterial({
+    side, clippingPlanes: [plane], colorWrite: false, depthWrite: false, depthTest: false,
+    stencilWrite: true, stencilFunc: THREE.AlwaysStencilFunc, stencilFail: op, stencilZFail: op, stencilZPass: op,
+  });
+  const back = pass(THREE.BackSide, THREE.IncrementWrapStencilOp);
+  const front = pass(THREE.FrontSide, THREE.DecrementWrapStencilOp);
+  const cap = new THREE.Mesh(new THREE.PlaneGeometry(80, 80).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({
+    color, stencilWrite: true, stencilRef: 0, stencilFunc: THREE.NotEqualStencilFunc,
+    stencilFail: THREE.ReplaceStencilOp, stencilZFail: THREE.ReplaceStencilOp, stencilZPass: THREE.ReplaceStencilOp,
+  }));
+  cap.renderOrder = 2;
+  cap.onAfterRender = (r) => r.clearStencil();
+  scene.add(cap);
+  const helpers = [];
+  return {
+    add(mesh) {
+      for (const material of [back, front]) {
+        const h = new THREE.Mesh(mesh.geometry, material);
+        h.renderOrder = 1;
+        mesh.add(h);
+        helpers.push(h);
+      }
+    },
+    update() {
+      const on = plane.constant < 50;
+      cap.visible = on;
+      cap.position.y = plane.constant;
+      for (const h of helpers) h.visible = on;
+    },
+  };
+}
+const caps = sectionCaps(cut, 0x1c1d1f);
+
+// ------------------------------------------------------------ views
+const ROOM_VIEWS = {
+  r1: { target: P(600, 1530, 0.3), dir: [-0.9, 2.6, 1.5], radius: 3.0 },
+  r2: { target: P(417, 760, 0.6), dir: [0.6, 2.8, 1.3], radius: 1.7 },
+  r3: { target: P(814, 590, 0.6), dir: [-0.7, 2.8, 1.4], radius: 1.7 },
+};
+const VIEWS = {
+  plan: { target: P(600, 1200), dir: [0, 1, 0.0001], cut: 1.2, plan: true },
+  overview: { target: P(600, 1270), dir: [-2.8, 12.5, 6.9], radius: 4.9, cut: 2.7 },
+  entrance: { target: P(600, 1380), dir: [2.7, 12.5, -8.0], radius: 4.9, cut: 2.7 },
+  ...Object.fromEntries(Object.entries(ROOM_VIEWS).map(([k, v]) => [k, { ...v, cut: 2.7 }])),
+};
+
+function framing(v) {
+  const vfov = THREE.MathUtils.degToRad(camera.fov);
+  const hfov = 2 * Math.atan(Math.tan(vfov / 2) * camera.aspect);
+  const dist = v.plan
+    ? 1.08 * Math.max(4.6 / 2 / Math.tan(hfov / 2), 9.6 / 2 / Math.tan(vfov / 2))
+    : v.radius / Math.sin(Math.min(vfov, hfov) / 2);
+  const dir = new THREE.Vector3(...v.dir).normalize();
+  return { target: v.target.clone(), pos: v.target.clone().addScaledVector(dir, dist) };
+}
+
+let tween = null;
+function markActive(name) {
+  document.querySelectorAll('[data-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === name)));
+}
+function flyTo(name, duration = 1400, onDone) {
+  const v = VIEWS[name], to = framing(v);
+  const fromSph = new THREE.Spherical().setFromVector3(camera.position.clone().sub(controls.target));
+  const toSph = new THREE.Spherical().setFromVector3(to.pos.clone().sub(to.target));
+  const dTheta = Math.atan2(Math.sin(toSph.theta - fromSph.theta), Math.cos(toSph.theta - fromSph.theta));
+  tween = { t0: performance.now(), duration: reduceMotion ? 0 : duration, fromTarget: controls.target.clone(), toTarget: to.target,
+    fromSph, toSph, dTheta, fromCut: cutHeight, toCut: v.cut, onDone };
+  controls.autoRotate = false;
+  markActive(name);
+}
+function jumpTo(name) {
+  const v = VIEWS[name], to = framing(v);
+  controls.target.copy(to.target);
+  camera.position.copy(to.pos);
+  setCut(v.cut);
+  markActive(name);
+}
+function stepTween(now) {
+  const t = tween;
+  const k = t.duration ? Math.min(1, (now - t.t0) / t.duration) : 1;
+  const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+  controls.target.lerpVectors(t.fromTarget, t.toTarget, e);
+  const s = new THREE.Spherical(
+    THREE.MathUtils.lerp(t.fromSph.radius, t.toSph.radius, e),
+    THREE.MathUtils.lerp(t.fromSph.phi, t.toSph.phi, e),
+    t.fromSph.theta + t.dTheta * e);
+  camera.position.setFromSpherical(s).add(controls.target);
+  setCut(THREE.MathUtils.lerp(t.fromCut, t.toCut, e));
+  if (k >= 1) {
+    tween = null;
+    t.onDone?.();
+  }
+}
+
+function intro() {
+  jumpTo('plan');
+  tween = { t0: performance.now(), duration: reduceMotion ? 0 : 900, fromTarget: controls.target.clone(), toTarget: controls.target.clone(),
+    fromSph: new THREE.Spherical().setFromVector3(camera.position.clone().sub(controls.target)),
+    toSph: new THREE.Spherical().setFromVector3(camera.position.clone().sub(controls.target)), dTheta: 0, fromCut: 1.2, toCut: 1.2,
+    onDone: () => flyTo('overview', 3400, () => { controls.autoRotate = spin.checked && !reduceMotion; }) };
+}
+
+// ------------------------------------------------------------ labels
+const tags = [
+  { el: document.getElementById('tag-r1'), at: P(539, 1419, 0.05) },
+  { el: document.getElementById('tag-r2'), at: P(419, 697, 0.05) },
+  { el: document.getElementById('tag-r3'), at: P(750, 575, 0.05) },
+];
+const v3 = new THREE.Vector3();
+function placeTags(w, h) {
+  for (const t of tags) {
+    v3.copy(t.at).project(camera);
+    t.el.hidden = !modelReady || v3.z > 1;
+    t.el.style.transform = `translate(${(v3.x * 0.5 + 0.5) * w}px, ${(-v3.y * 0.5 + 0.5) * h}px) translate(-50%, -50%)`;
+  }
+}
+
+// ------------------------------------------------------------ load
+// studio-plan.json is glTF with its buffer as a base64 data: URI. The artifact
+// sandbox blocks fetching data: URLs, so decode it here and hand the loader a GLB.
+function packGLB(doc, bin) {
+  const json = new TextEncoder().encode(JSON.stringify(doc));
+  const jsonPad = (4 - json.length % 4) % 4, binPad = (4 - bin.length % 4) % 4;
+  const binAt = 20 + json.length + jsonPad, total = binAt + 8 + bin.length + binPad;
+  const out = new Uint8Array(total), dv = new DataView(out.buffer);
+  dv.setUint32(0, 0x46546C67, true);            // "glTF"
+  dv.setUint32(4, 2, true);
+  dv.setUint32(8, total, true);
+  dv.setUint32(12, json.length + jsonPad, true);
+  dv.setUint32(16, 0x4E4F534A, true);           // "JSON"
+  out.set(json, 20);
+  out.fill(0x20, 20 + json.length, binAt);
+  dv.setUint32(binAt, bin.length + binPad, true);
+  dv.setUint32(binAt + 4, 0x004E4942, true);    // "BIN\0"
+  out.set(bin, binAt + 8);
+  return out.buffer;
+}
+async function loadModel() {
+  const res = await fetch('studio-plan.json');
+  if (!res.ok) throw new Error(`studio-plan.json returned HTTP ${res.status}`);
+  const doc = await res.json();
+  const uri = doc.buffers[0].uri;
+  const bin = Uint8Array.from(atob(uri.slice(uri.indexOf(',') + 1)), (c) => c.charCodeAt(0));
+  delete doc.buffers[0].uri;
+  doc.buffers[0].byteLength = bin.length;
+  return new GLTFLoader().parseAsync(packGLB(doc, bin), '');
+}
+
+let modelReady = false;
+loadModel().then((gltf) => {
+  const seen = new Set(), solids = [];
+  gltf.scene.traverse((o) => {
+    if (!o.isMesh) return;
+    const m = o.material;
+    o.castShadow = !m.transparent;
+    o.receiveShadow = true;
+    if (!m.transparent) solids.push(o);
+    if (seen.has(m)) return;
+    seen.add(m);
+    if (FLOOR_MAPS[m.name]) {
+      m.map = FLOOR_MAPS[m.name];
+      m.color.set(0xffffff);
+      m.metalness = 0;
+      m.roughness = 0.65;
+    }
+    if (m.transparent) m.depthWrite = false;
+    m.clippingPlanes = [cut];
+    m.clipShadows = true;
+    m.envMapIntensity = 0.6;
+    m.needsUpdate = true;
+  });
+  solids.forEach((o) => caps.add(o));
+  scene.add(gltf.scene);
+  modelReady = true;
+  statusEl.hidden = true;
+  intro();
+}).catch((err) => {
+  console.error(err);
+  statusEl.textContent = `The 3D model did not load (${err?.message || err}). Reload the page to try again.`;
+});
+
+// ------------------------------------------------------------ UI
+document.querySelectorAll('[data-view]').forEach((b) => b.addEventListener('click', () => {
+  spin.checked = false;
+  flyTo(b.dataset.view);
+}));
+cutInput.addEventListener('input', () => {
+  tween = null;
+  setCut(parseFloat(cutInput.value));
+});
+spin.addEventListener('change', () => { controls.autoRotate = spin.checked && !tween; });
+document.getElementById('replay').addEventListener('click', () => { spin.checked = !reduceMotion; intro(); });
+controls.addEventListener('start', () => {
+  tween = null;
+  controls.autoRotate = false;
+  spin.checked = false;
+  markActive(null);
+});
+if (reduceMotion) spin.checked = false;
+
+function applyTheme() {
+  scene.background = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--scene').trim() || '#e2e5e8');
+}
+applyTheme();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+new MutationObserver(applyTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+let width = 1, height = 1;
+new ResizeObserver(() => {
+  width = stage.clientWidth || 1;
+  height = stage.clientHeight || 1;
+  renderer.setSize(width, height, false);
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+}).observe(stage);
+
+jumpTo('plan');
+renderer.setAnimationLoop((now) => {
+  if (tween) stepTween(now);
+  controls.update();
+  caps.update();
+  renderer.render(scene, camera);
+  placeTags(width, height);
+});
+</script>

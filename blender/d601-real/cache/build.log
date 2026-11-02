@@ -1,0 +1,14 @@
+AREA 01 Hall                     raw  10.70  net  10.44  table  10.4  OK
+AREA 02 Living room + kitchen    raw  27.23  net  26.92  table  26.9  OK
+AREA 03 Room                     raw  16.49  net  16.26  table  16.3  OK
+AREA 04 Room                     raw  13.50  net  13.29  table  13.3  OK
+AREA 05 Bathroom                 raw   4.89  net   4.71  table   4.7  OK
+AREA 06 WC                       raw   1.84  net   1.72  table   1.7  OK
+AREA 07 Storage                  raw   1.97  net   1.88  table   1.9  OK
+AREA 08 Loggia                   raw   8.34  net   8.34  table   8.3  OK
+AREA usable (01-07) net 75.24  table 75.2
+Info: Saved "d601-real.blend"
+SAVED
+Blender 4.3.2 (hash 32f5fdce0a0a built 2024-12-17 03:35:23)
+
+Blender quit
